@@ -65,6 +65,9 @@ pip3 install dj-database-url dj-static gunicorn psycopg2-binary
 
 pip freeze > requirements.txt
 
+heroku config:set DJANGO_SETTINGS_MODULE=gogopwoerkimibot.prod_settings
+heroku config:set DISABLE_COLLECTSTATIC=1
+
 heroku git:remote -a gogopowerkimibot 
 ```
 ## Reference
