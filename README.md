@@ -1,4 +1,4 @@
-# line bot practise
+# GoGoPowerKimi
 
 ## Install package
 ``` shell
@@ -48,6 +48,10 @@ ALLOWED_HOSTS = ['127.0.0.1', '20af8c34126e.ngrok.io']
 ```
 
 ## Heroku
+1. runtime.txt
+2. Procfile
+3. gogopowerkimibot/prod_settings.py
+
 ```shell
 ## install
 pip3 install virtualenv
@@ -62,13 +66,14 @@ source bin/activate
 deactivate
 
 pip3 install dj-database-url dj-static gunicorn psycopg2-binary
-
 pip freeze > requirements.txt
 
 heroku config:set DJANGO_SETTINGS_MODULE=gogopowerkimibot.prod_settings
 heroku config:set DISABLE_COLLECTSTATIC=1
-
 heroku git:remote -a gogopowerkimibot 
+
+# log
+heroku logs --tail
 ```
 ## Reference
 * https://github.com/henriquebastos/python-decouple
