@@ -26,6 +26,7 @@ https://ngrok.com/download
 
 ## Run server
 ``` shell
+# 將靜態文件收集到STATIC_ROOT中
 python3 manage.py collectstatic
 python3 manage.py runserver 
 ./ngrok http 8000
@@ -74,6 +75,7 @@ heroku config:set DISABLE_COLLECTSTATIC=1
 heroku git:remote -a gogopowerkimibot 
 
 # log
+heroku login
 heroku logs --tail
 ```
 ## Reference
