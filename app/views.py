@@ -33,7 +33,9 @@ def callback(request):
                     if mtext == '卡比請客':
                         msgresponse.sendText(event)
                     elif "吱吱" in mtext:
-                        msgresponse.sendImage(event)
+                        msgresponse.sendImage(event, "zhizhi")
+                    elif mtext == "笑鼠人":
+                        msgresponse.sendImage(event, "mouse")
 
             if isinstance(event, PostbackEvent):  # PostbackTemplateAction觸發此事件
                 # 取得Postback資料

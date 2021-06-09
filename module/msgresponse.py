@@ -6,6 +6,11 @@ from linebot.models import TextSendMessage, ImageSendMessage, StickerSendMessage
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 baseurl = settings.STATIC_URL
 
+imgMap = {
+    "zhizhi": "https://i.imgur.com/IhQm1MI.png",
+    "mouse": "https://i.imgur.com/LFqbHF8.png",
+}
+
 
 def sendText(event):  # 傳送文字
     try:
@@ -18,11 +23,11 @@ def sendText(event):  # 傳送文字
             event.reply_token, TextSendMessage(text='發生錯誤！'))
 
 
-def sendImage(event):  # 傳送圖片 https://i.imgur.com/IhQm1MI
+def sendImage(event, key):  # 傳送圖片 https://i.imgur.com/IhQm1MI
     try:
         message = ImageSendMessage(
-            original_content_url="https://i.imgur.com/IhQm1MI.png",
-            preview_image_url="https://i.imgur.com/IhQm1MI.png"
+            original_content_url=imgMap[key],
+            preview_image_url=imgMap[key]
         )
         line_bot_api.reply_message(event.reply_token, message)
     except:
