@@ -2,5 +2,5 @@
 
 *.pyc
 __pycache__
-staticfiles
+# staticfiles
 ngrok
