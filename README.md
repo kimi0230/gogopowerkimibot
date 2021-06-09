@@ -26,6 +26,7 @@ https://ngrok.com/download
 
 ## Run server
 ``` shell
+python3 manage.py collectstatic
 python3 manage.py runserver 
 ./ngrok http 8000
 ```
