@@ -77,3 +77,4 @@ heroku logs --tail
 ```
 ## Reference
 * https://github.com/henriquebastos/python-decouple
+* https://ithelp.ithome.com.tw/articles/10209644
