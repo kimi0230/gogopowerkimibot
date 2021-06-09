@@ -30,9 +30,9 @@ def callback(request):
             if isinstance(event, MessageEvent):
                 if isinstance(event.message, TextMessage):
                     mtext = event.message.text
-                    if mtext == '@卡比請客':
+                    if mtext == '卡比請客':
                         msgresponse.sendText(event)
-                    elif mtext == '@吱吱':
+                    elif mtext in '吱吱':
                         msgresponse.sendImage(event)
 
             if isinstance(event, PostbackEvent):  # PostbackTemplateAction觸發此事件
