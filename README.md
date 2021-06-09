@@ -64,6 +64,8 @@ deactivate
 pip3 install dj-database-url dj-static gunicorn psycopg2-binary
 
 pip freeze > requirements.txt
+
+heroku git:remote -a gogopowerkimibot 
 ```
 ## Reference
 * https://github.com/henriquebastos/python-decouple
