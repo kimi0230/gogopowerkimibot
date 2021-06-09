@@ -1,3 +1,6 @@
 .env
-app/__pycache__/*
-my_line_bot/__pycache__/*
+
+*.pyc
+__pycache__
+staticfiles
+ngrok
