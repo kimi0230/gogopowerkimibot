@@ -923,7 +923,7 @@ CITY_AREA_MAPPING = [
             {
                 "ZipCode": "439",
                 "AreaName": "大安區",
-                "AreaName2": "大安",
+                "AreaName2": "大安區",
                 "AreaEngName": "Da’an Dist."
             }
         ]
