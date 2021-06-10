@@ -347,7 +347,7 @@ CITY_AREA_MAPPING = [
             {
                 "ZipCode": "260",
                 "AreaName": "宜蘭市",
-                "AreaName2": "宜蘭市",
+                "AreaName2": "宜蘭",
                 "AreaEngName": "Yilan City"
             },
             {
@@ -476,7 +476,7 @@ CITY_AREA_MAPPING = [
             {
                 "ZipCode": "302",
                 "AreaName": "竹北市",
-                "AreaName2": "竹北市",
+                "AreaName2": "竹北",
                 "AreaEngName": "Zhubei City"
             },
             {
@@ -646,7 +646,7 @@ CITY_AREA_MAPPING = [
             {
                 "ZipCode": "351",
                 "AreaName": "頭份市",
-                "AreaName2": "頭份市",
+                "AreaName2": "頭份",
                 "AreaEngName": "Toufen City"
             },
             {
@@ -688,7 +688,7 @@ CITY_AREA_MAPPING = [
             {
                 "ZipCode": "360",
                 "AreaName": "苗栗市",
-                "AreaName2": "苗栗市",
+                "AreaName2": "苗栗",
                 "AreaEngName": "Miaoli City"
             },
             {
@@ -936,7 +936,7 @@ CITY_AREA_MAPPING = [
             {
                 "ZipCode": "500",
                 "AreaName": "彰化市",
-                "AreaName2": "彰化市",
+                "AreaName2": "彰化",
                 "AreaEngName": "Changhua City"
             },
             {
@@ -990,7 +990,7 @@ CITY_AREA_MAPPING = [
             {
                 "ZipCode": "510",
                 "AreaName": "員林市",
-                "AreaName2": "員林市",
+                "AreaName2": "員林",
                 "AreaEngName": "Yuanlin City"
             },
             {
@@ -1099,7 +1099,7 @@ CITY_AREA_MAPPING = [
             {
                 "ZipCode": "540",
                 "AreaName": "南投市",
-                "AreaName2": "南投市",
+                "AreaName2": "南投",
                 "AreaEngName": "Nantou City"
             },
             {
@@ -1251,13 +1251,13 @@ CITY_AREA_MAPPING = [
             {
                 "ZipCode": "612",
                 "AreaName": "太保市",
-                "AreaName2": "太保市",
+                "AreaName2": "太保",
                 "AreaEngName": "Taibao City"
             },
             {
                 "ZipCode": "613",
                 "AreaName": "朴子市",
-                "AreaName2": "朴子市",
+                "AreaName2": "朴子",
                 "AreaEngName": "Puzi City"
             },
             {
@@ -1372,7 +1372,7 @@ CITY_AREA_MAPPING = [
             {
                 "ZipCode": "640",
                 "AreaName": "斗六市",
-                "AreaName2": "斗六市",
+                "AreaName2": "斗六",
                 "AreaEngName": "Douliu City"
             },
             {
@@ -1940,7 +1940,7 @@ CITY_AREA_MAPPING = [
             {
                 "ZipCode": "880",
                 "AreaName": "馬公市",
-                "AreaName2": "馬公市",
+                "AreaName2": "馬公",
                 "AreaEngName": "Magong City"
             },
             {
@@ -2026,7 +2026,7 @@ CITY_AREA_MAPPING = [
             {
                 "ZipCode": "900",
                 "AreaName": "屏東市",
-                "AreaName2": "屏東市",
+                "AreaName2": "屏東",
                 "AreaEngName": "Pingtung City"
             },
             {
@@ -2231,7 +2231,7 @@ CITY_AREA_MAPPING = [
             {
                 "ZipCode": "950",
                 "AreaName": "臺東市",
-                "AreaName2": "臺東市",
+                "AreaName2": "臺東",
                 "AreaEngName": "Taitung City"
             },
             {
@@ -2334,7 +2334,7 @@ CITY_AREA_MAPPING = [
             {
                 "ZipCode": "970",
                 "AreaName": "花蓮市",
-                "AreaName2": "花蓮市",
+                "AreaName2": "花蓮",
                 "AreaEngName": "Hualien City"
             },
             {
