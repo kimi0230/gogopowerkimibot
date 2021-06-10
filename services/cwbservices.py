@@ -19,6 +19,7 @@ def getCityArea(msg):
     city = ""
     area = ""
     if not msg == '':
+        # 找縣市
         msg = msg.replace('台', '臺')  # 氣象局資料使用「臺」
         matchingCity = [
             item for item in cityareaconst.CITY_AREA_MAPPING if item["CityName"] in msg or item["CityName2"] in msg]
@@ -26,6 +27,7 @@ def getCityArea(msg):
             city = matchingCity[0]["CityName"]
             msg = msg.replace(city, '')
 
+        # 找區鄉鎮
         if city != "":
             matchingArea = [item for item in matchingCity[0]
                             ["AreaList"] if item["AreaName"] in msg or item["AreaName2"] in msg]
@@ -33,9 +35,10 @@ def getCityArea(msg):
                 area = matchingArea[0]["AreaName"]
         else:
             matchingArea = [
-                a for c in cityareaconst.CITY_AREA_MAPPING for a in c["AreaList"] if a["AreaName"] in msg or a["AreaName2"] in msg]
+                {a, c["CityName"]} for c in cityareaconst.CITY_AREA_MAPPING for a in c["AreaList"] if a["AreaName"] in msg or a["AreaName2"] in msg]
         if len(matchingArea) > 0:
             area = matchingArea[0]["AreaName2"]
+            print(matchingArea)
 
     return {"City": city, "Area": area}
 
@@ -74,7 +77,8 @@ def getWeather(msg):
 
 def getAir(msg):
     if not msg == '':  # 天氣類地點存在
-        report = requests.get(epaUrl).json()
+        api_link = epaUrl % (user_token)
+        report = requests.get(api_link).json()
         # print(report["records"])
         result = ""
         for item in report["records"]:
