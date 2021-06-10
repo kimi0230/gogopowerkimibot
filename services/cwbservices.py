@@ -1,7 +1,9 @@
 import requests
 from django.conf import settings
-from myconst import cityareaconst
-# import cityareaconst
+try:
+    from myconst import cityareaconst
+except ImportError:
+    import cityareaconst
 try:
     import xml.etree.cElementTree as et
 except ImportError:
@@ -33,13 +35,14 @@ def getCityArea(msg):
             matchingArea = [item for item in matchingCity[0]
                             ["AreaList"] if item["AreaName"] in msg or item["AreaName2"] in msg]
             if len(matchingArea) > 0:
-                area = matchingArea[0]["AreaName"]
+                area = matchingArea[0]["AreaName2"]
         else:
             for c in cityareaconst.CITY_AREA_MAPPING:
                 for a in c["AreaList"]:
                     if a["AreaName"] in msg or a["AreaName2"] in msg:
                         area = a["AreaName2"]
                         city = c["CityName"]
+                        break
 
     return {"City": city, "Area": area}
 
@@ -85,16 +88,19 @@ def getAir(msg):
             if item["SiteName"] == msg:
                 result += msg+"空氣品質: \n" + "空氣狀態 : " + item["Status"] + '\n'+"AQI : "+item["AQI"] + \
                     '\n' + "PM2.5 : " + item["PM2.5_AVG"]
+                break
         return result
 
 
 if __name__ == "__main__":
     # getWeather()
     # getAir()
-    msg = "汐止"
+    msg = "台北大安"
     cityArea = getCityArea(msg)
+    print("cityArea : ", cityArea)
     resMsg = ""
     resMsg += getWeather(cityArea["City"])+"\n\n"
-    resMsg += getAir(cityArea["Area"])
+    if cityArea["Area"] != "":
+        resMsg += getAir(cityArea["Area"])
     print(resMsg)
     pass
