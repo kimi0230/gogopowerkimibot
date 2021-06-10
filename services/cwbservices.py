@@ -24,11 +24,11 @@ def getCityArea(msg):
     if not msg == '':
         # 找縣市
         msg = msg.replace('台', '臺')  # 氣象局資料使用「臺」
-        matchingCity = [
-            item for item in cityareaconst.CITY_AREA_MAPPING if item["CityName"] in msg or item["CityName2"] in msg]
-        if len(matchingCity) > 0:
-            city = matchingCity[0]["CityName"]
-            msg = msg.replace(city, '')
+        for c in cityareaconst.CITY_AREA_MAPPING:
+            if c["CityName"] in msg:
+                city = c["CityName"]
+            elif c["CityName2"] in msg:
+                city = c["CityName2"]
 
         # 找區鄉鎮
         if city != "":
