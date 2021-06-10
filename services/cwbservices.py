@@ -34,11 +34,11 @@ def getCityArea(msg):
             if len(matchingArea) > 0:
                 area = matchingArea[0]["AreaName"]
         else:
-            matchingArea = [
-                {a, c["CityName"]} for c in cityareaconst.CITY_AREA_MAPPING for a in c["AreaList"] if a["AreaName"] in msg or a["AreaName2"] in msg]
-        if len(matchingArea) > 0:
-            area = matchingArea[0]["AreaName2"]
-            print(matchingArea)
+            for c in cityareaconst.CITY_AREA_MAPPING:
+                for a in c["AreaList"]:
+                    if a["AreaName"] in msg or a["AreaName2"] in msg:
+                        area = a["AreaName2"]
+                        city = c["CityName"]
 
     return {"City": city, "Area": area}
 
