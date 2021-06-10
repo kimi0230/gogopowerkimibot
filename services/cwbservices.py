@@ -120,3 +120,4 @@ if __name__ == "__main__":
     # resMsg += getWeather(cityArea.city)
     # resMsg += getAir(cityArea.area)
     # print(resMsg)
+    pass
