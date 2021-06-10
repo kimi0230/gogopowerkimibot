@@ -42,7 +42,8 @@ def callback(request):
                         cityArea = cwbservices.getCityArea(msg)
                         resMsg = ""
                         if cityArea["City"] != "":
-                            resMsg += cwbservices.getWeather(cityArea["City"])
+                            resMsg += cwbservices.getWeather(
+                                cityArea["City"]) + "\n"
                         if cityArea["Area"] != "":
                             resMsg += cwbservices.getAir(cityArea["Area"])
                         if resMsg != "":
