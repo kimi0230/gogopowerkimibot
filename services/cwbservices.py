@@ -1,6 +1,6 @@
 import requests
 from django.conf import settings
-import cityjson
+from services import cityjson
 try:
     import xml.etree.cElementTree as et
 except ImportError:
