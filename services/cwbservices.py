@@ -27,8 +27,12 @@ def getCityArea(msg):
         for c in cityareaconst.CITY_AREA_MAPPING:
             if c["CityName"] in msg:
                 city = c["CityName"]
+                matchingCity = c
+                break
             elif c["CityName2"] in msg:
                 city = c["CityName2"]
+                matchingCity = c
+                break
 
         # 找區鄉鎮
         if city != "":
