@@ -8,6 +8,7 @@ from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import MessageEvent, TextMessage, PostbackEvent
 from module import msgresponse
+from services import cwbservices
 from urllib.parse import parse_qsl
 
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
@@ -31,11 +32,14 @@ def callback(request):
                 if isinstance(event.message, TextMessage):
                     mtext = event.message.text
                     if mtext == '卡比請客':
-                        msgresponse.sendText(event)
+                        msgresponse.sendText(event, "謝謝卡比 讚嘆卡比 卡比讚讚讚")
                     elif "吱吱" in mtext:
                         msgresponse.sendImage(event, "zhizhi")
                     elif mtext == "笑鼠人":
                         msgresponse.sendImage(event, "mouse")
+                    elif "天氣" in mtext:
+                        msg = cwbservices.getWeather(mtext)
+                        msgresponse.sendText(event, msg)
 
             if isinstance(event, PostbackEvent):  # PostbackTemplateAction觸發此事件
                 # 取得Postback資料

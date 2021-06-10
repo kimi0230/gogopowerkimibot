@@ -12,10 +12,10 @@ imgMap = {
 }
 
 
-def sendText(event):  # 傳送文字
+def sendText(event, msg):  # 傳送文字
     try:
         message = TextSendMessage(
-            text="謝謝卡比！"
+            text=msg
         )
         line_bot_api.reply_message(event.reply_token, message)
     except:

@@ -81,3 +81,5 @@ heroku logs --tail
 ## Reference
 * https://github.com/henriquebastos/python-decouple
 * https://ithelp.ithome.com.tw/articles/10209644
+* [中央氣象局opendata](https://opendata.cwb.gov.tw/index)
+* [中央氣象局opendata 資料代碼](https://opendata.cwb.gov.tw/opendatadoc/MFC/ForecastElement.pdf)

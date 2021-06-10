@@ -30,6 +30,9 @@ LINE_CHANNEL_ACCESS_TOKEN = config(
 LINE_CHANNEL_SECRET = config(
     'LINE_CHANNEL_SECRET', default='你的CHANNEL_SECRET')
 
+# CWB
+CWB_TOKEN = config('CWB_TOKEN', default='')
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
