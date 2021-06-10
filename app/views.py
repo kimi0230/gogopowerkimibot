@@ -39,7 +39,8 @@ def callback(request):
                         msgresponse.sendImage(event, "mouse")
                     elif "天氣" in mtext:
                         msg = cwbservices.getWeather(mtext)
-                        msgresponse.sendText(event, msg)
+                        if msg != "":
+                            msgresponse.sendText(event, msg)
 
             if isinstance(event, PostbackEvent):  # PostbackTemplateAction觸發此事件
                 # 取得Postback資料

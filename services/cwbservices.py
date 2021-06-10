@@ -27,7 +27,7 @@ def getWeather(msg="新北"):
             if len(matching) > 0:
                 flagcity = True
             else:
-                return "無此縣市資料"
+                return ""
 
         city = matching[0]
         doc_name = "F-C0032-001"
@@ -66,11 +66,9 @@ def getWeather(msg="新北"):
             print(weather)
             return weather
         else:
-            print('無此縣市資料！')
-            return "無此縣市資料"
+            return ""
     else:
-        print('無此縣市資料！')
-        return "無此縣市資料"
+        return ""
 
 
 if __name__ == "__main__":
