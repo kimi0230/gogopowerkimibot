@@ -38,12 +38,13 @@ def callback(request):
                     elif mtext == "笑鼠人":
                         msgresponse.sendImage(event, "mouse")
                     elif "天氣" in mtext:
-                        msg = msg.replace('天氣', '')
+                        msg = mtext.replace('天氣', '')
                         cityArea = cwbservices.getCityArea(msg)
-                        msg = cwbservices.getWeather(cityArea.city)
-                        msg += cwbservices.getAir(cityArea.area)
-                        if msg != "":
-                            msgresponse.sendText(event, msg)
+                        resMsg = ""
+                        resMsg += cwbservices.getWeather(cityArea.city)
+                        resMsg += cwbservices.getAir(cityArea.area)
+                        if resMsg != "":
+                            msgresponse.sendText(event, resMsg)
 
             if isinstance(event, PostbackEvent):  # PostbackTemplateAction觸發此事件
                 # 取得Postback資料

@@ -114,4 +114,9 @@ def getAir(msg):
 if __name__ == "__main__":
     # getWeather()
     # getAir()
-    getCityArea("台北松山")
+    # msg = "台北松山"
+    # cityArea = getCityArea(msg)
+    # resMsg = ""
+    # resMsg += getWeather(cityArea.city)
+    # resMsg += getAir(cityArea.area)
+    # print(resMsg)
