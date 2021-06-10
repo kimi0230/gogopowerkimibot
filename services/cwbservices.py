@@ -3,7 +3,7 @@ from django.conf import settings
 try:
     from myconst import cityareaconst
 except ImportError:
-    import cityareaconst
+    from ..myconst import cityareaconst
 try:
     import xml.etree.cElementTree as et
 except ImportError:
