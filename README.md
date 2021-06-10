@@ -78,6 +78,14 @@ heroku git:remote -a gogopowerkimibot
 heroku login
 heroku logs --tail
 ```
+
+## Commands
+```
+xx天氣
+卡比請客
+笑鼠人
+吱吱
+```
 ## Reference
 * https://github.com/henriquebastos/python-decouple
 * https://ithelp.ithome.com.tw/articles/10209644
