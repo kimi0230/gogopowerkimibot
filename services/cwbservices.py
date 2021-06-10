@@ -36,7 +36,7 @@ def getCityArea(msg):
 
         # 找區鄉鎮
         if city != "":
-            matchingArea = [item for item in matchingCity[0]
+            matchingArea = [item for item in matchingCity
                             ["AreaList"] if item["AreaName"] in msg or item["AreaName2"] in msg]
             if len(matchingArea) > 0:
                 area = matchingArea[0]["AreaName2"]
