@@ -27,7 +27,7 @@ def getCityArea(msg):
                 city = c["CityName"]
                 matchingCity = c
                 break
-        if city != "":
+        if city == "":
             for c in cityareaconst.CITY_AREA_MAPPING:
                 if c["CityName2"] in msg:
                     city = c["CityName"]
