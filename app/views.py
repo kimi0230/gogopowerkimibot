@@ -45,7 +45,7 @@ def callback(request):
                             resMsg += cwbservices.getWeather(
                                 cityArea["City"]) + "\n"
                         if cityArea["Area"] != "":
-                            if cityArea["Area"] == "板橋":
+                            if cityArea["Area"] == '板橋':
                                 resMsg += "卡比請客\n"
                             resMsg += cwbservices.getAir(cityArea["Area"])
                         if resMsg != "":

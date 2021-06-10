@@ -95,7 +95,7 @@ def getAir(msg):
 if __name__ == "__main__":
     # getWeather()
     # getAir()
-    msg = "台北大安"
+    msg = "板橋"
     cityArea = getCityArea(msg)
     print("cityArea : ", cityArea)
     resMsg = ""
