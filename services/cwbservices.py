@@ -1,6 +1,7 @@
 import requests
 from django.conf import settings
-from services import cityjson
+from myconst import cityareaconst
+
 try:
     import xml.etree.cElementTree as et
 except ImportError:
@@ -23,7 +24,7 @@ def getCityArea(msg):
     if not msg == '':
         msg = msg.replace('台', '臺')  # 氣象局資料使用「臺」
         matchingCity = [
-            item for item in cityjson.CITY_AREA_MAPPING if item["CityName"] in msg or item["CityName2"] in msg]
+            item for item in cityareaconst.CITY_AREA_MAPPING if item["CityName"] in msg or item["CityName2"] in msg]
         if len(matchingCity) > 0:
             city = matchingCity[0]["CityName"]
             msg = msg.replace(city, '')
@@ -35,7 +36,7 @@ def getCityArea(msg):
                 area = matchingArea[0]["AreaName"]
         else:
             matchingArea = [
-                a for c in cityjson.CITY_AREA_MAPPING for a in c["AreaList"] if a["AreaName"] in msg or a["AreaName2"] in msg]
+                a for c in cityareaconst.CITY_AREA_MAPPING for a in c["AreaList"] if a["AreaName"] in msg or a["AreaName2"] in msg]
         if len(matchingArea) > 0:
             area = matchingArea[0]["AreaName2"]
 
