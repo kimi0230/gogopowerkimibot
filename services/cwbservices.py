@@ -1,7 +1,6 @@
 import requests
 from django.conf import settings
-from services import cityJSON
-
+import cityjson
 try:
     import xml.etree.cElementTree as et
 except ImportError:
@@ -24,7 +23,7 @@ def getCityArea(msg):
     if not msg == '':
         msg = msg.replace('台', '臺')  # 氣象局資料使用「臺」
         matchingCity = [
-            item for item in cityJSON.CITY_AREA_MAPPING if item["CityName"] in msg or item["CityName2"] in msg]
+            item for item in cityjson.CITY_AREA_MAPPING if item["CityName"] in msg or item["CityName2"] in msg]
         if len(matchingCity) > 0:
             city = matchingCity[0]["CityName"]
             msg = msg.replace(city, '')
@@ -36,7 +35,7 @@ def getCityArea(msg):
                 area = matchingArea[0]["AreaName"]
         else:
             matchingArea = [
-                a for c in cityJSON.CITY_AREA_MAPPING for a in c["AreaList"] if a["AreaName"] in msg or a["AreaName2"] in msg]
+                a for c in cityjson.CITY_AREA_MAPPING for a in c["AreaList"] if a["AreaName"] in msg or a["AreaName2"] in msg]
         if len(matchingArea) > 0:
             area = matchingArea[0]["AreaName2"]
 
@@ -91,7 +90,6 @@ def getWeather(msg):
                 data = timeblock[2][0].text
                 weather = weather + tlist[i] + '：' + data + '\n'
             weather = weather[:-1]  # 移除最後一個換行
-            print(weather)
             return weather
         else:
             return ""
@@ -106,7 +104,7 @@ def getAir(msg):
         result = ""
         for item in report["records"]:
             if item["SiteName"] == msg:
-                result += "空氣狀態 : " + item["Status"] + '\n'+"AQI : "+item["AQI"] + \
+                result += "\n\n"+msg+"空氣品質: \n" + "空氣狀態 : " + item["Status"] + '\n'+"AQI : "+item["AQI"] + \
                     '\n' + "PM2.5 : " + item["PM2.5_AVG"]
         return result
 
@@ -114,10 +112,10 @@ def getAir(msg):
 if __name__ == "__main__":
     # getWeather()
     # getAir()
-    # msg = "台北松山"
-    # cityArea = getCityArea(msg)
-    # resMsg = ""
-    # resMsg += getWeather(cityArea.city)
-    # resMsg += getAir(cityArea.area)
-    # print(resMsg)
+    msg = "台北松山"
+    cityArea = getCityArea(msg)
+    resMsg = ""
+    resMsg += getWeather(cityArea["City"])
+    resMsg += getAir(cityArea["Area"])
+    print(resMsg)
     pass

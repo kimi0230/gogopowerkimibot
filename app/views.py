@@ -41,8 +41,10 @@ def callback(request):
                         msg = mtext.replace('天氣', '')
                         cityArea = cwbservices.getCityArea(msg)
                         resMsg = ""
-                        # resMsg += cwbservices.getWeather(cityArea.city)
-                        resMsg += cwbservices.getAir(cityArea.area)
+                        if cityArea["City"] != "":
+                            resMsg += cwbservices.getWeather(cityArea["City"])
+                        if cityArea["Area"] != "":
+                            resMsg += cwbservices.getAir(cityArea["Area"])
                         if resMsg != "":
                             msgresponse.sendText(event, resMsg)
 
