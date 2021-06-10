@@ -9,12 +9,10 @@ try:
 except ImportError:
     import xml.etree.ElementTree as et
 
-# user_token = settings.CWB_TOKEN
-user_token = "CWB-45B26441-4D78-4584-81F8-4A0F93B75DC1"
+user_token = settings.CWB_TOKEN
 cwburl = "http://opendata.cwb.gov.tw/opendataapi?dataid=%s&authorizationkey=%s"
 
-# epa_token = settings.EPA_TOKEN
-epa_token = "9be7b239-557b-4c10-9775-78cadfc555e9"
+epa_token = settings.EPA_TOKEN
 epaUrl = "https://data.epa.gov.tw/api/v1/aqx_p_432?limit=1000&api_key=%s&sort=ImportDate desc&format=json"
 
 

@@ -464,7 +464,7 @@ CITY_AREA_MAPPING = [
     },
     {
         "CityName": "新竹縣",
-        "CityName2": "新竹",
+        "CityName2": "新竹縣",
         "CityEngName": "Hsinchu County",
         "AreaList": [
             {
