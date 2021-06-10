@@ -38,7 +38,10 @@ def callback(request):
                     elif mtext == "笑鼠人":
                         msgresponse.sendImage(event, "mouse")
                     elif "天氣" in mtext:
-                        msg = cwbservices.getWeather(mtext)
+                        msg = msg.replace('天氣', '')
+                        cityArea = cwbservices.getCityArea(msg)
+                        msg = cwbservices.getWeather(cityArea.city)
+                        msg += cwbservices.getAir(cityArea.area)
                         if msg != "":
                             msgresponse.sendText(event, msg)
 

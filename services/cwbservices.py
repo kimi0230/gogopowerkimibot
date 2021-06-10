@@ -1,5 +1,6 @@
 import requests
 from django.conf import settings
+import cityJSON
 
 try:
     import xml.etree.cElementTree as et
@@ -14,8 +15,35 @@ cities = ["臺北", "新北", "桃園", "臺中", "臺南", "高雄", "基隆", 
 counties = ["苗栗", "彰化", "南投", "雲林", "嘉義", "屏東",
             "宜蘭", "花蓮", "臺東", "澎湖", "金門", "連江"]  # 縣
 
+epaUrl = "https://data.epa.gov.tw/api/v1/aqx_p_432?limit=1000&api_key=9be7b239-557b-4c10-9775-78cadfc555e9&sort=ImportDate%20desc&format=json"
 
-def getWeather(msg="新北"):
+
+def getCityArea(msg):
+    city = ""
+    area = ""
+    if not msg == '':
+        msg = msg.replace('台', '臺')  # 氣象局資料使用「臺」
+        matchingCity = [
+            item for item in cityJSON.CITY_AREA_MAPPING if item["CityName"] in msg or item["CityName2"] in msg]
+        if len(matchingCity) > 0:
+            city = matchingCity[0]["CityName"]
+            msg = msg.replace(city, '')
+
+        if city != "":
+            matchingArea = [item for item in matchingCity[0]
+                            ["AreaList"] if item["AreaName"] in msg or item["AreaName2"] in msg]
+            if len(matchingArea) > 0:
+                area = matchingArea[0]["AreaName"]
+        else:
+            matchingArea = [
+                a for c in cityJSON.CITY_AREA_MAPPING for a in c["AreaList"] if a["AreaName"] in msg or a["AreaName2"] in msg]
+        if len(matchingArea) > 0:
+            area = matchingArea[0]["AreaName2"]
+
+    return {"City": city, "Area": area}
+
+
+def getWeather(msg):
     if not msg == '':  # 天氣類地點存在
         msg = msg.replace('台', '臺')  # 氣象局資料使用「臺」
         matching = [item for item in cities if item in msg]
@@ -71,5 +99,19 @@ def getWeather(msg="新北"):
         return ""
 
 
+def getAir(msg):
+    if not msg == '':  # 天氣類地點存在
+        report = requests.get(epaUrl).json()
+        # print(report["records"])
+        result = ""
+        for item in report["records"]:
+            if item["SiteName"] == msg:
+                result += "空氣狀態 : " + item["Status"] + '\n'+"AQI : "+item["AQI"] + \
+                    '\n' + "PM2.5 : " + item["PM2.5_AVG"]
+        return result
+
+
 if __name__ == "__main__":
-    getWeather()
+    # getWeather()
+    # getAir()
+    getCityArea("台北松山")
