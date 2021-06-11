@@ -8,7 +8,7 @@ from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import MessageEvent, TextMessage, PostbackEvent
 from module import msgresponse
-from services import cwbservices
+from services import cwbservices, invoiceservice
 from urllib.parse import parse_qsl
 
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
@@ -39,6 +39,9 @@ def callback(request):
                         msgresponse.sendImage(event, "zhizhi")
                     elif mtext == "笑鼠人":
                         msgresponse.sendImage(event, "mouse")
+                    elif "發票" == mtext:
+                        msg = invoiceservice(mtext)
+                        msgresponse.sendText(event, resMsg)
                     elif "天氣" in mtext:
                         msg = mtext.replace('天氣', '')
                         cityArea = cwbservices.getCityArea(msg)
