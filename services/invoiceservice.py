@@ -8,7 +8,7 @@ except ImportError:
 url = 'http://invoice.etax.nat.gov.tw/invoice.xml'
 
 
-def showCurrent(msg):
+def getInvoice(msg):
     try:
         number = [int(num) for num in msg.split() if num.isdigit()]
         if len(number) > 0:
@@ -31,4 +31,4 @@ def showCurrent(msg):
 
 
 if __name__ == "__main__":
-    print(showCurrent("發票"))
+    print(getInvoice("發票"))
