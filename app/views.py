@@ -41,7 +41,8 @@ def callback(request):
                         msgresponse.sendImage(event, "mouse")
                     elif "發票" in mtext:
                         resMsg = invoiceservice.getInvoice(mtext)
-                        msgresponse.sendText(event, resMsg)
+                        if resMsg != "":
+                            msgresponse.sendText(event, resMsg)
                     elif "天氣" in mtext:
                         msg = mtext.replace('天氣', '')
                         cityArea = cwbservices.getCityArea(msg)

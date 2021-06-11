@@ -5,7 +5,7 @@ try:
 except ImportError:
     import xml.etree.ElementTree as et
 
-url = 'http://invoice.etax.nat.gov.tw/invoice.xml'
+url = 'https://invoice.etax.nat.gov.tw/invoice.xml'
 
 
 def getInvoice(msg):
