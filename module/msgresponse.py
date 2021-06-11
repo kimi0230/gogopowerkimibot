@@ -20,7 +20,7 @@ def sendText(event, msg):  # 傳送文字
         line_bot_api.reply_message(event.reply_token, message)
     except:
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='發生錯誤！'))
+            event.reply_token, TextSendMessage(text='請支援收銀!'))
 
 
 def sendImage(event, key):  # 傳送圖片 https://i.imgur.com/IhQm1MI
@@ -32,7 +32,7 @@ def sendImage(event, key):  # 傳送圖片 https://i.imgur.com/IhQm1MI
         line_bot_api.reply_message(event.reply_token, message)
     except:
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='發生錯誤！'))
+            event.reply_token, TextSendMessage(text='請支援收銀!'))
 
 
 def sendStick(event):  # 傳送貼圖
@@ -44,7 +44,7 @@ def sendStick(event):  # 傳送貼圖
         line_bot_api.reply_message(event.reply_token, message)
     except:
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='發生錯誤！'))
+            event.reply_token, TextSendMessage(text='請支援收銀!'))
 
 
 def sendMulti(event):  # 多項傳送
@@ -65,7 +65,7 @@ def sendMulti(event):  # 多項傳送
         line_bot_api.reply_message(event.reply_token, message)
     except:
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='發生錯誤！'))
+            event.reply_token, TextSendMessage(text='請支援收銀!'))
 
 
 def sendPosition(event):  # 傳送位置
@@ -79,7 +79,7 @@ def sendPosition(event):  # 傳送位置
         line_bot_api.reply_message(event.reply_token, message)
     except:
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='發生錯誤！'))
+            event.reply_token, TextSendMessage(text='請支援收銀!'))
 
 
 def sendQuickreply(event):  # 快速選單
@@ -106,7 +106,7 @@ def sendQuickreply(event):  # 快速選單
         line_bot_api.reply_message(event.reply_token, message)
     except:
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='發生錯誤！'))
+            event.reply_token, TextSendMessage(text='請支援收銀!'))
 
 
 def sendVoice(event):  # 傳送聲音
@@ -119,7 +119,7 @@ def sendVoice(event):  # 傳送聲音
         line_bot_api.reply_message(event.reply_token, message)
     except:
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='發生錯誤！'))
+            event.reply_token, TextSendMessage(text='請支援收銀!'))
 
 
 def sendVedio(event):  # 傳送影像
@@ -131,4 +131,4 @@ def sendVedio(event):  # 傳送影像
         line_bot_api.reply_message(event.reply_token, message)
     except:
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='發生錯誤！'))
+            event.reply_token, TextSendMessage(text='請支援收銀!'))

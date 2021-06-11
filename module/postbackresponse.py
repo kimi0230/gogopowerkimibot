@@ -19,7 +19,7 @@ def sendBack_buy(event, backdata):  # 處理Postback
         line_bot_api.reply_message(event.reply_token, message)
     except:
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='發生錯誤！'))
+            event.reply_token, TextSendMessage(text='請支援收銀!'))
 
 
 def sendBack_sell(event, backdata):  # 處理Postback
@@ -30,7 +30,7 @@ def sendBack_sell(event, backdata):  # 處理Postback
         line_bot_api.reply_message(event.reply_token, message)
     except:
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='發生錯誤！'))
+            event.reply_token, TextSendMessage(text='請支援收銀!'))
 
 
 def sendDate_sell(event, backdata):  # Postback,顯示日期時間
@@ -50,4 +50,4 @@ def sendDate_sell(event, backdata):  # Postback,顯示日期時間
         line_bot_api.reply_message(event.reply_token, message)
     except:
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='發生錯誤！'))
+            event.reply_token, TextSendMessage(text='請支援收銀!'))

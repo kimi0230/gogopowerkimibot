@@ -34,7 +34,7 @@ def sendButton(event):  # 按鈕樣版
         line_bot_api.reply_message(event.reply_token, message)
     except:
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='發生錯誤！'))
+            event.reply_token, TextSendMessage(text='請支援收銀!'))
 
 
 def sendConfirm(event):  # 確認樣板
@@ -58,7 +58,7 @@ def sendConfirm(event):  # 確認樣板
         line_bot_api.reply_message(event.reply_token, message)
     except:
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='發生錯誤！'))
+            event.reply_token, TextSendMessage(text='請支援收銀!'))
 
 
 def sendCarousel(event):  # 轉盤樣板
@@ -111,7 +111,7 @@ def sendCarousel(event):  # 轉盤樣板
         line_bot_api.reply_message(event.reply_token, message)
     except:
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='發生錯誤！'))
+            event.reply_token, TextSendMessage(text='請支援收銀!'))
 
 
 def sendImgCarousel(event):  # 圖片轉盤
@@ -140,7 +140,7 @@ def sendImgCarousel(event):  # 圖片轉盤
         line_bot_api.reply_message(event.reply_token, message)
     except:
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='發生錯誤！'))
+            event.reply_token, TextSendMessage(text='請支援收銀!'))
 
 
 def sendPizza(event):
@@ -151,7 +151,7 @@ def sendPizza(event):
         line_bot_api.reply_message(event.reply_token, message)
     except:
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='發生錯誤！'))
+            event.reply_token, TextSendMessage(text='請支援收銀!'))
 
 
 def sendYes(event):
@@ -162,7 +162,7 @@ def sendYes(event):
         line_bot_api.reply_message(event.reply_token, message)
     except:
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='發生錯誤！'))
+            event.reply_token, TextSendMessage(text='請支援收銀!'))
 
 
 def sendImgmap(event):  # 圖片地圖
@@ -198,7 +198,7 @@ def sendImgmap(event):  # 圖片地圖
         line_bot_api.reply_message(event.reply_token, message)
     except:
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='發生錯誤！'))
+            event.reply_token, TextSendMessage(text='請支援收銀!'))
 
 
 def sendDatetime(event):  # 日期時間
@@ -240,4 +240,4 @@ def sendDatetime(event):  # 日期時間
         line_bot_api.reply_message(event.reply_token, message)
     except:
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='發生錯誤！'))
+            event.reply_token, TextSendMessage(text='請支援收銀!'))

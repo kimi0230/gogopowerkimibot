@@ -33,7 +33,7 @@ def callback(request):
                     mtext = event.message.text
                     if mtext == '卡比請客':
                         msgresponse.sendText(event, "謝謝卡比 讚嘆卡比 卡比讚讚讚")
-                    elif "幹 bug" in mtext:
+                    elif "bug" in mtext:
                         msgresponse.sendText(event, "請支援收銀~")
                     elif "吱吱" in mtext:
                         msgresponse.sendImage(event, "zhizhi")

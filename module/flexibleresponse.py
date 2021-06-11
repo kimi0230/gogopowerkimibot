@@ -100,7 +100,7 @@ def sendFlex(event):  # 彈性配置
         line_bot_api.reply_message(event.reply_token, message)
     except:
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='發生錯誤！'))
+            event.reply_token, TextSendMessage(text='請支援收銀!'))
 
 
 def manageForm(event, mtext):
@@ -115,4 +115,4 @@ def manageForm(event, mtext):
         line_bot_api.reply_message(event.reply_token, message)
     except:
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='發生錯誤！'))
+            event.reply_token, TextSendMessage(text='請支援收銀!'))
