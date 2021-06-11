@@ -39,7 +39,7 @@ def callback(request):
                         msgresponse.sendImage(event, "zhizhi")
                     elif mtext == "笑鼠人":
                         msgresponse.sendImage(event, "mouse")
-                    elif "發票" == mtext:
+                    elif "發票" in mtext:
                         resMsg = invoiceservice(mtext)
                         msgresponse.sendText(event, resMsg)
                     elif "天氣" in mtext:
