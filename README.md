@@ -91,3 +91,4 @@ xx天氣
 * https://ithelp.ithome.com.tw/articles/10209644
 * [中央氣象局opendata](https://opendata.cwb.gov.tw/index)
 * [中央氣象局opendata 資料代碼](https://opendata.cwb.gov.tw/opendatadoc/MFC/ForecastElement.pdf)
+* [統一發票](https://invoice.etax.nat.gov.tw/invoice.xml)
