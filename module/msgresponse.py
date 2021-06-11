@@ -38,8 +38,8 @@ def sendImage(event, key):  # 傳送圖片 https://i.imgur.com/IhQm1MI
 def sendStick(event, stickObj):  # 傳送貼圖
     try:
         message = StickerSendMessage(  # 貼圖兩個id需查表
-            package_id=stickObj.pid,
-            sticker_id='stickObj.sid'
+            package_id=stickObj["pid"],
+            sticker_id=stickObj["sid"]
         )
         line_bot_api.reply_message(event.reply_token, message)
     except:
