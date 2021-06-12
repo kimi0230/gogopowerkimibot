@@ -41,11 +41,11 @@ def callback(request):
                         }
                         msgresponse.sendStick(event, stickObj)
                     elif mtext == "笑鼠人":
-                        msgresponse.sendImage(event, "zhizhi")
+                        msgresponse.sendImage(event, "mouse")
                     elif re.match(r"[bug]+", mtext) != None:
                         msgresponse.sendText(event, "請支援收銀~")
                     elif re.match(r"[吱吱]+", mtext) != None:
-                        msgresponse.sendImage(event, "mouse")
+                        msgresponse.sendImage(event, "zhizhi")
                     elif re.match(r"[發票]+", mtext) != None:
                         resMsg = invoiceservice.getInvoice(mtext)
                         if resMsg != "":
