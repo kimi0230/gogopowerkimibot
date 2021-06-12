@@ -10,6 +10,7 @@ from linebot.models import MessageEvent, TextMessage, PostbackEvent
 from module import msgresponse
 from services import cwbservices, invoiceservice
 from urllib.parse import parse_qsl
+import re
 
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
@@ -39,17 +40,17 @@ def callback(request):
                             "sid": 52002759
                         }
                         msgresponse.sendStick(event, stickObj)
-                    elif "bug" in mtext:
-                        msgresponse.sendText(event, "請支援收銀~")
-                    elif "吱吱" in mtext:
-                        msgresponse.sendImage(event, "zhizhi")
                     elif mtext == "笑鼠人":
+                    elif re.match(r"[bug]") in mtext:
+                        msgresponse.sendText(event, "請支援收銀~")
+                    elif re.match(r"[吱吱]") in mtext:
+                        msgresponse.sendImage(event, "zhizhi")
                         msgresponse.sendImage(event, "mouse")
-                    elif "發票" in mtext:
+                    elif re.match(r"[發票]") in mtext:
                         resMsg = invoiceservice.getInvoice(mtext)
                         if resMsg != "":
                             msgresponse.sendText(event, resMsg)
-                    elif "天氣" in mtext:
+                    elif re.match(r"[天氣]") in mtext:
                         msg = mtext.replace('天氣', '')
                         cityArea = cwbservices.getCityArea(msg)
                         resMsg = ""
