@@ -42,15 +42,15 @@ def callback(request):
                         msgresponse.sendStick(event, stickObj)
                     elif mtext == "笑鼠人":
                         msgresponse.sendImage(event, "zhizhi")
-                    elif re.match(r"[bug]+") in mtext:
+                    elif re.match(r"[bug]+") != None:
                         msgresponse.sendText(event, "請支援收銀~")
-                    elif re.match(r"[吱吱]+") in mtext:
+                    elif re.match(r"[吱吱]+") != None:
                         msgresponse.sendImage(event, "mouse")
-                    elif re.match(r"[發票]+") in mtext:
+                    elif re.match(r"[發票]+") != None:
                         resMsg = invoiceservice.getInvoice(mtext)
                         if resMsg != "":
                             msgresponse.sendText(event, resMsg)
-                    elif re.match(r"[天氣]+") in mtext:
+                    elif re.match(r"[天氣]+") != None:
                         msg = mtext.replace('天氣', '')
                         cityArea = cwbservices.getCityArea(msg)
                         resMsg = ""
