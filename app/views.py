@@ -32,6 +32,7 @@ def callback(request):
             if isinstance(event, MessageEvent):
                 if isinstance(event.message, TextMessage):
                     mtext = event.message.text
+                    print(mtext)
                     if mtext == '卡比請客':
                         msgresponse.sendText(event, "謝謝卡比 讚嘆卡比 卡比讚讚讚")
                     elif mtext == '蔡章章的戶頭餘額':
@@ -42,15 +43,16 @@ def callback(request):
                         msgresponse.sendStick(event, stickObj)
                     elif mtext == "笑鼠人":
                         msgresponse.sendImage(event, "mouse")
-                    elif re.match(r"[bug]+", mtext) != None:
+                    elif re.match(r".*bug.*", mtext) != None:
                         msgresponse.sendText(event, "請支援收銀~")
-                    elif re.match(r"[吱吱]+", mtext) != None:
+                    elif re.match(r".*吱吱.*", mtext) != None:
+                        print("kkk")
                         msgresponse.sendImage(event, "zhizhi")
-                    elif re.match(r"[發票]+", mtext) != None:
+                    elif re.match(r".*發票.*", mtext) != None:
                         resMsg = invoiceservice.getInvoice(mtext)
                         if resMsg != "":
                             msgresponse.sendText(event, resMsg)
-                    elif re.match(r"[天氣]+", mtext) != None:
+                    elif re.match(r".*天氣.*", mtext) != None:
                         msg = mtext.replace('天氣', '')
                         cityArea = cwbservices.getCityArea(msg)
                         resMsg = ""
