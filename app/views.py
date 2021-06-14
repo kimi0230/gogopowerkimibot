@@ -34,7 +34,7 @@ def callback(request):
                     mtext = event.message.text
                     if mtext == '卡比請客':
                         msgresponse.sendText(event, "謝謝卡比 讚嘆卡比 卡比讚讚讚")
-                    elif mtext == '蔡章章的戶頭餘額':
+                    elif mtext == '蔡章章戶頭':
                         stickObj = {
                             "pid": 11537,
                             "sid": 52002759

@@ -81,10 +81,14 @@ heroku logs --tail
 
 ## Commands
 ```
-xx天氣
 卡比請客
 笑鼠人
 吱吱
+蔡章章戶頭
+
+發票 {數字代表前n期}
+xx天氣
+疫情
 ```
 ## Reference
 * https://github.com/henriquebastos/python-decouple
