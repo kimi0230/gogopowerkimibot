@@ -8,7 +8,7 @@ from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import MessageEvent, TextMessage, PostbackEvent
 from module import msgresponse
-from services import cwbservices, invoiceservice
+from services import cwbservices, invoiceservice, covid19service
 from urllib.parse import parse_qsl
 import re
 
@@ -32,7 +32,6 @@ def callback(request):
             if isinstance(event, MessageEvent):
                 if isinstance(event.message, TextMessage):
                     mtext = event.message.text
-                    print(mtext)
                     if mtext == '卡比請客':
                         msgresponse.sendText(event, "謝謝卡比 讚嘆卡比 卡比讚讚讚")
                     elif mtext == '蔡章章的戶頭餘額':
@@ -43,6 +42,12 @@ def callback(request):
                         msgresponse.sendStick(event, stickObj)
                     elif mtext == "笑鼠人":
                         msgresponse.sendImage(event, "mouse")
+                    elif mtext == "疫情":
+                        res = covid19service.getCovid19()
+                        resMsg = "%s\n 新增確診:\t %s\n 新增死亡:\t %s\n 累計確診:\t %s\n 累計死亡:\t %s\n 死亡率:\t %s\n 疫苗接種人次:\t %s\n" % (
+                            res["time"], res["recovered"], res["newDeaths"], res["total"], res["totalDeaths"], res["rateDeaths"], res["vaccine"])
+                        if resMsg != "":
+                            msgresponse.sendText(event, resMsg)
                     elif re.match(r".*bug.*", mtext) != None:
                         msgresponse.sendText(event, "請支援收銀~")
                     elif re.match(r".*吱吱.*", mtext) != None:

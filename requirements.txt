@@ -16,3 +16,5 @@ sqlparse==0.4.1
 static3==0.7.0
 urllib3==1.26.5
 googletrans==4.0.0-rc1
+beautifulsoup4==4.9.3
+lxml==4.6.3
