@@ -44,8 +44,8 @@ def callback(request):
                         msgresponse.sendImage(event, "mouse")
                     elif mtext == "疫情":
                         res = covid19service.getCovid19()
-                        resMsg = "%s\n 新增確診:\t %s\n 新增死亡:\t %s\n 累計確診:\t %s\n 累計死亡:\t %s\n 死亡率:\t %s\n 疫苗接種人次:\t %s\n" % (
-                            res["time"], res["recovered"], res["newDeaths"], res["total"], res["totalDeaths"], res["rateDeaths"], res["vaccine"])
+                        resMsg = "%s\n 新增確診:\t %s\n 新增死亡:\t %s\n 累計確診:\t %s\n 累計死亡:\t %s\n 死亡率:\t %s\n 疫苗接種人次:\t %s\n %s" % (
+                            res["time"], res["recovered"], res["newDeaths"], res["total"], res["totalDeaths"], res["rateDeaths"], res["vaccine"], res["url"])
                         if resMsg != "":
                             msgresponse.sendText(event, resMsg)
                     elif re.match(r".*bug.*", mtext) != None:

@@ -53,6 +53,7 @@ def getCovid19():
             ".country_deaths_change")) == 0 else soup.select(".country_deaths")[1].text
 
         result = {
+            "url": url,
             "time": time,
             "total": totalConfirmed,
             "recovered": recovered,
