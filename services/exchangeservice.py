@@ -1,0 +1,105 @@
+
+from bs4 import BeautifulSoup
+
+# fix: InsecureRequestWarning: Unverified HTTPS request is being made to host
+import requests.packages.urllib3
+
+# 測試table
+# import prettytable as pt
+
+url = "https://rate.bot.com.tw/xrt?Lang=zh-TW"
+
+
+herders = {
+    'User-Agent': 'Mozilla/5.0 (Macintosh Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36'
+}
+
+defaultCurrency = ["美金 (USD)", "日圓 (JPY)", "英鎊 (GBP)", "人民幣 (CNY)", "歐元 (EUR)"]
+allCurrency = [
+    "美金 (USD)",
+    "港幣 (HKD)",
+    "英鎊 (GBP)",
+    "澳幣 (AUD)",
+    "加拿大幣 (CAD)",
+    "新加坡幣 (SGD)",
+    "瑞士法郎 (CHF)",
+    "日圓 (JPY)",
+    "南非幣 (ZAR)",
+    "瑞典幣 (SEK)",
+    "紐元 (NZD)",
+    "泰幣 (THB)",
+    "菲國比索 (PHP)",
+    "印尼幣 (IDR)",
+    "歐元 (EUR)",
+    "韓元 (KRW)",
+    "越南盾 (VND)",
+    "馬來幣 (MYR)",
+    "人民幣 (CNY)",
+]
+
+
+def getBoTExchange(msg=""):
+    try:
+        if msg != "":
+            msg = msg.upper()
+            for a in allCurrency:
+                if msg in a:
+                    msg = a
+                    found = True
+                    break
+            if not found:
+                return ""
+
+        # fix: InsecureRequestWarning: Unverified HTTPS request is being made to host
+        requests.packages.urllib3.disable_warnings()
+        res = requests.get(url, headers=herders, verify=False)
+        res.encoding = 'UTF-8'
+        soup = BeautifulSoup(res.text, "lxml")
+        # print(soup)
+        time = soup.find(
+            "span", class_="time").text.strip()
+        # print(time)
+        table = [s for s in soup.select("table.table tbody tr")]
+        # print(table[0].select("td"))
+        queryResult = {}
+        for t in table:
+            currency = t.select("td div.visible-phone")[0].text.strip()
+            cashRateBuy = t.select("td")[1].text.strip()
+            cashRateSell = t.select("td")[2].text.strip()
+            spotRateBuy = t.select("td")[3].text.strip()
+            spotRateSell = t.select("td")[4].text.strip()
+            queryResult[currency] = [cashRateBuy,
+                                     cashRateSell, spotRateBuy, spotRateSell]
+        # print(queryResult)
+        result = {}
+        if msg == "":
+            # 只抓預設值
+            result = {d: queryResult[d] for d in defaultCurrency}
+        else:
+            result = {msg: queryResult[msg]}
+
+        if len(result) > 0:
+            return result
+
+        return ""
+    except:
+        return ""
+
+
+if __name__ == "__main__":
+    # print(getBoTExchange())
+    # print(getBoTExchange("美金 (USD)"))
+    # print(getBoTExchange("jp"))
+    print(getBoTExchange("日"))
+    # print(getBoTExchange("加拿大"))
+    # mtext = "匯率"
+    # msg = mtext.replace('匯率', '').strip()
+    # res = getBoTExchange(msg)
+    # if res != "":
+    #     print(res)
+    #     tb = pt.PrettyTable()
+    #     tb.field_names = ['幣別', '現金買入', '現金賣出', '即期買入', '即期賣出']
+    #     for r in res:
+    #         tb.add_row([r, res[r][0], res[r][1], res[r][2], res[r][3]])
+
+    #     print(tb)
