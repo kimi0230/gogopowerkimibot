@@ -86,9 +86,10 @@ heroku logs --tail
 吱吱
 蔡章章戶頭
 
-發票 {數字代表前n期}
-xx天氣
+發票 {數字N: 代表前N期}
+天氣 {地區}
 疫情
+匯率 {幣別}
 ```
 ## Reference
 * https://github.com/henriquebastos/python-decouple

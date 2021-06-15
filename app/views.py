@@ -10,6 +10,7 @@ from linebot.models import MessageEvent, TextMessage, PostbackEvent
 from module import msgresponse
 from services import cwbservices, invoiceservice, covid19service, exchangeservice
 from urllib.parse import parse_qsl
+from myconst import cmdlist
 import re
 
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
@@ -34,6 +35,8 @@ def callback(request):
                     mtext = event.message.text
                     if mtext == '卡比請客':
                         msgresponse.sendText(event, "謝謝卡比 讚嘆卡比 卡比讚讚讚")
+                    elif mtext == "ls":
+                        msgresponse.sendText(event, cmdlist.CMD_LIST)
                     elif mtext == '蔡章章戶頭':
                         stickObj = {
                             "pid": 11537,
@@ -56,6 +59,7 @@ def callback(request):
                             for r in res:
                                 resMsg += "|%s | %s | %s |\n" % (
                                     r, res[r][2], res[r][3])
+                            resMsg += "https://rate.bot.com.tw/xrt?Lang=zh-TW"
                             msgresponse.sendText(event, resMsg)
                     elif re.match(r".*bug.*", mtext) != None:
                         msgresponse.sendText(event, "請支援收銀~")
