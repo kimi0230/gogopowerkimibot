@@ -54,12 +54,6 @@ ALLOWED_HOSTS = ['127.0.0.1', '20af8c34126e.ngrok.io']
 ![ngrok](https://github.com/kimi0230/linebot_practise/blob/master/screenshot/ngrok.png)
 ![webhook](https://github.com/kimi0230/linebot_practise/blob/master/screenshot/webhook.png)
 
-
-## Command
-```
-
-```
-
 ## Heroku
 1. runtime.txt
 2. Procfile
