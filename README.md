@@ -1,5 +1,16 @@
 # GoGoPowerKimi
 
+## Commands
+* `發票 {數字N: 代表前N期}`
+* `天氣 {地區}`
+* `疫情`
+* `匯率 {幣別}`
+* `卡比請客`
+* `笑鼠人`
+* `吱吱`
+* `蔡章章戶頭`
+* `ls`  : 顯示所有指令
+
 ## Install package
 ``` shell
 pip3 install -r requirements.txt
@@ -79,18 +90,6 @@ heroku login
 heroku logs --tail
 ```
 
-## Commands
-```
-卡比請客
-笑鼠人
-吱吱
-蔡章章戶頭
-
-發票 {數字N: 代表前N期}
-天氣 {地區}
-疫情
-匯率 {幣別}
-```
 ## Reference
 * https://github.com/henriquebastos/python-decouple
 * https://ithelp.ithome.com.tw/articles/10209644
