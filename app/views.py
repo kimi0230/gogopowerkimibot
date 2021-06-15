@@ -8,7 +8,7 @@ from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import MessageEvent, TextMessage, PostbackEvent
 from module import msgresponse
-from services import cwbservices, invoiceservice, covid19service
+from services import cwbservices, invoiceservice, covid19service, exchangeservice
 from urllib.parse import parse_qsl
 import re
 
@@ -47,6 +47,15 @@ def callback(request):
                         resMsg = "%s\n 新增確診:\t %s\n 新增死亡:\t %s\n 累計確診:\t %s\n 累計死亡:\t %s\n 死亡率:\t %s\n 疫苗接種人次:\t %s\n %s" % (
                             res["time"], res["recovered"], res["newDeaths"], res["total"], res["totalDeaths"], res["rateDeaths"], res["vaccine"], res["url"])
                         if resMsg != "":
+                            msgresponse.sendText(event, resMsg)
+                    elif re.match(r"^匯率", mtext) != None:
+                        msg = mtext.replace('匯率', '').strip()
+                        res = exchangeservice.getBoTExchange(msg)
+                        if res != "":
+                            resMsg = "|幣別\t\t|即期買\t|即期賣\t|\n"
+                            for r in res:
+                                resMsg += "|%s | %s | %s |\n" % (
+                                    r, res[r][2], res[r][3])
                             msgresponse.sendText(event, resMsg)
                     elif re.match(r".*bug.*", mtext) != None:
                         msgresponse.sendText(event, "請支援收銀~")
