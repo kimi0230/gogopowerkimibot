@@ -30,6 +30,12 @@ LINE_CHANNEL_ACCESS_TOKEN = config(
 LINE_CHANNEL_SECRET = config(
     'LINE_CHANNEL_SECRET', default='你的CHANNEL_SECRET')
 
+# LINE Notify token
+ZHIZHI_NOTIFY_TOKEN = config(
+    'ZHIZHI_NOTIFY_TOKEN', default='你的LINI_NOTIFY_TOKEN')
+CARBE_NOTIFY_TOKEN = config(
+    'CARBE_NOTIFY_TOKEN', default='你的LINI_NOTIFY_TOKEN')
+
 # CWB
 CWB_TOKEN = config('CWB_TOKEN', default='')
 
@@ -53,6 +59,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'gogopowerkimibot',
     'myconst',
+    'django_q',
 ]
 
 MIDDLEWARE = [
@@ -143,3 +150,14 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Django Q
+Q_CLUSTER = {
+    'name': 'gogopowerkimibot',
+    'workers': 1,
+    'timeout': 600,
+    'retry': 1200,
+    'queue_limit': 50,
+    'bulk': 10,
+    'orm': 'default'
+}
