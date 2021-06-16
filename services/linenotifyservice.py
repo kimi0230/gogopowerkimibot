@@ -47,7 +47,7 @@ ETF = "https://mis.twse.com.tw/stock/etf_nav.jsp?ex=tse#memo3"
 
 
 def stock5pm():
-    msg = '三大法人買賣超: %s \n\n 八大官股: %s \n\n ETF溢價: %s' % (
+    msg = '\n 三大法人買賣超: %s \n\n 八大官股: %s \n\n ETF溢價: %s' % (
         THREE_TRADE, EGIHTGOV, ETF)
     payload = {'message': msg}
     headers = {
