@@ -77,6 +77,7 @@ pip freeze > requirements.txt
 
 heroku config:set DJANGO_SETTINGS_MODULE=gogopowerkimibot.prod_settings
 heroku config:set DISABLE_COLLECTSTATIC=1
+heroku config:add TZ="Asia/Taipei"
 heroku git:remote -a gogopowerkimibot 
 
 # bash
