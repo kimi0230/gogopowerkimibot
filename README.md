@@ -138,7 +138,6 @@ Q_CLUSTER = {
 
 ## memo
 ```
-
 python3 manage.py showmigrations
 python3 manage.py migrate django_q zero
 ```
