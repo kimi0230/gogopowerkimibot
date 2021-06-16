@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+from multiprocessing import set_start_method
 import os
 from pathlib import Path
 from decouple import config
@@ -161,3 +162,6 @@ Q_CLUSTER = {
     'bulk': 10,
     'orm': 'default'
 }
+# patch for Python 3.8
+# https://github.com/Koed00/django-q/issues/389
+set_start_method('fork')
