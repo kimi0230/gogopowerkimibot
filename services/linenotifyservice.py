@@ -16,7 +16,7 @@ def test():
     msg = '起床尿尿摟'
     payload = {'message': msg}
     headers = {
-        "Authorization": "Bearer " + token,
+        "Authorization": "Bearer " + "msgG1hovWso1zkinUPL0335RVNV1h5TTzET9F1W92Q6",
         "Content-Type": "application/x-www-form-urlencoded"
     }
     notify = requests.post(
