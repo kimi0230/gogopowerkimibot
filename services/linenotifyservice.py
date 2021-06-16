@@ -12,6 +12,7 @@ carbeToken = config('CARBE_NOTIFY_TOKEN')
 
 
 def test():
+    print("kimimimimimimimimii")
     msg = '起床尿尿摟'
     payload = {'message': msg}
     headers = {

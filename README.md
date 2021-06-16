@@ -79,6 +79,9 @@ heroku config:set DJANGO_SETTINGS_MODULE=gogopowerkimibot.prod_settings
 heroku config:set DISABLE_COLLECTSTATIC=1
 heroku git:remote -a gogopowerkimibot 
 
+# bash
+heroku run bash 
+
 # log
 heroku login
 heroku logs --tail
