@@ -56,7 +56,7 @@ ALLOWED_HOSTS = ['127.0.0.1', '20af8c34126e.ngrok.io']
 
 ## Heroku
 1. runtime.txt
-2. Procfile
+2. Procfile : 告訴 Heroku 伺服器種類及主程式名稱
 3. gogopowerkimibot/prod_settings.py
 
 ```shell
@@ -84,9 +84,49 @@ heroku login
 heroku logs --tail
 ```
 
+## Apply for notify token
+https://notify-bot.line.me/my/
+
+## Schedule tool: Django Q 
+1. `pip3 install django-q`
+2. settings.py > INSTALLED_APPS > add `django_q`
+3. `python3 manage.py migrate`
+4. settings.py > INSTALLED_APPS > add `Q_CLUSTER` :https://django-q.readthedocs.io/en/latest/configure.html#orm-configuration
+``` python
+# settings.py example
+Q_CLUSTER = {
+    'name': 'myproject',
+    'workers': 8,
+    'recycle': 500,
+    'timeout': 60,
+    'compress': True,
+    'save_limit': 250,
+    'queue_limit': 500,
+    'cpu_affinity': 1,
+    'label': 'Django Q',
+    'redis': {
+        'host': '127.0.0.1',
+        'port': 6379,
+        'db': 0, }
+}
+
+Q_CLUSTER = {
+    'name': 'gogopowerkimibot',    
+    'workers': 1,       
+    'timeout': 600,    
+    'retry': 1200,    
+    'queue_limit': 50,    
+    'bulk': 10,    
+    'orm': 'default'
+}
+```
+
+5. `python3 manage.py qcluster`
+
 ## Reference
 * https://github.com/henriquebastos/python-decouple
 * https://ithelp.ithome.com.tw/articles/10209644
 * [中央氣象局opendata](https://opendata.cwb.gov.tw/index)
 * [中央氣象局opendata 資料代碼](https://opendata.cwb.gov.tw/opendatadoc/MFC/ForecastElement.pdf)
 * [統一發票](https://invoice.etax.nat.gov.tw/invoice.xml)
+* https://django-q.readthedocs.io/en/latest/cluster.html
