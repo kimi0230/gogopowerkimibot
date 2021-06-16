@@ -153,7 +153,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Django Q
 Q_CLUSTER = {
-    'name': 'gogopowerkimibot',
+    'name': 'DjangORM',
     'workers': 1,
     'timeout': 600,
     'retry': 1200,
