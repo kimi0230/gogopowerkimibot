@@ -98,9 +98,17 @@ WSGI_APPLICATION = 'gogopowerkimibot.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'sqlite3': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    },
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('POSTGRE_DATABASE', ""),
+        'USER': config('POSTGRE_USER', ""),
+        'PASSWORD': config('POSTGRE_PASSWORD', ""),
+        'HOST': config('POSTGRE_HOST', ""),
+        'PORT': config('POSTGRE_PORT', 5432),
     }
 }
 
