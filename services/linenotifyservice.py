@@ -135,7 +135,7 @@ def punchOut():
     print(msg)
     payload = {'message': msg}
     headers = {
-        "Authorization": "Bearer " + token,
+        "Authorization": "Bearer " + etenToken,
         "Content-Type": "application/x-www-form-urlencoded"
     }
     notify = requests.post(
