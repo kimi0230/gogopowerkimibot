@@ -94,18 +94,20 @@ def punchMsg(times, msgtext, rmin=0, rmax=10):
         nowDate, times.strftime("%H:%M"))
     # urlDanny = tinyURL.makeTiny(urlDanny)
 
-    urls = [urlKimi, urlCooper, urlDanny]
-    msg = '\n %s \n'
+    urls = {"Kimi": urlKimi, "Cooper": urlCooper, "Danny": urlDanny}
+
+    msgArr = []
     with ThreadPoolExecutor(max_workers=3) as executor:
         outStr = []
-        for n in urls:
-            res = executor.submit(punchMsgJob, n)
+        for k, v in urls.items():
+            res = executor.submit(punchMsgJob, k, v)
             outStr.append(res)
+        for future in as_completed(outStr):
+            msgArr.append(future.result())
 
-    msg += ''.join(outStr)+"日記: "+config('ETEN_DIARY', "")
+    msg = '\n %s \n%s日記:%s ' % (
+        msgtext, ''.join(msgArr), config('ETEN_DIARY', ""))
 
-    # msg = '\n %s \n Kimi: %s \n\n Cooper: %s \n\n Danny: %s \n\n 日記: %s ' % (
-    #     msgtext, urlKimi, urlCooper, urlDanny, config('ETEN_DIARY', ""))
     return msg
 
 
@@ -130,7 +132,7 @@ def punchOut():
     time = datetime.datetime.now()
     defaultTime = time.replace(hour=17, minute=40)
     msg = punchMsg(defaultTime, "下班尿尿瞜~", 6, 10)
-
+    print(msg)
     payload = {'message': msg}
     headers = {
         "Authorization": "Bearer " + token,
