@@ -1,3 +1,4 @@
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import requests
 from django.conf import settings
 from decouple import config
@@ -67,6 +68,10 @@ def stock5pm():
         print('發送 LINE Notify 失敗！')
 
 
+def punchMsgJob(name, url):
+    return name+": "+tinyURL.makeTiny(url) + "\n\n"
+
+
 def punchMsg(times, msgtext, rmin=0, rmax=10):
     nowDate = datetime.date.today().strftime("%Y-%m-%d")
     randNum = random.randrange(rmin, rmax)
@@ -89,8 +94,18 @@ def punchMsg(times, msgtext, rmin=0, rmax=10):
         nowDate, times.strftime("%H:%M"))
     urlDanny = tinyURL.makeTiny(urlDanny)
 
-    msg = '\n %s \n Kimi: %s \n\n Cooper: %s \n\n Danny: %s \n\n 日記: %s ' % (
-        msgtext, urlKimi, urlCooper, urlDanny, config('ETEN_DIARY', ""))
+    urls = [urlKimi, urlCooper, urlDanny]
+    msg = '\n %s \n'
+    with ThreadPoolExecutor(max_workers=3) as executor:
+        outStr = []
+        for n in urls:
+            res = executor.submit(punchMsgJob, n)
+            outStr.append(res)
+
+    msg += ''.join(outStr)+"日記: "+config('ETEN_DIARY', "")
+
+    # msg = '\n %s \n Kimi: %s \n\n Cooper: %s \n\n Danny: %s \n\n 日記: %s ' % (
+    #     msgtext, urlKimi, urlCooper, urlDanny, config('ETEN_DIARY', ""))
     return msg
 
 
@@ -118,7 +133,7 @@ def punchOut():
 
     payload = {'message': msg}
     headers = {
-        "Authorization": "Bearer " + etenToken,
+        "Authorization": "Bearer " + token,
         "Content-Type": "application/x-www-form-urlencoded"
     }
     notify = requests.post(
