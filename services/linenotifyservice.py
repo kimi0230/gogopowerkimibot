@@ -89,8 +89,8 @@ def punchMsg(times, msgtext, rmin=0, rmax=10):
         nowDate, times.strftime("%H:%M"))
     urlDanny = tinyURL.makeTiny(urlDanny)
 
-    msg = '\n %s \n Kimi: %s \n\n Cooper: %s \n\n Danny: %s' % (
-        msgtext, urlKimi, urlCooper, urlDanny)
+    msg = '\n %s \n Kimi: %s \n\n Cooper: %s \n\n Danny: %s \n\n 日記: %s ' % (
+        msgtext, urlKimi, urlCooper, urlDanny, config('ETEN_DIARY', ""))
     return msg
 
 
