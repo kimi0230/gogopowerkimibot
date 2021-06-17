@@ -91,6 +91,7 @@ def punchMsg(times, msgtext, rmin=0, rmax=10):
 
 
 def punchIn():
+    time = datetime.datetime.now()
     defaultTime = time.replace(hour=8, minute=40)
     msg = punchMsg(defaultTime, "上班睡覺瞜~", 0, 5)
     payload = {'message': msg}
