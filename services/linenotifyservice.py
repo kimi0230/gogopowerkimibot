@@ -2,6 +2,9 @@ import requests
 from django.conf import settings
 from decouple import config
 
+import datetime
+
+import random
 try:
     token = settings.ZHIZHI_NOTIFY_TOKEN
 except:
@@ -9,6 +12,8 @@ except:
     token = config('ZHIZHI_NOTIFY_TOKEN')
 
 carbeToken = config('CARBE_NOTIFY_TOKEN')
+
+etenToken = config('ETEN_NOTIFY_TOKEN')
 
 
 def test():
@@ -62,5 +67,64 @@ def stock5pm():
         print('發送 LINE Notify 失敗！')
 
 
+def punchMsg(times, msgtext, rmin=0, rmax=10):
+    nowDate = datetime.date.today().strftime("%Y-%m-%d")
+    randNum = random.randrange(rmin, rmax)
+    Minsadded = datetime.timedelta(minutes=randNum)
+    newTime = times + Minsadded
+
+    urlKimi = "https://docs.google.com/forms/d/e/1FAIpQLSfKZAP0Ph2s3ATh3oYSmkxmMaUI64X0-dRL04SEfiQn4N9YOw/formResponse?entry.1343758667=蔡煜章&entry.1842948447=出勤刷卡&entry.529029656=%sT%s" % (
+        nowDate, newTime.strftime("%H:%M"))
+
+    # 重算時間
+    randNum = random.randrange(11)
+    Minsadded = datetime.timedelta(minutes=randNum)
+    newTime = times + Minsadded
+
+    urlCooper = "https://docs.google.com/forms/d/e/1FAIpQLSfKZAP0Ph2s3ATh3oYSmkxmMaUI64X0-dRL04SEfiQn4N9YOw/formResponse?entry.1343758667=趙榮聖&entry.1842948447=出勤刷卡&entry.529029656=%sT%s" % (
+        nowDate, newTime.strftime("%H:%M"))
+    urlDanny = "https://docs.google.com/forms/d/e/1FAIpQLSfKZAP0Ph2s3ATh3oYSmkxmMaUI64X0-dRL04SEfiQn4N9YOw/formResponse?entry.1343758667=李子川&entry.1842948447=出勤刷卡&entry.529029656=%sT%s" % (
+        nowDate, times.strftime("%H:%M"))
+    msg = '\n %s \n Kimi: %s \n\n Cooper: %s \n\n Danny: %s' % (
+        msgtext, urlKimi, urlCooper, urlDanny)
+    return msg
+
+
+def punchIn():
+    defaultTime = time.replace(hour=8, minute=40)
+    msg = punchMsg(defaultTime, "上班睡覺瞜~", 0, 5)
+    payload = {'message': msg}
+    headers = {
+        "Authorization": "Bearer " + etenToken,
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
+    notify = requests.post(
+        "https://notify-api.line.me/api/notify", headers=headers, params=payload)
+    if notify.status_code == 200:
+        print('發送 LINE Notify 成功！')
+    else:
+        print('發送 LINE Notify 失敗！')
+
+
+def punchOut():
+    time = datetime.datetime.now()
+    defaultTime = time.replace(hour=17, minute=40)
+    msg = punchMsg(defaultTime, "下班尿尿瞜~", 6, 10)
+
+    payload = {'message': msg}
+    headers = {
+        "Authorization": "Bearer " + etenToken,
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
+    notify = requests.post(
+        "https://notify-api.line.me/api/notify", headers=headers, params=payload)
+    if notify.status_code == 200:
+        print('發送 LINE Notify 成功！')
+    else:
+        print('發送 LINE Notify 失敗！')
+
+
 if __name__ == "__main__":
-    stock5pm()
+    # stock5pm()
+    # punchIn()
+    punchOut()
