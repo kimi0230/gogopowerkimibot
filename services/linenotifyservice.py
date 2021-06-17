@@ -1,3 +1,4 @@
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import requests
 from django.conf import settings
 from decouple import config
@@ -67,6 +68,10 @@ def stock5pm():
         print('發送 LINE Notify 失敗！')
 
 
+def punchMsgJob(name, url):
+    return name+": "+tinyURL.makeTiny(url) + "\n\n"
+
+
 def punchMsg(times, msgtext, rmin=0, rmax=10):
     nowDate = datetime.date.today().strftime("%Y-%m-%d")
     randNum = random.randrange(rmin, rmax)
@@ -75,22 +80,32 @@ def punchMsg(times, msgtext, rmin=0, rmax=10):
 
     urlKimi = "https://docs.google.com/forms/d/e/1FAIpQLSfKZAP0Ph2s3ATh3oYSmkxmMaUI64X0-dRL04SEfiQn4N9YOw/formResponse?entry.1343758667=蔡煜章&entry.1842948447=出勤刷卡&entry.529029656=%sT%s" % (
         nowDate, newTime.strftime("%H:%M"))
-    urlKimi = tinyURL.makeTiny(urlKimi)
+    # urlKimi = tinyURL.makeTiny(urlKimi)
+
     # 重算時間
     randNum = random.randrange(11)
     Minsadded = datetime.timedelta(minutes=randNum)
     newTime = times + Minsadded
-
     urlCooper = "https://docs.google.com/forms/d/e/1FAIpQLSfKZAP0Ph2s3ATh3oYSmkxmMaUI64X0-dRL04SEfiQn4N9YOw/formResponse?entry.1343758667=趙榮聖&entry.1842948447=出勤刷卡&entry.529029656=%sT%s" % (
         nowDate, newTime.strftime("%H:%M"))
-    urlCooper = tinyURL.makeTiny(urlCooper)
+    # urlCooper = tinyURL.makeTiny(urlCooper)
 
     urlDanny = "https://docs.google.com/forms/d/e/1FAIpQLSfKZAP0Ph2s3ATh3oYSmkxmMaUI64X0-dRL04SEfiQn4N9YOw/formResponse?entry.1343758667=李子川&entry.1842948447=出勤刷卡&entry.529029656=%sT%s" % (
         nowDate, times.strftime("%H:%M"))
-    urlDanny = tinyURL.makeTiny(urlDanny)
+    # urlDanny = tinyURL.makeTiny(urlDanny)
 
-    msg = '\n %s \n Kimi: %s \n\n Cooper: %s \n\n Danny: %s \n\n 日記: %s ' % (
-        msgtext, urlKimi, urlCooper, urlDanny, config('ETEN_DIARY', ""))
+    urls = [urlKimi, urlCooper, urlDanny]
+    msg = '\n %s \n'
+    with ThreadPoolExecutor(max_workers=3) as executor:
+        outStr = []
+        for n in urls:
+            res = executor.submit(punchMsgJob, n)
+            outStr.append(res)
+
+    msg += ''.join(outStr)+"日記: "+config('ETEN_DIARY', "")
+
+    # msg = '\n %s \n Kimi: %s \n\n Cooper: %s \n\n Danny: %s \n\n 日記: %s ' % (
+    #     msgtext, urlKimi, urlCooper, urlDanny, config('ETEN_DIARY', ""))
     return msg
 
 
@@ -118,7 +133,7 @@ def punchOut():
 
     payload = {'message': msg}
     headers = {
-        "Authorization": "Bearer " + etenToken,
+        "Authorization": "Bearer " + token,
         "Content-Type": "application/x-www-form-urlencoded"
     }
     notify = requests.post(
