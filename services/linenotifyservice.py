@@ -1,7 +1,7 @@
 import requests
 from django.conf import settings
 from decouple import config
-
+from utility import tinyURL
 import datetime
 
 import random
@@ -75,7 +75,7 @@ def punchMsg(times, msgtext, rmin=0, rmax=10):
 
     urlKimi = "https://docs.google.com/forms/d/e/1FAIpQLSfKZAP0Ph2s3ATh3oYSmkxmMaUI64X0-dRL04SEfiQn4N9YOw/formResponse?entry.1343758667=蔡煜章&entry.1842948447=出勤刷卡&entry.529029656=%sT%s" % (
         nowDate, newTime.strftime("%H:%M"))
-
+    urlKimi = tinyURL.makeTiny(urlKimi)
     # 重算時間
     randNum = random.randrange(11)
     Minsadded = datetime.timedelta(minutes=randNum)
@@ -83,8 +83,12 @@ def punchMsg(times, msgtext, rmin=0, rmax=10):
 
     urlCooper = "https://docs.google.com/forms/d/e/1FAIpQLSfKZAP0Ph2s3ATh3oYSmkxmMaUI64X0-dRL04SEfiQn4N9YOw/formResponse?entry.1343758667=趙榮聖&entry.1842948447=出勤刷卡&entry.529029656=%sT%s" % (
         nowDate, newTime.strftime("%H:%M"))
+    urlCooper = tinyURL.makeTiny(urlCooper)
+
     urlDanny = "https://docs.google.com/forms/d/e/1FAIpQLSfKZAP0Ph2s3ATh3oYSmkxmMaUI64X0-dRL04SEfiQn4N9YOw/formResponse?entry.1343758667=李子川&entry.1842948447=出勤刷卡&entry.529029656=%sT%s" % (
         nowDate, times.strftime("%H:%M"))
+    urlDanny = tinyURL.makeTiny(urlDanny)
+
     msg = '\n %s \n Kimi: %s \n\n Cooper: %s \n\n Danny: %s' % (
         msgtext, urlKimi, urlCooper, urlDanny)
     return msg

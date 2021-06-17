@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'gogopowerkimibot',
     'myconst',
+    'utility',
     'django_q',
 ]
 
