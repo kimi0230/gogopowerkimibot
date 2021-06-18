@@ -16,9 +16,19 @@ def scheduled_job():
         print(key, value)
 
 
-@sched.scheduled_job('interval', minutes=1)
+@sched.scheduled_job('cron', day_of_week='mon-fri', hour=18, minute='15')
 def scheduled_job():
     linenotifyservice.stock5pm()
+
+
+@sched.scheduled_job('cron', day_of_week='mon-fri', hour=8, minute='38')
+def scheduled_job():
+    linenotifyservice.punchIn()
+
+
+@sched.scheduled_job('cron', day_of_week='mon-fri', hour=17, minute='38')
+def scheduled_job():
+    linenotifyservice.punchOut()
 
 
 sched.start()
