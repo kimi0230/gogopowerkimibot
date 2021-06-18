@@ -16,7 +16,7 @@ def scheduled_job():
         print(key, value)
 
 
-@sched.scheduled_job('interval', minute=1)
+@sched.scheduled_job('interval', minutes=1)
 def scheduled_job():
     linenotifyservice.stock5pm()
 
