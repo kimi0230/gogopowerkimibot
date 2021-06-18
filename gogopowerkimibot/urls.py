@@ -19,8 +19,16 @@ from app import views as app
 from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
+import datetime
+from django.http import HttpResponse
+
+
+def Hello(request):
+    return HttpResponse("Hello Kimi : " + datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S"))
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     url('^callback', app.callback),
+    url('$', Hello),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
