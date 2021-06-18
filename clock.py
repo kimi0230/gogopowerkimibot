@@ -9,7 +9,7 @@ sched = BlockingScheduler()
 @sched.scheduled_job('interval', minutes=25)
 def scheduled_job():
     # url = "http://127.0.0.1:8000"
-    url = "https:gogopowerkimibot.herokuapp.com/"
+    url = "https://gogopowerkimibot.herokuapp.com/"
     conn = urllib.request.urlopen(url)
 
     for key, value in conn.getheaders():
