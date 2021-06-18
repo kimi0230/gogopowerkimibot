@@ -1,6 +1,6 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
 import urllib.request
-
+from services import linenotifyservice
 sched = BlockingScheduler()
 
 # @sched.scheduled_job('cron', day_of_week='mon-fri', minute='*/20')
@@ -14,6 +14,11 @@ def scheduled_job():
 
     for key, value in conn.getheaders():
         print(key, value)
+
+
+@sched.scheduled_job('interval', minute=1)
+def scheduled_job():
+    linenotifyservice.stock5pm()
 
 
 sched.start()
