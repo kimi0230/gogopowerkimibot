@@ -30,5 +30,4 @@ def Hello(request):
 urlpatterns = [
     path('admin/', admin.site.urls),
     url('^callback', app.callback),
-    url('$', Hello),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
