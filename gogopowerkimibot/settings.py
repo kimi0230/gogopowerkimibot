@@ -38,6 +38,10 @@ CARBE_NOTIFY_TOKEN = config(
     'CARBE_NOTIFY_TOKEN', default='你的LINI_NOTIFY_TOKEN')
 ETEN_NOTIFY_TOKEN = config(
     'ETEN_NOTIFY_TOKEN', default='你的LINI_NOTIFY_TOKEN')
+CHOCO_NOTIFY_TOKEN = config(
+    'CHOCO_NOTIFY_TOKEN', default='')
+NETFLIXGRUP_NOTIFY_TOKEN = config(
+    'NETFLIXGRUP_NOTIFY_TOKEN', default='')
 
 # CWB
 CWB_TOKEN = config('CWB_TOKEN', default='')

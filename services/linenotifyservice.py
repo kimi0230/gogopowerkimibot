@@ -16,14 +16,24 @@ except:
     # for local test
     token = config('ZHIZHI_NOTIFY_TOKEN')
 
-carbeToken = config('CARBE_NOTIFY_TOKEN')
+try:
+    carbeToken = settings.CARBE_NOTIFY_TOKEN
+except:
+    carbeToken = config('CARBE_NOTIFY_TOKEN')
+
 try:
     etenToken = settings.ETEN_NOTIFY_TOKEN
 except:
     etenToken = config('ETEN_NOTIFY_TOKEN')
 
-chocoToken = config('CHOCO_NOTIFY_TOKEN')
-netflixGrupToken = config('NETFLIXGRUP_NOTIFY_TOKEN')
+try:
+    chocoToken = settings.CHOCO_NOTIFY_TOKEN
+except:
+    chocoToken = config('CHOCO_NOTIFY_TOKEN')
+try:
+    netflixGrupToken = settings.NETFLIXGRUP_NOTIFY_TOKEN
+except:
+    netflixGrupToken = config('NETFLIXGRUP_NOTIFY_TOKEN')
 
 
 bankAccount = config('RICHART_ACCOUNT')
