@@ -20,6 +20,8 @@ try:
 except:
     etenToken = config('ETEN_NOTIFY_TOKEN')
 
+chocoToken = config('CHOCO_NOTIFY_TOKEN')
+
 
 def test():
     msg = '起床尿尿摟'
@@ -69,8 +71,8 @@ def covid19():
             pttRes["Date"], pttRes["Title"], pttRes["Link"])
     payload = {'message': resMsg}
 
-    tokens = [carbeToken, etenToken]
-    with ThreadPoolExecutor(max_workers=2) as executor:
+    tokens = [carbeToken, etenToken, chocoToken]
+    with ThreadPoolExecutor(max_workers=3) as executor:
         outStr = []
         for v in tokens:
             res = executor.submit(sendLineNotify, v, payload)
