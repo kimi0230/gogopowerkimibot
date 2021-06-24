@@ -3,6 +3,7 @@ import re
 from bs4 import BeautifulSoup
 import time
 import datetime
+from services import pttservice
 
 # fix: InsecureRequestWarning: Unverified HTTPS request is being made to host
 import requests.packages.urllib3
@@ -69,45 +70,10 @@ def getCovid19():
         return ""
 
 
-def getPTT(url, keyword=""):
-    try:
-        if keyword != "":
-            url += "search?q="+keyword
-        headers['cookie'] = 'over18=1;'
-        found = False
-        count = 1
-        page = 5
-        # nowDate = datetime.date.today().strftime("%-m/%d")
-        while found == False and count <= page:
-            if keyword != "":
-                tmpurl = "%s&page=%d" % (url, count)
-            else:
-                tmpurl = url
-
-            res = requests.get(tmpurl, headers=headers)
-            # res.encoding = 'UTF-8'
-            soup = BeautifulSoup(res.text, "lxml")
-            for entry in soup.select('.r-ent'):
-                title = entry.select('.title')[0].text.strip()
-                m = re.match(r'^\[爆卦\] 本土\+.*', title)
-                if m != None:
-                    date = entry.select('.date')[0].text
-                    link = "https://www.ptt.cc" + \
-                        entry.select('a')[0].get('href')
-                    found = True
-                    return {"Title": title, "Date": date, "Link": link}
-            if found == False:
-                count += 1
-        return ""
-    except:
-        return ""
-
-
 def getGossipCovid19():
-    start = 39254  # 設定起始網頁 (務必自行調整)
-    number = 5    # 設定要從開始頁面往後爬多少個
-    end = start - number
-
+    # start = 39254  # 設定起始網頁 (務必自行調整)
+    # number = 5    # 設定要從開始頁面往後爬多少個
+    # end = start - number
     # for i in range(start, end, -1):
     #     # 組成 正確 URL
     #     link = "https://www.ptt.cc/bbs/Gossiping/index"+str(i)+".html"
@@ -115,9 +81,9 @@ def getGossipCovid19():
     #     getPTT(link)
     #     # 避免被太快被 PTT 封鎖請求
     #     time.sleep(1)
-
     link = "https://www.ptt.cc/bbs/Gossiping/"
-    return getPTT(link, "[爆卦] 本土+")
+    regex = re.compile(r'^\[爆卦\] 本土\+.*')
+    return pttservice.getPTT(link, regex, "[爆卦] 本土+")
 
 
 if __name__ == "__main__":
