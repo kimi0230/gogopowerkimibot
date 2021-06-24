@@ -1,8 +1,6 @@
 import requests
 import re
 from bs4 import BeautifulSoup
-import time
-import datetime
 from services import pttservice
 
 # fix: InsecureRequestWarning: Unverified HTTPS request is being made to host

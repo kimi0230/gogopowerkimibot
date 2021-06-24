@@ -28,7 +28,7 @@ def getPTT(url, regex, keyword=""):
             soup = BeautifulSoup(res.text, "lxml")
             for entry in soup.select('.r-ent'):
                 title = entry.select('.title')[0].text.strip()
-                m = re.match(r'^\[爆卦\] 本土\+.*', title)
+                m = regex.match(title)
                 if m != None:
                     date = entry.select('.date')[0].text
                     link = "https://www.ptt.cc" + \
@@ -44,6 +44,12 @@ def getPTT(url, regex, keyword=""):
 
 
 if __name__ == "__main__":
-    url = "https://www.ptt.cc/bbs/Gossiping/"
-    regex = re.compile(r'^\[爆卦\] 本土\+.*')
-    print(getPTT(url, regex, "[爆卦] 本土+"))
+    # 八卦版疫情
+    # url = "https://www.ptt.cc/bbs/Gossiping/"
+    # regex = re.compile(r'^\[爆卦\] 本土\+.*')
+    # print(getPTT(url, regex, "[爆卦] 本土+"))
+
+    # 爬netflix片單
+    url = "https://www.ptt.cc/bbs/EAseries/"
+    regex = re.compile(r'.*Netflix台灣.*片單.*')
+    print(getPTT(url, regex, "Netflix台灣"))
