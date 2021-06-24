@@ -4,6 +4,7 @@ from django.conf import settings
 from decouple import config
 from utility import tinyURL
 import datetime
+from services import covid19service
 
 import random
 try:
@@ -37,6 +38,25 @@ def carbe():
     payload = {'message': msg}
     headers = {
         "Authorization": "Bearer " + carbeToken,
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
+    notify = requests.post(
+        "https://notify-api.line.me/api/notify", headers=headers, params=payload)
+    if notify.status_code == 200:
+        print('發送 LINE Notify 成功！')
+    else:
+        print('發送 LINE Notify 失敗！')
+
+
+def covid19():
+    pttRes = covid19service.getGossipCovid19()
+    resMsg = ""
+    if pttRes != "":
+        resMsg = "%s\n%s\n%s\n" % (
+            pttRes["Date"], pttRes["Title"], pttRes["Link"])
+    payload = {'message': resMsg}
+    headers = {
+        "Authorization": "Bearer " + token,
         "Content-Type": "application/x-www-form-urlencoded"
     }
     notify = requests.post(
