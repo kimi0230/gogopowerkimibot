@@ -92,7 +92,8 @@ def getPTT(url, keyword=""):
                 m = re.match(r'^\[爆卦\] 本土\+.*', title)
                 if m != None:
                     date = entry.select('.date')[0].text
-                    link = entry.select('a')[0].get('href')
+                    link = "https://www.ptt.cc" + \
+                        entry.select('a')[0].get('href')
                     found = True
                     return {"Title": title, "Date": date, "Link": link}
             if found == False:
