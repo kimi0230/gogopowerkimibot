@@ -68,8 +68,7 @@ def callback(request):
                             msgresponse.sendText(event, resMsg)
                     elif re.match(r".*bug.*", mtext) != None:
                         msgresponse.sendText(event, "請支援收銀~")
-                    elif re.match(r".*吱吱.*", mtext) != None:
-                        print("kkk")
+                    elif mtext == "吱吱":
                         msgresponse.sendImage(event, "zhizhi")
                     elif re.match(r".*發票.*", mtext) != None:
                         resMsg = invoiceservice.getInvoice(mtext)
