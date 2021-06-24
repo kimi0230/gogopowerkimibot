@@ -231,8 +231,8 @@ def netflixMangFee():
 if __name__ == "__main__":
     # stock5pm()
     # punchIn()
-    # punchOut()
+    punchOut()
     # test()
     # covid19()
     # netflixMonList()
-    netflixMangFee()
+    # netflixMangFee()
