@@ -3,6 +3,7 @@ import requests
 from django.conf import settings
 from decouple import config
 from utility import tinyURL
+
 import datetime
 from services import covid19service
 
@@ -14,8 +15,10 @@ except:
     token = config('ZHIZHI_NOTIFY_TOKEN')
 
 carbeToken = config('CARBE_NOTIFY_TOKEN')
-
-etenToken = config('ETEN_NOTIFY_TOKEN')
+try:
+    etenToken = settings.ETEN_NOTIFY_TOKEN
+except:
+    etenToken = config('ETEN_NOTIFY_TOKEN')
 
 
 def test():
@@ -48,6 +51,16 @@ def carbe():
         print('發送 LINE Notify 失敗！')
 
 
+def sendLineNotify(token, params):
+    headers = {
+        "Authorization": "Bearer " + token,
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
+    notify = requests.post(
+        "https://notify-api.line.me/api/notify", headers=headers, params=params)
+    return notify
+
+
 def covid19():
     pttRes = covid19service.getGossipCovid19()
     resMsg = ""
@@ -55,16 +68,20 @@ def covid19():
         resMsg = "%s\n%s\n%s\n" % (
             pttRes["Date"], pttRes["Title"], pttRes["Link"])
     payload = {'message': resMsg}
-    headers = {
-        "Authorization": "Bearer " + carbeToken,
-        "Content-Type": "application/x-www-form-urlencoded"
-    }
-    notify = requests.post(
-        "https://notify-api.line.me/api/notify", headers=headers, params=payload)
-    if notify.status_code == 200:
-        print('發送 LINE Notify 成功！')
-    else:
-        print('發送 LINE Notify 失敗！')
+
+    tokens = [carbeToken, etenToken]
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        outStr = []
+        for v in tokens:
+            res = executor.submit(sendLineNotify, v, payload)
+            outStr.append(res)
+
+        for future in as_completed(outStr):
+            if future.result().status_code == 200:
+                print('發送 LINE Notify 成功！')
+            else:
+                print('發送 LINE Notify 失敗！')
+    return
 
 
 THREE_TRADE = "https://www.twse.com.tw/zh/page/trading/fund/BFI82U.html"
@@ -169,4 +186,6 @@ def punchOut():
 if __name__ == "__main__":
     # stock5pm()
     # punchIn()
-    punchOut()
+    # punchOut()
+    # test()
+    covid19()

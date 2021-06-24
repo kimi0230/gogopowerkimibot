@@ -36,6 +36,8 @@ ZHIZHI_NOTIFY_TOKEN = config(
     'ZHIZHI_NOTIFY_TOKEN', default='你的LINI_NOTIFY_TOKEN')
 CARBE_NOTIFY_TOKEN = config(
     'CARBE_NOTIFY_TOKEN', default='你的LINI_NOTIFY_TOKEN')
+ETEN_NOTIFY_TOKEN = config(
+    'ETEN_NOTIFY_TOKEN', default='你的LINI_NOTIFY_TOKEN')
 
 # CWB
 CWB_TOKEN = config('CWB_TOKEN', default='')
