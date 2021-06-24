@@ -1,4 +1,6 @@
 # GoGoPowerKimi
+LINE 機器人, LINE Notify.
+發票, 天氣, 匯率, 疫情, ptt 爬蟲
 
 ## Commands
 * `發票 {數字N}`: N:代表前N期的發票(optinal) ex. `發票 1`

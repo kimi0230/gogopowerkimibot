@@ -1,5 +1,7 @@
 import requests
 from django.conf import settings
+from decouple import config
+
 try:
     from myconst import cityareaconst
 except ImportError:
@@ -9,10 +11,16 @@ try:
 except ImportError:
     import xml.etree.ElementTree as et
 
-user_token = settings.CWB_TOKEN
+try:
+    user_token = settings.CWB_TOKEN
+except:
+    user_token = config('CWB_TOKEN')
 cwburl = "http://opendata.cwb.gov.tw/opendataapi?dataid=%s&authorizationkey=%s"
 
-epa_token = settings.EPA_TOKEN
+try:
+    epa_token = settings.EPA_TOKEN
+except:
+    epa_token = config('EPA_TOKEN')
 epaUrl = "https://data.epa.gov.tw/api/v1/aqx_p_432?limit=1000&api_key=%s&sort=ImportDate desc&format=json"
 
 
