@@ -8,38 +8,60 @@ headers = {
 }
 
 
-def getPTT(url, regex, keyword=""):
+def getIndex(soup):
+    link = soup.select('.btn.wide')[1].get('href')
+    startIndx = link.find('index')
+    endIndx = link.find('.html')
+    index = link[startIndx+5:endIndx]
+    return int(index)+1
+
+
+def getPTT(url, regex=None, keyword=""):
     try:
+        nowIndex = 0
+        headers['cookie'] = 'over18=1;'
         if keyword != "":
             url += "search?q="+keyword
-        headers['cookie'] = 'over18=1;'
+        else:
+            # 先抓初始頁面的index
+            res = requests.get(url, headers=headers)
+            soup = BeautifulSoup(res.text, "lxml")
+            nowIndex = getIndex(soup)
+
         found = False
         count = 1
-        page = 5
-
+        page = 3
+        allTitle = []
         while found == False and count <= page:
             if keyword != "":
                 tmpurl = "%s&page=%d" % (url, count)
             else:
-                tmpurl = url
+                tmpurl = "%sindex%d.html" % (url, nowIndex-count)
 
             res = requests.get(tmpurl, headers=headers)
             # res.encoding = 'UTF-8'
             soup = BeautifulSoup(res.text, "lxml")
+
             for entry in soup.select('.r-ent'):
                 title = entry.select('.title')[0].text.strip()
-                m = regex.match(title)
-                if m != None:
-                    date = entry.select('.date')[0].text
-                    link = "https://www.ptt.cc" + \
-                        entry.select('a')[0].get('href')
-                    found = True
-                    return {"Title": title, "Date": date, "Link": link}
+                date = entry.select('.date')[0].text
+                link = "https://www.ptt.cc" + \
+                    entry.select('a')[0].get('href')
+                if regex != None:
+                    m = regex.match(title)
+                    if m != None:
+                        found = True
+                        return {"Title": title, "Date": date, "Link": link}
+                else:
+                    allTitle.append(
+                        {"Title": title, "Date": date, "Link": link})
             if found == False:
                 count += 1
             time.sleep(1)
-        return ""
-    except:
+
+        return allTitle
+    except Exception as e:
+        print(e)
         return ""
 
 
@@ -53,3 +75,5 @@ if __name__ == "__main__":
     url = "https://www.ptt.cc/bbs/EAseries/"
     regex = re.compile(r'.*Netflix台灣.*片單.*')
     print(getPTT(url, regex, "Netflix台灣"))
+    # print(getPTT(url, regex))
+    # print(getPTT(url))
