@@ -199,8 +199,8 @@ def netflixMonList():
             pttRes["Date"], pttRes["Title"], pttRes["Link"])
     payload = {'message': resMsg}
 
-    tokens = [netflixGrupToken]
-    with ThreadPoolExecutor(max_workers=3) as executor:
+    tokens = [netflixGrupToken, etenToken]
+    with ThreadPoolExecutor(max_workers=2) as executor:
         outStr = []
         for v in tokens:
             res = executor.submit(sendLineNotify, v, payload)
