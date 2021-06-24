@@ -26,6 +26,10 @@ chocoToken = config('CHOCO_NOTIFY_TOKEN')
 netflixGrupToken = config('NETFLIXGRUP_NOTIFY_TOKEN')
 
 
+bankAccount = config('RICHART_ACCOUNT')
+bankAccountLink = config('RICHART_ACCOUNT_LINK')
+
+
 def test():
     msg = '起床尿尿摟'
     payload = {'message': msg}
@@ -214,10 +218,21 @@ def netflixMonList():
     return
 
 
+def netflixMangFee():
+    resMsg = " \n 目前管理費(一季) 390/4*3 = 292.5 \n 1/5, 4/5, 7/5, 10/5 收款 ^ ^ \n匯款給我 292  就好 ~~ \n\n Hi~麻煩轉帳至台新銀行(812)帳號是 %s 或是點擊連結開啟Richart APP可以直接帶入我的帳號唷 %s " % (bankAccount, bankAccountLink)
+    payload = {'message': resMsg}
+    res = sendLineNotify(netflixGrupToken, payload)
+    if res.status_code == 200:
+        print('發送 LINE Notify 成功！')
+    else:
+        print('發送 LINE Notify 失敗！')
+
+
 if __name__ == "__main__":
     # stock5pm()
     # punchIn()
     # punchOut()
     # test()
     # covid19()
-    netflixMonList()
+    # netflixMonList()
+    netflixMangFee()
