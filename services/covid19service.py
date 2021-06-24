@@ -2,6 +2,7 @@ import requests
 import re
 from bs4 import BeautifulSoup
 import time
+import datetime
 
 # fix: InsecureRequestWarning: Unverified HTTPS request is being made to host
 import requests.packages.urllib3
@@ -69,34 +70,36 @@ def getCovid19():
 
 
 def getPTT(url, keyword=""):
-    if keyword != "":
-        url += "search?q="+keyword
-    headers['cookie'] = 'over18=1;'
-    found = False
-    count = 1
-    page = 1
-    while found == False and count <= page:
+    try:
         if keyword != "":
-            tmpurl = "%s&page=%d" % (url, count)
-        else:
-            tmpurl = url
+            url += "search?q="+keyword
+        headers['cookie'] = 'over18=1;'
+        found = False
+        count = 1
+        page = 5
+        # nowDate = datetime.date.today().strftime("%-m/%d")
+        while found == False and count <= page:
+            if keyword != "":
+                tmpurl = "%s&page=%d" % (url, count)
+            else:
+                tmpurl = url
 
-        res = requests.get(tmpurl, headers=headers)
-        # res.encoding = 'UTF-8'
-        soup = BeautifulSoup(res.text, "lxml")
-        for entry in soup.select('.r-ent'):
-            title = entry.select('.title')[0].text
-            print(title)
-            m = re.match(r'\[.*\].*', title)
-            print(m)
-            if m != None:
-                date = entry.select('.date')[0].text
-                link = entry.select('a')[0].get('href')
-                print(title, date, link)
-                found = True
-                return {"Title": title, "Date": date, "Link": link}
-        if found == False:
-            count += 1
+            res = requests.get(tmpurl, headers=headers)
+            # res.encoding = 'UTF-8'
+            soup = BeautifulSoup(res.text, "lxml")
+            for entry in soup.select('.r-ent'):
+                title = entry.select('.title')[0].text.strip()
+                m = re.match(r'^\[爆卦\] 本土\+.*', title)
+                if m != None:
+                    date = entry.select('.date')[0].text
+                    link = entry.select('a')[0].get('href')
+                    found = True
+                    return {"Title": title, "Date": date, "Link": link}
+            if found == False:
+                count += 1
+        return ""
+    except:
+        return ""
 
 
 def getGossipCovid19():
@@ -113,7 +116,7 @@ def getGossipCovid19():
     #     time.sleep(1)
 
     link = "https://www.ptt.cc/bbs/Gossiping/"
-    getPTT(link, "[爆卦] 本土+")
+    return getPTT(link, "[爆卦] 本土+")
 
 
 if __name__ == "__main__":

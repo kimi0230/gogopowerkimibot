@@ -46,8 +46,13 @@ def callback(request):
                     elif mtext == "笑鼠人":
                         msgresponse.sendImage(event, "mouse")
                     elif mtext == "疫情":
+                        pttRes = covid19service.getGossipCovid19()
+                        resMsg = ""
+                        if pttRes != "":
+                            resMsg = "%s\n%s\n%s\n" % (
+                                pttRes["Date"], pttRes["Title"], pttRes["Link"])
                         res = covid19service.getCovid19()
-                        resMsg = "%s\n 新增確診:\t %s\n 新增死亡:\t %s\n 累計確診:\t %s\n 累計死亡:\t %s\n 死亡率:\t %s\n 疫苗接種人次:\t %s\n %s" % (
+                        resMsg += "%s\n 新增確診:\t %s\n 新增死亡:\t %s\n 累計確診:\t %s\n 累計死亡:\t %s\n 死亡率:\t %s\n 疫苗接種人次:\t %s\n %s" % (
                             res["time"], res["recovered"], res["newDeaths"], res["total"], res["totalDeaths"], res["rateDeaths"], res["vaccine"], res["url"])
                         if resMsg != "":
                             msgresponse.sendText(event, resMsg)
