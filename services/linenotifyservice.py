@@ -56,7 +56,7 @@ def covid19():
             pttRes["Date"], pttRes["Title"], pttRes["Link"])
     payload = {'message': resMsg}
     headers = {
-        "Authorization": "Bearer " + token,
+        "Authorization": "Bearer " + carbeToken,
         "Content-Type": "application/x-www-form-urlencoded"
     }
     notify = requests.post(
