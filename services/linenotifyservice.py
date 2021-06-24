@@ -199,7 +199,7 @@ def netflixMonList():
             pttRes["Date"], pttRes["Title"], pttRes["Link"])
     payload = {'message': resMsg}
 
-    tokens = [netflixGrupToken, etenToken]
+    tokens = [netflixGrupToken, etenToken, carbeToken]
     with ThreadPoolExecutor(max_workers=2) as executor:
         outStr = []
         for v in tokens:
