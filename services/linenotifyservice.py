@@ -4,7 +4,7 @@ from django.conf import settings
 from decouple import config
 from utility import tinyURL
 import re
-from services import pttservice, gasservice
+from services import pttservice, gasservice, cambridgeservice
 
 import datetime
 from services import covid19service
@@ -264,6 +264,25 @@ def gasCPC():
     return
 
 
+def getDailyAWord(examp=True):
+    resMsg = cambridgeservice.toMsg(cambridgeservice.getDailyAWord(), examp)
+    payload = {'message': resMsg}
+    tokens = [token]
+
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        outStr = []
+        for v in tokens:
+            res = executor.submit(sendLineNotify, v, payload)
+            outStr.append(res)
+
+        for future in as_completed(outStr):
+            if future.result().status_code == 200:
+                print('發送 LINE Notify 成功！')
+            else:
+                print('發送 LINE Notify 失敗！')
+    return
+
+
 if __name__ == "__main__":
     # stock5pm()
     # punchIn()
@@ -272,4 +291,5 @@ if __name__ == "__main__":
     # covid19()
     # netflixMonList()
     # netflixMangFee()
-    gasCPC()
+    # gasCPC()
+    getDailyAWord()

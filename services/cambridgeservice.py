@@ -33,7 +33,7 @@ def transWord(word):
         usAudio = url + \
             head.select('source')[2].get("src")
         result["Head"].append(
-            {"uk": uk, "ukAudio": ukAudio, "us": us, "usAudio": usAudio})
+            {"uk": uk, "ukAudio": ukAudio, "us": us, "usAudio": usAudio, "partofspeech": partofspeech})
 
     # 中文意思
     chtTranslation = set(soup.select(".trans.dtrans.dtrans-se.break-cj")) - \
@@ -51,15 +51,32 @@ def transWord(word):
     return result
 
 
-def getDayWord():
+def toMsg(source, examp=True):
+    if source != "":
+        result = "\n"
+        for head in source["Head"]:
+            result += "%s\n UK : %s US: %s \n" % (
+                head["partofspeech"], head["uk"], head["us"])
+        result += "---------\n"
+        for k, v in enumerate(source["ChtTrans"]):
+            result += "%s \n %s  \n" % (v, source["EngTrans"][k])
+        if examp == True:
+            result += "\n---------\n"
+            result += "\nExample:\n "+"\n\n".join(source["Example"])
+    else:
+        return
+    return result
+
+
+def getDailyAWord():
     res = requests.get(url, headers=headers)
     res.encoding = 'UTF-8'
     soup = BeautifulSoup(res.text, "lxml")
     word = soup.select(".fs36.lmt-5.feature-w-big.wotd-hw a")[0].text
 
-    # word = "material"
-    transWord(word)
+    word = "material"
+    return transWord(word)
 
 
 if __name__ == "__main__":
-    print(getDayWord())
+    print(getDailyAWord())
