@@ -8,7 +8,7 @@ from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import MessageEvent, TextMessage, PostbackEvent
 from module import msgresponse
-from services import cwbservices, invoiceservice, covid19service, exchangeservice
+from services import cwbservices, invoiceservice, covid19service, exchangeservice, cambridgeservice
 from urllib.parse import parse_qsl
 from myconst import cmdlist
 import re
@@ -87,7 +87,25 @@ def callback(request):
                             resMsg += cwbservices.getAir(cityArea["Area"])
                         if resMsg != "":
                             msgresponse.sendText(event, resMsg)
-
+                    elif re.match(r"^t:.*", mtext) != None:
+                        msg = mtext.replace('t:', '').strip()
+                        if msg != "":
+                            resMsg = cambridgeservice(
+                                cambridgeservice.transWord(msg), False)
+                        if resMsg != "":
+                            msgresponse.sendText(event, resMsg)
+                    elif re.match(r"^te:.*", mtext) != None:
+                        msg = mtext.replace('t:', '').strip()
+                        if msg != "":
+                            resMsg = cambridgeservice(
+                                cambridgeservice.transWord(msg), True)
+                        if resMsg != "":
+                            msgresponse.sendText(event, resMsg)
+                    elif mtext == "td:":
+                        resMsg = cambridgeservice(
+                            cambridgeservice.getDailyAWord(), True)
+                        if resMsg != "":
+                            msgresponse.sendText(event, resMsg)
             if isinstance(event, PostbackEvent):  # PostbackTemplateAction觸發此事件
                 # 取得Postback資料
                 pass
