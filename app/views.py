@@ -90,19 +90,19 @@ def callback(request):
                     elif re.match(r"^t:.*", mtext) != None:
                         msg = mtext.replace('t:', '').strip()
                         if msg != "":
-                            resMsg = cambridgeservice(
+                            resMsg = cambridgeservice.toMsg(
                                 cambridgeservice.transWord(msg), False)
                         if resMsg != "":
                             msgresponse.sendText(event, resMsg)
                     elif re.match(r"^te:.*", mtext) != None:
                         msg = mtext.replace('t:', '').strip()
                         if msg != "":
-                            resMsg = cambridgeservice(
+                            resMsg = cambridgeservice.toMsg(
                                 cambridgeservice.transWord(msg), True)
                         if resMsg != "":
                             msgresponse.sendText(event, resMsg)
                     elif mtext == "td:":
-                        resMsg = cambridgeservice(
+                        resMsg = cambridgeservice.toMsg(
                             cambridgeservice.getDailyAWord(), True)
                         if resMsg != "":
                             msgresponse.sendText(event, resMsg)
