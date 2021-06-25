@@ -95,7 +95,7 @@ def callback(request):
                         if resMsg != "":
                             msgresponse.sendText(event, resMsg)
                     elif re.match(r"^te:.*", mtext) != None:
-                        msg = mtext.replace('t:', '').strip()
+                        msg = mtext.replace('te:', '').strip()
                         if msg != "":
                             resMsg = cambridgeservice.toMsg(
                                 cambridgeservice.transWord(msg), True)
