@@ -4,7 +4,7 @@ from django.conf import settings
 from decouple import config
 from utility import tinyURL
 import re
-from services import pttservice
+from services import pttservice, oilservice
 
 import datetime
 from services import covid19service
@@ -238,11 +238,37 @@ def netflixMangFee():
         print('發送 LINE Notify 失敗！')
 
 
+def oilCPC():
+    source = oilservice.getCPC()
+    resMsg = ""
+    if source != "":
+        resMsg = "%s\t%s\n" % (
+            source["Date"], source["Title"])
+        for v in source["Data"]:
+            resMsg += "%s : %s \n" % (v["name"], v["price"])
+
+    payload = {'message': resMsg}
+    tokens = [carbeToken, etenToken, chocoToken]
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        outStr = []
+        for v in tokens:
+            res = executor.submit(sendLineNotify, v, payload)
+            outStr.append(res)
+
+        for future in as_completed(outStr):
+            if future.result().status_code == 200:
+                print('發送 LINE Notify 成功！')
+            else:
+                print('發送 LINE Notify 失敗！')
+    return
+
+
 if __name__ == "__main__":
     # stock5pm()
     # punchIn()
-    punchOut()
+    # punchOut()
     # test()
     # covid19()
     # netflixMonList()
     # netflixMangFee()
+    oilCPC()
