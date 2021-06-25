@@ -248,8 +248,8 @@ def gasCPC():
             resMsg += "%s : %s \n" % (v["name"], v["price"])
 
     payload = {'message': resMsg}
-    # tokens = [carbeToken, etenToken, chocoToken]
-    tokens = [token]
+    tokens = [carbeToken, etenToken, chocoToken]
+
     with ThreadPoolExecutor(max_workers=2) as executor:
         outStr = []
         for v in tokens:
