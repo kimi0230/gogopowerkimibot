@@ -80,7 +80,7 @@ def getGossipCovid19():
     #     # 避免被太快被 PTT 封鎖請求
     #     time.sleep(1)
     link = "https://www.ptt.cc/bbs/Gossiping/"
-    regex = re.compile(r'^\[爆卦\] 本.{1}\+.*')
+    regex = re.compile(r'^\[爆卦\] 本.*')
     return pttservice.getPTT(link, regex, "[爆卦] 本")
 
 
