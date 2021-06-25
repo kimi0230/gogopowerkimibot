@@ -17,10 +17,10 @@ def getCPC():
     res = json.loads(res.text)
     title = BeautifulSoup(res["UpOrDown_Html"], "lxml").get_text()
     date = res["PriceUpdate"]
-    oilNames = ["92無鉛", "95無鉛", "98無鉛", "酒精汽油", "超級柴油", "液化石油氣"]
-    oilList = [{"name": v, "price": res["sPrice" +
-                                        str(k+1)]}for k, v in enumerate(oilNames)]
-    return {"Title": title, "Data": oilList, "Date": date}
+    gasNames = ["92無鉛", "95無鉛", "98無鉛", "酒精汽油", "超級柴油", "液化石油氣"]
+    gasList = [{"name": v, "price": res["sPrice" +
+                                        str(k+1)]}for k, v in enumerate(gasNames)]
+    return {"Title": title, "Data": gasList, "Date": date}
 
 
 if __name__ == "__main__":
