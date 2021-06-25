@@ -73,8 +73,6 @@ def getDailyAWord():
     res.encoding = 'UTF-8'
     soup = BeautifulSoup(res.text, "lxml")
     word = soup.select(".fs36.lmt-5.feature-w-big.wotd-hw a")[0].text
-
-    word = "material"
     return transWord(word)
 
 
