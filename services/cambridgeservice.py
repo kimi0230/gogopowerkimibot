@@ -64,7 +64,7 @@ def transWord(word):
 def toMsg(source, examp=True):
     try:
         if source != "":
-            result = "\n %s \n" % (source["Word"])
+            result = "\n%s\n\n" % (source["Word"])
             for head in source["Head"]:
                 result += "%s\n UK : %s US: %s \n" % (
                     head["partofspeech"], head["uk"], head["us"])
