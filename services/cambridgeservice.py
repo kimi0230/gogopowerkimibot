@@ -22,7 +22,7 @@ def transWord(word):
         res = requests.get(wordURL, headers=headers)
         soup = BeautifulSoup(res.text, "lxml")
         result = {}
-
+        result["Word"] = word
         result["Head"] = []
         # 詞性, 發音
         for head in soup.select(".pos-header.dpos-h"):
@@ -64,7 +64,7 @@ def transWord(word):
 def toMsg(source, examp=True):
     try:
         if source != "":
-            result = "\n"
+            result = "\n %s \n" % (source["Word"])
             for head in source["Head"]:
                 result += "%s\n UK : %s US: %s \n" % (
                     head["partofspeech"], head["uk"], head["us"])
