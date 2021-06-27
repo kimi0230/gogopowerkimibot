@@ -1,6 +1,6 @@
 # GoGoPowerKimi
 LINE 機器人, LINE Notify.
-發票, 天氣, 匯率, 疫情, ptt 爬蟲
+發票, 天氣, 匯率, 疫情, ptt 爬蟲, [Cambridge Dictionary](https://dictionary.cambridge.org/zht)爬蟲
 
 ## Commands
 * `發票 {數字N}`: N:代表前N期的發票(optinal) ex. `發票 1`
@@ -11,6 +11,9 @@ LINE 機器人, LINE Notify.
 * `笑鼠人`
 * `吱吱`
 * `蔡章章戶頭`
+* `t:{英文單字}`: 取得翻譯 音標 詞性
+* `te:{英文單字}`: 取得翻譯 音標 詞性 中英例句
+* `td:`: 取得每日一單字
 * `ls`  : 顯示所有指令
 
 ## Install package
