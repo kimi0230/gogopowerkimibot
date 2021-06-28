@@ -88,7 +88,8 @@ def covid19():
             pttRes["Date"], pttRes["Title"], pttRes["Link"])
     payload = {'message': resMsg}
 
-    tokens = [carbeToken, etenToken, chocoToken]
+    # tokens = [carbeToken, etenToken, chocoToken]
+    tokens = [token]
     with ThreadPoolExecutor(max_workers=3) as executor:
         outStr = []
         for v in tokens:
@@ -288,8 +289,8 @@ if __name__ == "__main__":
     # punchIn()
     # punchOut()
     # test()
-    # covid19()
+    covid19()
     # netflixMonList()
     # netflixMangFee()
     # gasCPC()
-    getDailyAWord()
+    # getDailyAWord()
