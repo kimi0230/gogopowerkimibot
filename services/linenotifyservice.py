@@ -212,8 +212,12 @@ def netflixMonList():
     if pttRes != "":
         resMsg = "%s\n%s\n%s\n" % (
             pttRes["Date"], pttRes["Title"], pttRes["Link"])
-    payload = {'message': resMsg}
 
+    nowMonth = datetime.datetime.today().month
+    regex = re.compile(r'.*'+str(nowMonth)+'.*月.*')
+    if regex.match(pttRes["Title"]) == None:
+        return
+    payload = {'message': resMsg}
     tokens = [netflixGrupToken, etenToken, carbeToken]
     with ThreadPoolExecutor(max_workers=2) as executor:
         outStr = []
@@ -289,8 +293,8 @@ if __name__ == "__main__":
     # punchIn()
     # punchOut()
     # test()
-    covid19()
-    # netflixMonList()
+    # covid19()
+    netflixMonList()
     # netflixMangFee()
     # gasCPC()
     # getDailyAWord()
