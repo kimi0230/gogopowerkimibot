@@ -81,7 +81,7 @@ def getGossipCovid19():
     #     time.sleep(1)
     link = "https://www.ptt.cc/bbs/Gossiping/"
     regex = re.compile(r'^\[爆卦\] 本.*')
-    return pttservice.getPTT(link, regex, "本土")
+    return pttservice.getPTT(link, regex)
 
 
 if __name__ == "__main__":
