@@ -24,13 +24,12 @@ def getPTT(url, regex=None, keyword=""):
             url += "search?q="+keyword
         else:
             # 先抓初始頁面的index
-            res = requests.get(url, headers=headers)
+            res = requests.get(url+"index.html", headers=headers)
             soup = BeautifulSoup(res.text, "lxml")
             nowIndex = getIndex(soup)
-
         found = False
-        count = 1
-        page = 3
+        count = 0
+        page = 10
         allTitle = []
         while found == False and count <= page:
             if keyword != "":
@@ -45,16 +44,16 @@ def getPTT(url, regex=None, keyword=""):
             for entry in soup.select('.r-ent'):
                 title = entry.select('.title')[0].text.strip()
                 date = entry.select('.date')[0].text
-                link = "https://www.ptt.cc" + \
-                    entry.select('a')[0].get('href')
                 if regex != None:
                     m = regex.match(title)
                     if m != None:
                         found = True
+                        link = "https://www.ptt.cc" + \
+                            entry.select('a')[0].get('href')
                         return {"Title": title, "Date": date, "Link": link}
                 else:
                     allTitle.append(
-                        {"Title": title, "Date": date, "Link": link})
+                        {"Title": title, "Date": date})
             if found == False:
                 count += 1
             time.sleep(1)

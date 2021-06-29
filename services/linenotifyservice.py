@@ -70,13 +70,13 @@ def carbe():
         print('發送 LINE Notify 失敗！')
 
 
-def sendLineNotify(token, params):
+def sendLineNotify(token, params, file=None):
     headers = {
         "Authorization": "Bearer " + token,
-        "Content-Type": "application/x-www-form-urlencoded"
+        # "Content-Type": "application/x-www-form-urlencoded"
     }
     notify = requests.post(
-        "https://notify-api.line.me/api/notify", headers=headers, params=params)
+        "https://notify-api.line.me/api/notify", headers=headers, params=params, files=file)
     return notify
 
 
@@ -293,8 +293,9 @@ if __name__ == "__main__":
     # punchIn()
     # punchOut()
     # test()
-    # covid19()
-    netflixMonList()
+    covid19()
+    # netflixMonList()
     # netflixMangFee()
     # gasCPC()
     # getDailyAWord()
+    # carbe()
