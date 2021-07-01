@@ -81,27 +81,33 @@ def sendLineNotify(token, params, file=None):
 
 
 def covid19():
-    pttRes = covid19service.getGossipCovid19()
-    resMsg = ""
-    if pttRes != "":
-        resMsg = "%s\n%s\n%s\n" % (
-            pttRes["Date"], pttRes["Title"], pttRes["Link"])
-    payload = {'message': resMsg}
+    try:
+        pttRes = covid19service.getGossipCovid19()
+        resMsg = ""
+        if pttRes != "":
+            resMsg = "%s\n%s\n%s\n" % (
+                pttRes["Date"], pttRes["Title"], pttRes["Link"])
+        if resMsg == "":
+            return
 
-    tokens = [carbeToken, etenToken, chocoToken]
-    # tokens = [token]
-    with ThreadPoolExecutor(max_workers=3) as executor:
-        outStr = []
-        for v in tokens:
-            res = executor.submit(sendLineNotify, v, payload)
-            outStr.append(res)
+        payload = {'message': resMsg}
 
-        for future in as_completed(outStr):
-            if future.result().status_code == 200:
-                print('發送 LINE Notify 成功！')
-            else:
-                print('發送 LINE Notify 失敗！')
-    return
+        tokens = [carbeToken, etenToken, chocoToken]
+        # tokens = [token]
+        with ThreadPoolExecutor(max_workers=3) as executor:
+            outStr = []
+            for v in tokens:
+                res = executor.submit(sendLineNotify, v, payload)
+                outStr.append(res)
+
+            for future in as_completed(outStr):
+                if future.result().status_code == 200:
+                    print('發送 LINE Notify 成功！')
+                else:
+                    print('發送 LINE Notify 失敗！')
+        return
+    except:
+        return
 
 
 THREE_TRADE = "https://www.twse.com.tw/zh/page/trading/fund/BFI82U.html"
