@@ -138,26 +138,23 @@ def punchMsgJob(name, url):
 def punchMsg(times, msgtext, rmin=0, rmax=10):
     nowDate = datetime.date.today().strftime("%Y-%m-%d")
     randNum = random.randrange(rmin, rmax)
-    Minsadded = datetime.timedelta(minutes=randNum)
-    newTime = times + Minsadded
+    # Minsadded = datetime.timedelta(minutes=randNum)
+    # newTime = times + Minsadded
 
-    urlKimi = "https://docs.google.com/forms/d/e/1FAIpQLSfKZAP0Ph2s3ATh3oYSmkxmMaUI64X0-dRL04SEfiQn4N9YOw/formResponse?entry.1343758667=蔡煜章&entry.1842948447=出勤刷卡&entry.529029656=%sT%s" % (
-        nowDate, newTime.strftime("%H:%M"))
-    # urlKimi = tinyURL.makeTiny(urlKimi)
+    # urlKimi = "https://docs.google.com/forms/d/e/1FAIpQLSfKZAP0Ph2s3ATh3oYSmkxmMaUI64X0-dRL04SEfiQn4N9YOw/formResponse?entry.1343758667=蔡煜章&entry.1842948447=出勤刷卡&entry.529029656=%sT%s" % (
+    #     nowDate, newTime.strftime("%H:%M"))
 
     # 重算時間
-    randNum = random.randrange(11)
-    Minsadded = datetime.timedelta(minutes=randNum)
-    newTime = times + Minsadded
-    urlCooper = "https://docs.google.com/forms/d/e/1FAIpQLSfKZAP0Ph2s3ATh3oYSmkxmMaUI64X0-dRL04SEfiQn4N9YOw/formResponse?entry.1343758667=趙榮聖&entry.1842948447=出勤刷卡&entry.529029656=%sT%s" % (
-        nowDate, newTime.strftime("%H:%M"))
-    # urlCooper = tinyURL.makeTiny(urlCooper)
+    # randNum = random.randrange(11)
+    # Minsadded = datetime.timedelta(minutes=randNum)
+    # newTime = times + Minsadded
+    # urlCooper = "https://docs.google.com/forms/d/e/1FAIpQLSfKZAP0Ph2s3ATh3oYSmkxmMaUI64X0-dRL04SEfiQn4N9YOw/formResponse?entry.1343758667=趙榮聖&entry.1842948447=出勤刷卡&entry.529029656=%sT%s" % (
+    #     nowDate, newTime.strftime("%H:%M"))
 
     urlDanny = "https://docs.google.com/forms/d/e/1FAIpQLSfKZAP0Ph2s3ATh3oYSmkxmMaUI64X0-dRL04SEfiQn4N9YOw/formResponse?entry.1343758667=李子川&entry.1842948447=出勤刷卡&entry.529029656=%sT%s" % (
         nowDate, times.strftime("%H:%M"))
-    # urlDanny = tinyURL.makeTiny(urlDanny)
 
-    urls = {"Kimi": urlKimi, "Cooper": urlCooper, "Danny": urlDanny}
+    urls = {"Danny": urlDanny}
 
     msgArr = []
     with ThreadPoolExecutor(max_workers=3) as executor:
