@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 
 # fix: InsecureRequestWarning: Unverified HTTPS request is being made to host
 import requests.packages.urllib3
+from utility import tinyURL
 
 url = "https://dictionary.cambridge.org/zht"
 
@@ -24,6 +25,7 @@ def transWord(word):
         result = {}
         result["Word"] = word
         result["Head"] = []
+        result["URL"] = wordURL
         # 詞性, 發音
         for head in soup.select(".pos-header.dpos-h"):
             # 詞性
@@ -64,7 +66,8 @@ def transWord(word):
 def toMsg(source, examp=True):
     try:
         if source != "":
-            result = "\n%s\n\n" % (source["Word"])
+            result = "\n%s\n%s\n" % (
+                source["Word"], tinyURL.makeTiny(source["URL"]))
             for head in source["Head"]:
                 result += "%s\n UK : %s US: %s \n" % (
                     head["partofspeech"], head["uk"], head["us"])
@@ -93,5 +96,5 @@ def getDailyAWord():
 
 
 if __name__ == "__main__":
-    # print(getDailyAWord())
-    print(transWord("kioki"))
+    print(getDailyAWord())
+    # print(transWord("kioki"))
