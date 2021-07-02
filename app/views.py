@@ -106,6 +106,8 @@ def callback(request):
                             cambridgeservice.getDailyAWord(), True)
                         if resMsg != "":
                             msgresponse.sendText(event, resMsg)
+                    elif mtext == "穩":
+                        msgresponse.sendImage(event, "stable")
             if isinstance(event, PostbackEvent):  # PostbackTemplateAction觸發此事件
                 # 取得Postback資料
                 pass
