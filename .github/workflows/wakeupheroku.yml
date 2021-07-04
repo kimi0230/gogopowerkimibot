@@ -11,4 +11,4 @@ jobs:
       - name: call heroku
         env:
           HEROKUURL: ${{ secrets.HEROKUURL }}
-        run: curl '${HEROKUURL}'
+        run: curl ${{HEROKUURL}}
