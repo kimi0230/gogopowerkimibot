@@ -1,8 +1,9 @@
 # GoGoPowerKimi
-LINE 機器人, LINE Notify.
-發票, 天氣, 匯率, 疫情, ptt 爬蟲, [Cambridge Dictionary](https://dictionary.cambridge.org/zht)爬蟲
-每星期日中油油價漲幅 notify
-每日英文單字 notify
+LINE 機器人, LINE Notify. 
+使用 Django, Django Q 排程, PostgreSQL, GitHub Active 自動部署至 Heroku
+發票, 天氣, 匯率, 疫情, ptt 爬蟲, [Cambridge Dictionary](https://dictionary.cambridge.org/zht)爬蟲
+中油油價漲幅 notify
+每日英文單字 notify 等
 
 ## Commands
 * `發票 {數字N}`: N:代表前N期的發票(optinal) ex. `發票 1`
