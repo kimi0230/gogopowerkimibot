@@ -10,4 +10,4 @@ jobs:
       HEROKU_URL: ${{ secrets.HEROKU_URL }}
     steps:
       - name: call heroku
-        run: curl  "%HEROKU_URL%"
+        run: curl "$HEROKU_URL"
