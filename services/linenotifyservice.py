@@ -196,8 +196,19 @@ def punchIn():
 def punchOut():
     time = datetime.datetime.now()
     defaultTime = time.replace(hour=17, minute=40)
-    msg = punchMsg(defaultTime, "下班尿尿瞜~", 6, 10)
-    print(msg)
+    msg = punchMsg(defaultTime, "下班尿尿瞜~", 6, 10) + "\n\n"
+
+    # 取得天氣資料
+    loc = ["台北+內湖", "台北+大安", "新北+汐止", "新北+三重"]
+    with ThreadPoolExecutor(max_workers=4) as executor:
+        outStr = []
+        for v in loc:
+            res = executor.submit(getwttr, v)
+            outStr.append(res)
+
+        for future in as_completed(outStr):
+            msg += future.result()+"\n"
+
     payload = {'message': msg}
     headers = {
         "Authorization": "Bearer " + etenToken,
@@ -359,8 +370,8 @@ def wether(title=None, loc=[]):
                 msg += future.result()+"\n"
         payload = {'message': title+"\n"+msg}
 
-        tokens = [token]
-        # tokens = [etenToken]
+        # tokens = [token]
+        tokens = [etenToken]
 
         # 發送line
         with ThreadPoolExecutor(max_workers=3) as executor:
