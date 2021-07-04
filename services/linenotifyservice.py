@@ -4,7 +4,7 @@ from django.conf import settings
 from decouple import config
 from utility import tinyURL
 import re
-from services import pttservice, gasservice, cambridgeservice
+from services import pttservice, gasservice, cambridgeservice, cwbservices
 import shutil
 import datetime
 from services import covid19service
@@ -316,11 +316,35 @@ def threeDayWether(loc="New-Taipei"):
         file = {'imageFile': res.raw}
 
       # tokens = [carbeToken, etenToken, chocoToken]
-        tokens = [etenToken]
+        tokens = [token]
         with ThreadPoolExecutor(max_workers=3) as executor:
             outStr = []
             for v in tokens:
                 res = executor.submit(sendLineNotify, v, payload, file)
+                outStr.append(res)
+
+            for future in as_completed(outStr):
+                if future.result().status_code == 200:
+                    print('發送 LINE Notify 成功！')
+                else:
+                    print('發送 LINE Notify 失敗！')
+        return
+    except Exception as e:
+        print(e)
+        return
+
+
+def lunch(loc=None):
+    try:
+        res = cwbservices.getWeather(loc)
+        payload = {'message': "放飯摟~\n"+res}
+
+      # tokens = [carbeToken, etenToken, chocoToken]
+        tokens = [etenToken]
+        with ThreadPoolExecutor(max_workers=3) as executor:
+            outStr = []
+            for v in tokens:
+                res = executor.submit(sendLineNotify, v, payload)
                 outStr.append(res)
 
             for future in as_completed(outStr):
@@ -345,4 +369,5 @@ if __name__ == "__main__":
     # gasCPC()
     # getDailyAWord()
     # carbe()
-    threeDayWether()
+    # threeDayWether()
+    lunch("內湖")
