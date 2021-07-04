@@ -8,5 +8,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: call heroku
-        uses: actions/checkout@v2
         run: curl https://gogopowerkimibot.herokuapp.com/
