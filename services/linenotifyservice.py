@@ -334,7 +334,7 @@ def threeDayWether(loc="New-Taipei"):
         return
 
 
-def lunch(loc=None):
+def lunch(loc="台北"):
     try:
         res = cwbservices.getWeather(loc)
         payload = {'message': "放飯摟~\n"+res}
@@ -370,4 +370,4 @@ if __name__ == "__main__":
     # getDailyAWord()
     # carbe()
     # threeDayWether()
-    lunch("內湖")
+    lunch()
