@@ -334,13 +334,35 @@ def threeDayWether(loc="New-Taipei"):
         return
 
 
-def lunch(loc="台北"):
-    try:
-        res = cwbservices.getWeather(loc)
-        payload = {'message': "放飯摟~\n"+res}
+def getwttr(loc):
+    url = "https://zh-tw.wttr.in/%s?format=%s&lang=%s" % (
+        loc, '%l:+%c+%C+%t', "zh-tw")
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36',
+        'Accept-Language': "zh-tw"
+    }
+    res = requests.get(url, headers=headers)
+    return res.text
 
-      # tokens = [carbeToken, etenToken, chocoToken]
+
+def wether(title=None, loc=[]):
+    try:
+        msg = ""
+        # 取得天氣資料
+        with ThreadPoolExecutor(max_workers=4) as executor:
+            outStr = []
+            for v in loc:
+                res = executor.submit(getwttr, v)
+                outStr.append(res)
+
+            for future in as_completed(outStr):
+                msg += future.result()+"\n"
+        payload = {'message': title+"\n"+msg}
+
+        # tokens = [token]
         tokens = [etenToken]
+
+        # 發送line
         with ThreadPoolExecutor(max_workers=3) as executor:
             outStr = []
             for v in tokens:
@@ -370,4 +392,5 @@ if __name__ == "__main__":
     # getDailyAWord()
     # carbe()
     # threeDayWether()
-    lunch()
+    # lunch("Taipei+Neihu", "New-Taipei+Xizhi")
+    wether(title="放飯了~", loc=["台北+內湖", "台北+大安", "新北+汐止", "新北+三重"])
