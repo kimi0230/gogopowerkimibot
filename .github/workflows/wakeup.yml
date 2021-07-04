@@ -1,11 +1,11 @@
 name: Wake Up
 on:
   schedule:
-    # - cron: "30 07 * * *"
-    - cron: "* * * * *"
+    # - cron: "30 23 * * *"
+    - cron: "*/5 * * * *"
 jobs:
   WakeUp-Actions:
     runs-on: ubuntu-latest
     steps:
       - name: call heroku
-        run: curl https://gogopowerkimibot.herokuapp.com
+        run: curl  ${{ secrets.HEROKU_URL }}
