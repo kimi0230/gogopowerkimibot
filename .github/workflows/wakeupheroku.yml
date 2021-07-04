@@ -6,8 +6,8 @@ on:
 jobs:
   WakeUp-Actions:
     runs-on: ubuntu-latest
-    env:
-      HEROKUURL: ${{ secrets.HEROKUURL }}
     steps:
       - name: call heroku
-        run: curl ${{ env.HEROKUURL }}
+        env:
+          HEROKUURL: ${{ secrets.HEROKUURL }}
+        run: curl ${HEROKUURL}
