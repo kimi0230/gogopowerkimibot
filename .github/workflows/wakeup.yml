@@ -1,4 +1,4 @@
-name: wake up heroku at morning
+name: Wake up heroku at morning
 on:
   schedule:
     # - cron: "30 07 * * *"
