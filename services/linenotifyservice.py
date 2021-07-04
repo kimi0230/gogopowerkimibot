@@ -58,13 +58,9 @@ def sendLineNotify(token, params=None, file=None):
 def test():
     msg = '起床尿尿摟'
     payload = {'message': msg}
-    headers = {
-        "Authorization": "Bearer " + token,
-        "Content-Type": "application/x-www-form-urlencoded"
-    }
-    notify = requests.post(
-        "https://notify-api.line.me/api/notify", headers=headers, params=payload)
-    if notify.status_code == 200:
+
+    res = sendLineNotify(token, payload)
+    if res.status_code == 200:
         print('發送 LINE Notify 成功！')
     else:
         print('發送 LINE Notify 失敗！')
@@ -73,13 +69,8 @@ def test():
 def carbe():
     msg = '卡比起床尿尿'
     payload = {'message': msg}
-    headers = {
-        "Authorization": "Bearer " + carbeToken,
-        "Content-Type": "application/x-www-form-urlencoded"
-    }
-    notify = requests.post(
-        "https://notify-api.line.me/api/notify", headers=headers, params=payload)
-    if notify.status_code == 200:
+    res = sendLineNotify(carbeToken, payload)
+    if res.status_code == 200:
         print('發送 LINE Notify 成功！')
     else:
         print('發送 LINE Notify 失敗！')
@@ -124,13 +115,9 @@ def stock5pm():
     msg = '\n 三大法人買賣超: %s \n\n 八大官股: %s \n\n ETF溢價: %s' % (
         THREE_TRADE, EGIHTGOV, ETF)
     payload = {'message': msg}
-    headers = {
-        "Authorization": "Bearer " + token,
-        "Content-Type": "application/x-www-form-urlencoded"
-    }
-    notify = requests.post(
-        "https://notify-api.line.me/api/notify", headers=headers, params=payload)
-    if notify.status_code == 200:
+    res = sendLineNotify(token, payload)
+
+    if res.status_code == 200:
         print('發送 LINE Notify 成功！')
     else:
         print('發送 LINE Notify 失敗！')
@@ -181,13 +168,9 @@ def punchIn():
     defaultTime = time.replace(hour=8, minute=40)
     msg = punchMsg(defaultTime, "上班睡覺瞜~", 0, 5)
     payload = {'message': msg}
-    headers = {
-        "Authorization": "Bearer " + etenToken,
-        "Content-Type": "application/x-www-form-urlencoded"
-    }
-    notify = requests.post(
-        "https://notify-api.line.me/api/notify", headers=headers, params=payload)
-    if notify.status_code == 200:
+    res = sendLineNotify(etenToken, payload)
+
+    if res.status_code == 200:
         print('發送 LINE Notify 成功！')
     else:
         print('發送 LINE Notify 失敗！')
@@ -395,7 +378,7 @@ if __name__ == "__main__":
     # stock5pm()
     # punchIn()
     # punchOut()
-    # test()
+    test()
     # covid19()
     # netflixMonList()
     # netflixMangFee()
@@ -404,4 +387,4 @@ if __name__ == "__main__":
     # carbe()
     # threeDayWether()
     # lunch("Taipei+Neihu", "New-Taipei+Xizhi")
-    wether(title="放飯了~", loc=["台北+內湖", "台北+大安", "新北+汐止", "新北+三重"])
+    # wether(title="放飯了~", loc=["台北+內湖", "台北+大安", "新北+汐止", "新北+三重"])
