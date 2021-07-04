@@ -141,6 +141,7 @@ Q_CLUSTER = {
 * [中央氣象局opendata 資料代碼](https://opendata.cwb.gov.tw/opendatadoc/MFC/ForecastElement.pdf)
 * [統一發票](https://invoice.etax.nat.gov.tw/invoice.xml)
 * https://django-q.readthedocs.io/en/latest/cluster.html
+* https://github.com/chubin/wttr.in
 
 
 ## memo

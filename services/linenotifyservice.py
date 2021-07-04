@@ -359,8 +359,8 @@ def wether(title=None, loc=[]):
                 msg += future.result()+"\n"
         payload = {'message': title+"\n"+msg}
 
-        # tokens = [token]
-        tokens = [etenToken]
+        tokens = [token]
+        # tokens = [etenToken]
 
         # 發送line
         with ThreadPoolExecutor(max_workers=3) as executor:
