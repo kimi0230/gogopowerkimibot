@@ -7,7 +7,6 @@ jobs:
   WakeUp-Actions:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
       - name: call heroku
         env:
           HEROKUURL: ${{ secrets.HEROKUURL }}
