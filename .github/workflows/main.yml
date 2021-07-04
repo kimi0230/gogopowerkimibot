@@ -8,4 +8,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: call heroku
-        run: curl https://gogopowerkimibot.herokuapp.com/
+        run: curl ${{ secrets.HEROKU_URL }}
