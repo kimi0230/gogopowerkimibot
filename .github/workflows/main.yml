@@ -1,0 +1,11 @@
+name: wake up heroku at morning
+on:
+  schedule:
+    # - cron: "30 07 * * *"
+    - cron: "*/1 * * * *"
+jobs:
+  runs-on: ubuntu-latest
+  steps:
+    - name: call heroku
+      uses: actions/checkout@v2
+      run: curl https://gogopowerkimibot.herokuapp.com/
