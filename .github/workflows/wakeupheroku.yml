@@ -1,8 +1,8 @@
 name: Wake Up Heroku
 on:
   schedule:
-    # - cron: "30 23 * * *"
-    - cron: "* * * * *"
+    - cron: "30 23 * * *"
+#     - cron: "* * * * *"
 jobs:
   WakeUp-Actions:
     runs-on: ubuntu-latest
