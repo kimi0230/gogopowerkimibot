@@ -5,7 +5,7 @@ from decouple import config
 from utility import tinyURL
 import re
 from services import pttservice, gasservice, cambridgeservice
-
+import shutil
 import datetime
 from services import covid19service
 
@@ -40,6 +40,21 @@ bankAccount = config('RICHART_ACCOUNT')
 bankAccountLink = config('RICHART_ACCOUNT_LINK')
 
 
+def sendLineNotify(token, params=None, file=None):
+    headers = {
+        "Authorization": "Bearer " + token,
+        # "Content-Type": "application/x-www-form-urlencoded"
+    }
+
+    if params == None:
+        notify = requests.post(
+            "https://notify-api.line.me/api/notify", headers=headers, files=file)
+    else:
+        notify = requests.post(
+            "https://notify-api.line.me/api/notify", headers=headers, params=params, files=file)
+    return notify
+
+
 def test():
     msg = '起床尿尿摟'
     payload = {'message': msg}
@@ -68,16 +83,6 @@ def carbe():
         print('發送 LINE Notify 成功！')
     else:
         print('發送 LINE Notify 失敗！')
-
-
-def sendLineNotify(token, params, file=None):
-    headers = {
-        "Authorization": "Bearer " + token,
-        # "Content-Type": "application/x-www-form-urlencoded"
-    }
-    notify = requests.post(
-        "https://notify-api.line.me/api/notify", headers=headers, params=params, files=file)
-    return notify
 
 
 def covid19():
@@ -291,6 +296,44 @@ def getDailyAWord(examp=True):
     return
 
 
+def threeDayWether(loc="New-Taipei"):
+    try:
+        url = "https://zh-tw.wttr.in/%s%s" % (loc, ".png")
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Macintosh Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36'
+        }
+        res = requests.get(url, headers=headers, stream=True)
+        payload = {'message': loc}
+
+        # 寫入檔案
+        # Set decode_content value to True, otherwise the downloaded image file's size will be zero.
+        # res.raw.decode_content = True
+        # # Open a local file with wb ( write binary ) permission.
+        # with open("New-Taipei.png", 'wb') as f:
+        #     shutil.copyfileobj(res.raw, f)
+        # f = open('New-Taipei.png', 'rb')  # create an empty demo file
+        # file = {'imageFile': f}
+        file = {'imageFile': res.raw}
+
+      # tokens = [carbeToken, etenToken, chocoToken]
+        tokens = [etenToken]
+        with ThreadPoolExecutor(max_workers=3) as executor:
+            outStr = []
+            for v in tokens:
+                res = executor.submit(sendLineNotify, v, payload, file)
+                outStr.append(res)
+
+            for future in as_completed(outStr):
+                if future.result().status_code == 200:
+                    print('發送 LINE Notify 成功！')
+                else:
+                    print('發送 LINE Notify 失敗！')
+        return
+    except Exception as e:
+        print(e)
+        return
+
+
 if __name__ == "__main__":
     # stock5pm()
     # punchIn()
@@ -300,5 +343,6 @@ if __name__ == "__main__":
     # netflixMonList()
     # netflixMangFee()
     # gasCPC()
-    getDailyAWord()
+    # getDailyAWord()
     # carbe()
+    threeDayWether()
