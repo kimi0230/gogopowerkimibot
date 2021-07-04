@@ -2,7 +2,7 @@ name: wake up heroku at morning
 on:
   schedule:
     # - cron: "30 07 * * *"
-    - cron: "*/1 * * * *"
+    - cron: "* * * * *"
 jobs:
   GitHub-Actions:
     runs-on: ubuntu-latest
