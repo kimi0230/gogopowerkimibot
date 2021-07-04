@@ -1,4 +1,4 @@
-name: Wake Up
+name: Wake Up Heroku
 on:
   schedule:
     # - cron: "30 23 * * *"
