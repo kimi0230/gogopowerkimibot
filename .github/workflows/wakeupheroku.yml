@@ -2,12 +2,13 @@ name: Wake Up Heroku
 on:
   schedule:
     # - cron: "30 23 * * *"
-    - cron: "*/5 * * * *"
+    - cron: "* * * * *"
 jobs:
   WakeUp-Actions:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: call heroku
         env:
           HEROKUURL: ${{ secrets.HEROKUURL }}
-        run: curl ${HEROKUURL}
+        run: curl '${HEROKUURL}'
