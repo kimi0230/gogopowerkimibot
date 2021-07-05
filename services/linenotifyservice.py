@@ -329,8 +329,7 @@ def threeDayWether(loc="New-Taipei"):
 
 
 def getwttr(loc):
-    url = "https: // zh-tw.wttr. in / % s?m
-    &format = %s & lang = %s" % (
+    url = "https://zh-tw.wttr.in/%s?m&format=%s&lang=%s" % (
         loc, '%l:+%c+%C+%t', "zh-tw")
     headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36',
