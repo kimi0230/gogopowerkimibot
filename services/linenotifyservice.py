@@ -329,7 +329,8 @@ def threeDayWether(loc="New-Taipei"):
 
 
 def getwttr(loc):
-    url = "https://zh-tw.wttr.in/%s?format=%s&lang=%s" % (
+    url = "https: // zh-tw.wttr. in / % s?m
+    &format = %s & lang = %s" % (
         loc, '%l:+%c+%C+%t', "zh-tw")
     headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36',
@@ -353,8 +354,8 @@ def wether(title=None, loc=[]):
                 msg += future.result()+"\n"
         payload = {'message': title+"\n"+msg}
 
-        # tokens = [token]
-        tokens = [etenToken]
+        tokens = [token]
+        # tokens = [etenToken]
 
         # 發送line
         with ThreadPoolExecutor(max_workers=3) as executor:
@@ -378,7 +379,7 @@ if __name__ == "__main__":
     # stock5pm()
     # punchIn()
     # punchOut()
-    test()
+    # test()
     # covid19()
     # netflixMonList()
     # netflixMangFee()
@@ -387,4 +388,4 @@ if __name__ == "__main__":
     # carbe()
     # threeDayWether()
     # lunch("Taipei+Neihu", "New-Taipei+Xizhi")
-    # wether(title="放飯了~", loc=["台北+內湖", "台北+大安", "新北+汐止", "新北+三重"])
+    wether(title="放飯了~", loc=["台北+內湖", "台北+大安", "新北+汐止", "新北+三重"])
