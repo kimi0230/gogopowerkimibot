@@ -128,20 +128,21 @@ def punchMsgJob(name, url):
 
 
 def punchMsg(times, msgtext, rmin=0, rmax=10):
+    """
     nowDate = datetime.date.today().strftime("%Y-%m-%d")
     randNum = random.randrange(rmin, rmax)
-    # Minsadded = datetime.timedelta(minutes=randNum)
-    # newTime = times + Minsadded
+    Minsadded = datetime.timedelta(minutes=randNum)
+    newTime = times + Minsadded
 
-    # urlKimi = "https://docs.google.com/forms/d/e/1FAIpQLSfKZAP0Ph2s3ATh3oYSmkxmMaUI64X0-dRL04SEfiQn4N9YOw/formResponse?entry.1343758667=蔡煜章&entry.1842948447=出勤刷卡&entry.529029656=%sT%s" % (
-    #     nowDate, newTime.strftime("%H:%M"))
+    urlKimi = "https://docs.google.com/forms/d/e/1FAIpQLSfKZAP0Ph2s3ATh3oYSmkxmMaUI64X0-dRL04SEfiQn4N9YOw/formResponse?entry.1343758667=蔡煜章&entry.1842948447=出勤刷卡&entry.529029656=%sT%s" % (
+        nowDate, newTime.strftime("%H:%M"))
 
     # 重算時間
-    # randNum = random.randrange(11)
-    # Minsadded = datetime.timedelta(minutes=randNum)
-    # newTime = times + Minsadded
-    # urlCooper = "https://docs.google.com/forms/d/e/1FAIpQLSfKZAP0Ph2s3ATh3oYSmkxmMaUI64X0-dRL04SEfiQn4N9YOw/formResponse?entry.1343758667=趙榮聖&entry.1842948447=出勤刷卡&entry.529029656=%sT%s" % (
-    #     nowDate, newTime.strftime("%H:%M"))
+    randNum = random.randrange(11)
+    Minsadded = datetime.timedelta(minutes=randNum)
+    newTime = times + Minsadded
+    urlCooper = "https://docs.google.com/forms/d/e/1FAIpQLSfKZAP0Ph2s3ATh3oYSmkxmMaUI64X0-dRL04SEfiQn4N9YOw/formResponse?entry.1343758667=趙榮聖&entry.1842948447=出勤刷卡&entry.529029656=%sT%s" % (
+        nowDate, newTime.strftime("%H:%M"))
 
     urlDanny = "https://docs.google.com/forms/d/e/1FAIpQLSfKZAP0Ph2s3ATh3oYSmkxmMaUI64X0-dRL04SEfiQn4N9YOw/formResponse?entry.1343758667=李子川&entry.1842948447=出勤刷卡&entry.529029656=%sT%s" % (
         nowDate, times.strftime("%H:%M"))
@@ -159,6 +160,10 @@ def punchMsg(times, msgtext, rmin=0, rmax=10):
 
     msg = '\n %s \n%s日記:%s ' % (
         msgtext, ''.join(msgArr), config('ETEN_DIARY', ""))
+    """
+
+    msg = '\n %s \n日記:%s ' % (
+        msgtext, config('ETEN_DIARY', ""))
 
     return msg
 
@@ -290,7 +295,7 @@ def getDailyAWord(examp=True):
     return
 
 
-def threeDayWether(loc="New-Taipei"):
+def threeDayWether(loc="新北+汐止"):
     try:
         url = "https://zh-tw.wttr.in/%s%s" % (loc, ".png")
         headers = {
@@ -385,6 +390,6 @@ if __name__ == "__main__":
     # gasCPC()
     # getDailyAWord()
     # carbe()
-    # threeDayWether()
+    threeDayWether()
     # lunch("Taipei+Neihu", "New-Taipei+Xizhi")
-    wether(title="放飯了~", loc=["台北+內湖", "台北+大安", "新北+汐止", "新北+三重"])
+    # wether(title="放飯了~", loc=["台北+內湖", "台北+大安", "新北+汐止", "新北+三重"])
