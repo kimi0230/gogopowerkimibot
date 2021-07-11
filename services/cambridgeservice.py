@@ -35,11 +35,15 @@ def transWord(word):
             uk = "[ %s ]" % (kk[0].text)
             ukAudio = url + \
                 head.select('source')[0].get("src")
-            us = "[ %s ]" % (kk[1].text)
+            if len(kk) > 1:
+                us = "[ %s ]" % (kk[1].text)
+            else:
+                us = uk
             usAudio = url + \
                 head.select('source')[2].get("src")
             result["Head"].append(
                 {"uk": uk, "ukAudio": ukAudio, "us": us, "usAudio": usAudio, "partofspeech": partofspeech})
+
         if len(result["Head"]) <= 0:
             return ""
 
@@ -59,7 +63,8 @@ def transWord(word):
         result["Example"] = [item.get_text().strip() for item in example]
 
         return result
-    except:
+    except Exception as e:
+        print(e)
         return ""
 
 
