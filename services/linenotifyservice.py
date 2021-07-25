@@ -4,7 +4,7 @@ from django.conf import settings
 from decouple import config
 from utility import tinyURL
 import re
-from services import pttservice, gasservice, cambridgeservice, cwbservices
+from services import pttservice, gasservice, cambridgeservice, invoiceservice
 import shutil
 import datetime
 from services import covid19service
@@ -295,6 +295,26 @@ def getDailyAWord(examp=True):
     return
 
 
+def getInvoice(msg="發票"):
+    resMsg = invoiceservice.getInvoice(msg)
+    print(resMsg)
+    payload = {'message': resMsg}
+    tokens = [carbeToken, etenToken, chocoToken]
+
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        outStr = []
+        for v in tokens:
+            res = executor.submit(sendLineNotify, v, payload)
+            outStr.append(res)
+
+        for future in as_completed(outStr):
+            if future.result().status_code == 200:
+                print('發送 LINE Notify 成功！')
+            else:
+                print('發送 LINE Notify 失敗！')
+    return
+
+
 def threeDayWether(loc="新北+汐止"):
     try:
         url = "https://zh-tw.wttr.in/%s%s" % (loc, ".png")
@@ -390,6 +410,7 @@ if __name__ == "__main__":
     # gasCPC()
     # getDailyAWord()
     # carbe()
-    threeDayWether()
+    # threeDayWether()
     # lunch("Taipei+Neihu", "New-Taipei+Xizhi")
     # wether(title="放飯了~", loc=["台北+內湖", "台北+大安", "新北+汐止", "新北+三重"])
+    getInvoice()
