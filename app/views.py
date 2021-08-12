@@ -74,19 +74,19 @@ def callback(request):
                         resMsg = invoiceservice.getInvoice(mtext)
                         if resMsg != "":
                             msgresponse.sendText(event, resMsg)
-                    elif re.match(r".*天氣.*", mtext) != None:
-                        msg = mtext.replace('天氣', '')
-                        cityArea = cwbservices.getCityArea(msg)
-                        resMsg = ""
-                        if cityArea["City"] != "":
-                            resMsg += cwbservices.getWeather(
-                                cityArea["City"]) + "\n"
-                        if cityArea["Area"] != "":
-                            if cityArea["Area"] == '板橋':
-                                resMsg += "卡比請客\n"
-                            resMsg += cwbservices.getAir(cityArea["Area"])
-                        if resMsg != "":
-                            msgresponse.sendText(event, resMsg)
+                    # elif re.match(r".*天氣.*", mtext) != None:
+                    #     msg = mtext.replace('天氣', '')
+                    #     cityArea = cwbservices.getCityArea(msg)
+                    #     resMsg = ""
+                    #     if cityArea["City"] != "":
+                    #         resMsg += cwbservices.getWeather(
+                    #             cityArea["City"]) + "\n"
+                    #     if cityArea["Area"] != "":
+                    #         if cityArea["Area"] == '板橋':
+                    #             resMsg += "卡比請客\n"
+                    #         resMsg += cwbservices.getAir(cityArea["Area"])
+                    #     if resMsg != "":
+                    #         msgresponse.sendText(event, resMsg)
                     elif re.match(r"^t:.*", mtext) != None:
                         msg = mtext.replace('t:', '').strip()
                         if msg != "":
