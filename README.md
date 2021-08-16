@@ -75,6 +75,13 @@ ALLOWED_HOSTS = ['127.0.0.1', '20af8c34126e.ngrok.io']
 2. Procfile : 告訴 Heroku 伺服器種類及主程式名稱
 3. gogopowerkimibot/prod_settings.py
 
+### Heroku 免費限制 
+1. 每 30 分鐘沒使用就會停機
+    * Django Q 排程, 設定每25分鐘, 呼叫一次api避免休眠
+2. 免費 550 小時
+    * 可以驗證信用卡增加 450 小時
+    * 因為加了排程會導致時間使用超過, 可以設定凌晨時不呼叫排成,讓他停機. 然後使用 github的workflows, 建立排程在早上喚醒
+
 ```shell
 ## install
 pip3 install virtualenv
