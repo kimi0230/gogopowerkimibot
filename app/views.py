@@ -48,7 +48,7 @@ def callback(request):
                     elif mtext == "疫情":
                         pttRes = covid19service.getGossipCovid19()
                         resMsg = ""
-                        if pttRes != "":
+                        if len(pttRes) > 0:
                             resMsg = "%s\n%s\n%s\n" % (
                                 pttRes["Date"], pttRes["Title"], pttRes["Link"])
                         res = covid19service.getCovid19()
