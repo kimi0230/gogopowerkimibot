@@ -109,11 +109,11 @@ def covid19():
 THREE_TRADE = "https://www.twse.com.tw/zh/page/trading/fund/BFI82U.html"
 EGIHTGOV = "https://histock.tw/stock/broker8.aspx"
 ETF = "https://mis.twse.com.tw/stock/etf_nav.jsp?ex=tse#memo3"
-
+FOREIGN = "https: // fubon-ebrokerdj.fbs.com.tw/Z/ZG/ZGK_D.djhtm"
 
 def stock5pm():
-    msg = '\n 三大法人買賣超: %s \n\n 八大官股: %s \n\n ETF溢價: %s' % (
-        THREE_TRADE, EGIHTGOV, ETF)
+    msg = '\n 三大法人買賣超: %s \n\n 外資買賣超 %s \n\n八大官股: %s \n\n ETF溢價: %s' % (
+        THREE_TRADE, FOREIGN, EGIHTGOV, ETF)
     payload = {'message': msg}
     res = sendLineNotify(token, payload)
 
