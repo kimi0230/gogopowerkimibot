@@ -103,7 +103,7 @@ def starDay():
     payload = {'message': resMsg}
     file = {'imageFile': resImg.raw}
 
-    tokens = [token]
+    tokens = [token, chocoToken]
     with ThreadPoolExecutor(max_workers=3) as executor:
         outStr = []
         for v in tokens:
