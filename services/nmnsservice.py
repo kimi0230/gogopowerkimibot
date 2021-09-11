@@ -1,5 +1,3 @@
-
-from module import msgresponse
 import requests
 from bs4 import BeautifulSoup
 import datetime
@@ -38,17 +36,24 @@ def getStar(year="", month=""):
             "contents": contents[:-2],  # 後面的聯絡資訊不要
             "images": images
         }
-        print(result)
+        # print(result)
         return result
     except Exception as e:
         print(e)
         return ""
 
 
-def sendStar(event, msg):
-    msgresponse.sendText(event, msg)
+def getStarText(year="", month=""):
+    star = getStar(year, month)
+    msg = star['contentTitle']+"\t"+star['url'] + \
+        "\n"+star['contents'][0] + "\n\n"
+
+    msg += "\n".join(star['contents'][1:])
+    # print(msg)
+    return msg
 
 
 if __name__ == "__main__":
     # python3 -B -m services.nmnsservice
-    getStar()
+    # getStar()
+    getStarText()
