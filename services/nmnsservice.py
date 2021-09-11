@@ -20,8 +20,13 @@ def getStar(year="", month=""):
             year = nowDate.year
         if month == "":
             month = "%02d" % nowDate.month
+        else:
+            month = "%02d" % month
         url = link % (year, year, month)
         res = requests.get(url, headers=headers)
+        if res.status_code != 200:
+            return
+
         soup = BeautifulSoup(res.text, "lxml")
 
         #  0: 總介紹
