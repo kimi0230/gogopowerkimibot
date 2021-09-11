@@ -8,7 +8,7 @@ from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import MessageEvent, TextMessage, PostbackEvent
 from module import msgresponse
-from services import cwbservices, invoiceservice, covid19service, exchangeservice, cambridgeservice
+from services import cwbservices, invoiceservice, covid19service, exchangeservice, cambridgeservice, nmnsservice
 from urllib.parse import parse_qsl
 from myconst import cmdlist
 import re
@@ -108,6 +108,8 @@ def callback(request):
                             msgresponse.sendText(event, resMsg)
                     elif mtext == "穩":
                         msgresponse.sendImage(event, "stable")
+                    elif mtext == "天文":
+                        nmnsservice.sendText(event, "123")
             if isinstance(event, PostbackEvent):  # PostbackTemplateAction觸發此事件
                 # 取得Postback資料
                 pass
