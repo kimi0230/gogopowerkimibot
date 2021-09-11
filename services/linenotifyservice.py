@@ -4,7 +4,7 @@ from django.conf import settings
 from decouple import config
 from utility import tinyURL
 import re
-from services import pttservice, gasservice, cambridgeservice, invoiceservice
+from services import pttservice, gasservice, cambridgeservice, invoiceservice, nmnsservice
 import shutil
 import datetime
 from services import covid19service
@@ -74,6 +74,32 @@ def carbe():
         print('發送 LINE Notify 成功！')
     else:
         print('發送 LINE Notify 失敗！')
+
+
+def star():
+    try:
+        resMsg = nmnsservice.getStarText()
+        if resMsg == "":
+            return
+
+        payload = {'message': resMsg}
+
+        tokens = [token, chocoToken]
+        # tokens = [token]
+        with ThreadPoolExecutor(max_workers=3) as executor:
+            outStr = []
+            for v in tokens:
+                res = executor.submit(sendLineNotify, v, payload)
+                outStr.append(res)
+
+            for future in as_completed(outStr):
+                if future.result().status_code == 200:
+                    print('發送 LINE Notify 成功！')
+                else:
+                    print('發送 LINE Notify 失敗！')
+        return
+    except:
+        return
 
 
 def covid19():
@@ -414,4 +440,5 @@ if __name__ == "__main__":
     # threeDayWether()
     # lunch("Taipei+Neihu", "New-Taipei+Xizhi")
     # wether(title="放飯了~", loc=["台北+內湖", "台北+大安", "新北+汐止", "新北+三重"])
-    getInvoice()
+    # getInvoice()
+    star()
