@@ -39,6 +39,10 @@ except:
 bankAccount = config('RICHART_ACCOUNT')
 bankAccountLink = config('RICHART_ACCOUNT_LINK')
 
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Macintosh Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36'
+}
+
 
 def sendLineNotify(token, params=None, file=None):
     headers = {
@@ -74,6 +78,44 @@ def carbe():
         print('發送 LINE Notify 成功！')
     else:
         print('發送 LINE Notify 失敗！')
+
+
+def starDay():
+    now = datetime.datetime.now()
+    # 找明天
+    tomorrow = now + datetime.timedelta(days=1)
+    tomorrowDate = "%d/%d" % (tomorrow.month, tomorrow.day)
+    starResult = nmnsservice.getStar(tomorrow.year, tomorrow.month)
+    if starResult == "":
+        return
+    # print(starResult)
+    resMsg = ""
+    for i in range(len(starResult['contentsTitle'])):
+        if starResult['contentsTitle'][i]['day'] == tomorrowDate:
+            resMsg += "%s\n%s\n%s" % (tomorrowDate,
+                                      starResult['contents'][2*i+1].split("、")[1], starResult['contents'][2*i+2])
+            resImgURL = starResult['images'][i]['link']
+            resImg = requests.get(resImgURL, headers=headers, stream=True)
+            break
+    if resMsg == "":
+        return
+
+    payload = {'message': resMsg}
+    file = {'imageFile': resImg.raw}
+
+    tokens = [token]
+    with ThreadPoolExecutor(max_workers=3) as executor:
+        outStr = []
+        for v in tokens:
+            res = executor.submit(sendLineNotify, v, payload, file)
+            outStr.append(res)
+
+        for future in as_completed(outStr):
+            if future.result().status_code == 200:
+                print('發送 LINE Notify 成功！')
+            else:
+                print('發送 LINE Notify 失敗！')
+    return
 
 
 def star():
@@ -355,9 +397,6 @@ def getInvoice(msg="發票"):
 def threeDayWether(loc="新北+汐止"):
     try:
         url = "https://zh-tw.wttr.in/%s%s" % (loc, ".png")
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Macintosh Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36'
-        }
         res = requests.get(url, headers=headers, stream=True)
         payload = {'message': loc}
 
@@ -451,4 +490,5 @@ if __name__ == "__main__":
     # lunch("Taipei+Neihu", "New-Taipei+Xizhi")
     # wether(title="放飯了~", loc=["台北+內湖", "台北+大安", "新北+汐止", "新北+三重"])
     # getInvoice()
-    star()
+    # star()
+    starDay()

@@ -39,8 +39,9 @@ def getStar(year="", month=""):
 
         title = soup.select('#content-title h2')[0].text.strip()
 
+        imageRoot = "https://www.nmns.edu.tw"
         images = []if len(soup.select('.ts_overflow_Xh a')
-                          ) == 0 else [{"title": a.get("title"), "link": a.get("href")} for a in soup.select('.ts_overflow_Xh a') if a.get("title") != None]
+                          ) == 0 else [{"title": a.get("title"), "link": "%s%s" % (imageRoot, a.get("href"))} for a in soup.select('.ts_overflow_Xh a') if a.get("title") != None]
 
         result = {
             "url": url,
