@@ -109,7 +109,7 @@ def callback(request):
                     elif mtext == "穩":
                         msgresponse.sendImage(event, "stable")
                     elif mtext == "天文":
-                        msgresponse.sendText(nmnsservice.getStarText(), resMsg)
+                        msgresponse.sendText(event, nmnsservice.getStarText())
             if isinstance(event, PostbackEvent):  # PostbackTemplateAction觸發此事件
                 # 取得Postback資料
                 pass
