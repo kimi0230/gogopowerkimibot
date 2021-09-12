@@ -63,7 +63,6 @@ def getStarText(year="", month=""):
         "\n"+star['contents'][0] + "\n\n"
 
     msg += "\n".join(s['title'] for s in star['contentsTitle'])
-    print(msg)
     return msg
 
 
