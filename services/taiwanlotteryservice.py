@@ -37,8 +37,12 @@ def getlottery():
             locale.currency(int(dollar.text), grouping=True) for dollar in soup.select(".top_dollar")]
         lottos = {} if len(soup.select(".contents_box02")) == 0 else {
             titles[idx]: extractionlotto(box, 6) for idx, box in enumerate(soup.select(".contents_box02")) if idx % 2 == 0}
-        lottos["威力彩"]["topDollar"] = topDollar[0].split(".")[0]
-        lottos["大樂透"]["topDollar"] = topDollar[1].split(".")[0]
+        if len(topDollar)<2:
+            lottos["威力彩"]["topDollar"] = "更新中"
+            lottos["大樂透"]["topDollar"] = "更新中"
+        else:
+            lottos["威力彩"]["topDollar"] = topDollar[0].split(".")[0]
+            lottos["大樂透"]["topDollar"] = topDollar[1].split(".")[0]
         return lottos
     except Exception as e:
         print(e)
@@ -64,5 +68,5 @@ def genLineMsg(title, lottery):
 
 if __name__ == "__main__":
     # python3 -B -m services.taiwanlotteryservice
-    # print(getlottery())
-    print(getlotteryText())
+    print(getlottery())
+    # print(getlotteryText())
