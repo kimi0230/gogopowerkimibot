@@ -4,8 +4,8 @@ from django.conf import settings
 from decouple import config
 from utility import tinyURL
 import re
-from services import pttservice, gasservice, cambridgeservice, invoiceservice, nmnsservice
-import shutil
+from services import pttservice, gasservice, cambridgeservice, invoiceservice, nmnsservice, taiwanlotteryservice
+
 import datetime
 from services import covid19service
 
@@ -475,6 +475,32 @@ def wether(title=None, loc=[]):
         return
 
 
+def lottery(*category):
+    try:
+        resMsg = taiwanlotteryservice.getlotteryText(category)
+        if resMsg == "":
+            return
+
+        payload = {'message': resMsg}
+        tokens = [token]
+        # 發送line
+        with ThreadPoolExecutor(max_workers=3) as executor:
+            outStr = []
+            for v in tokens:
+                res = executor.submit(sendLineNotify, v, payload)
+                outStr.append(res)
+
+            for future in as_completed(outStr):
+                if future.result().status_code == 200:
+                    print('發送 LINE Notify 成功！')
+                else:
+                    print('發送 LINE Notify 失敗！')
+        return
+    except Exception as e:
+        print(e)
+        return
+
+
 if __name__ == "__main__":
     # stock5pm()
     # punchIn()
@@ -491,4 +517,5 @@ if __name__ == "__main__":
     # wether(title="放飯了~", loc=["台北+內湖", "台北+大安", "新北+汐止", "新北+三重"])
     # getInvoice()
     # star()
-    starDay()
+    # starDay()
+    lottery("大樂透", "威力彩")
