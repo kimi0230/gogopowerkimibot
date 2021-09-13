@@ -50,8 +50,8 @@ def getlotteryText(category=["威力彩", "大樂透"]):
 
 
 def genLineMsg(title, lottery):
-    msg = "%s\n%s\n大小順序:\t%s\n\n\n" % (title,
-                                       lottery["time"], lottery["AscOrder"])
+    msg = "%s\n%s\n大小順序:\t%s\n特別號:%s\n\n\n" % (title,
+                                               lottery["time"], lottery["AscOrder"], lottery["specialNumber"])
     return msg
 
 
