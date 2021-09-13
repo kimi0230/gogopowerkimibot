@@ -482,7 +482,7 @@ def lottery(*category):
             return
 
         payload = {'message': resMsg}
-        tokens = [token]
+        tokens = [chocoToken, etenToken]
         # 發送line
         with ThreadPoolExecutor(max_workers=3) as executor:
             outStr = []
