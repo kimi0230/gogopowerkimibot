@@ -110,7 +110,7 @@ def callback(request):
                         msgresponse.sendImage(event, "stable")
                     elif mtext == "天文":
                         msgresponse.sendText(event, nmnsservice.getStarText())
-                    elif mtext == "樂透":
+                    elif mtext in ["樂透", "威力彩", "大樂透"]:
                         msgresponse.sendText(
                             event, taiwanlotteryservice.getlotteryText())
             if isinstance(event, PostbackEvent):  # PostbackTemplateAction觸發此事件
