@@ -52,7 +52,8 @@ def getlotteryText(category=["威力彩", "大樂透"]):
     for title in category:
         msg += genLineMsg(title, lotterys[title])
 
-    return msg.strip()
+    lotteryShortURL = "\n\nhttps://tinyl.io/4lb9"
+    return msg.strip() + lotteryShortURL
 
 
 def genLineMsg(title, lottery):
@@ -63,5 +64,5 @@ def genLineMsg(title, lottery):
 
 if __name__ == "__main__":
     # python3 -B -m services.taiwanlotteryservice
-    print(getlottery())
-    # print(getlotteryText())
+    # print(getlottery())
+    print(getlotteryText())
