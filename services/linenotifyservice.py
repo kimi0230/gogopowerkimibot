@@ -396,7 +396,7 @@ def getInvoice(msg="發票"):
 
 def threeDayWether(loc="新北+汐止"):
     try:
-        url = "https://zh-tw.wttr.in/%s%s" % (loc, ".png")
+        url = "https://zh-tw.wttr.in/%s%s?lang=%s" % (loc, ".png", "zh-tw")
         res = requests.get(url, headers=headers, stream=True)
         payload = {'message': loc}
 
