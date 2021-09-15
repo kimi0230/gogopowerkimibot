@@ -188,11 +188,12 @@ THREE_TRADE = "https://tinyl.io/4fA1"
 EGIHTGOV = "https://tinyl.io/4fA2"
 ETF = "https://tinyl.io/4fA4"
 FOREIGN = "https://tinyl.io/4fA6"
+FUTCONTRACT = "https://tinyl.io/4mYR"
 
 
 def stock5pm():
-    msg = '\n 三大法人買賣超: %s \n\n 外資買賣超 %s \n\n八大官股: %s \n\n ETF溢價: %s' % (
-        THREE_TRADE, FOREIGN, EGIHTGOV, ETF)
+    msg = '\n 三大法人買賣超: %s \n\n 外資買賣超 %s \n\n八大官股: %s \n\n ETF溢價: %s \n\n 未平倉: %s' % (
+        THREE_TRADE, FOREIGN, EGIHTGOV, ETF, FUTCONTRACT)
     payload = {'message': msg}
     res = sendLineNotify(token, payload)
 
