@@ -6,8 +6,8 @@ LINE 機器人, LINE Notify.
 中油油價漲幅 notify
 每日英文單字 notify 等
 
-![line bot](https://github.com/kimi0230/gogopowerkimibot/blob/master/images/gif/bot.gif)
-![line notify](https://github.com/kimi0230/gogopowerkimibot/blob/master/images/gif/notify.gif)
+![line bot](https://github.com/kimi0230/gogopowerkimibot/raw/main/images/gif/bot.gif)
+![line notify](https://github.com/kimi0230/gogopowerkimibot/raw/main/images/gif/notify.gif)
 ## Commands
 
 - `發票 {數字N}`: N:代表前 N 期的發票(optinal) ex. `發票 1`
