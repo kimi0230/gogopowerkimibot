@@ -104,7 +104,7 @@ def starDay():
         payload = {'message': resMsg}
         file = {'imageFile': resImg.raw}
 
-        tokens = [token, chocoToken, carbeToken, etenToken]
+        tokens = [chocoToken, carbeToken, etenToken]
         # tokens = [token]
         with ThreadPoolExecutor(max_workers=3) as executor:
             outStr = []
