@@ -81,41 +81,46 @@ def carbe():
 
 
 def starDay():
-    now = datetime.datetime.now()
-    # 找明天
-    tomorrow = now + datetime.timedelta(days=1)
-    tomorrowDate = "%d/%d" % (tomorrow.month, tomorrow.day)
-    starResult = nmnsservice.getStar(tomorrow.year, tomorrow.month)
-    if starResult == "":
+    try:
+        now = datetime.datetime.now()
+        # 找明天
+        tomorrow = now + datetime.timedelta(days=1)
+        tomorrowDate = "%d/%d" % (tomorrow.month, tomorrow.day)
+        starResult = nmnsservice.getStar(tomorrow.year, tomorrow.month)
+        if starResult == "":
+            return
+        print(starResult)
+        resMsg = ""
+        for i in range(len(starResult['contentsTitle'])):
+            if starResult['contentsTitle'][i]['day'] == tomorrowDate:
+                resMsg += "%s\n%s\n%s" % (tomorrowDate,
+                                          starResult['contents'][2*i+1].split("、")[1], starResult['contents'][2*i+2])
+                resImgURL = starResult['images'][i]['link']
+                resImg = requests.get(resImgURL, headers=headers, stream=True)
+                break
+        if resMsg == "":
+            return
+
+        payload = {'message': resMsg}
+        file = {'imageFile': resImg.raw}
+
+        # tokens = [token, chocoToken]
+        tokens = [token]
+        with ThreadPoolExecutor(max_workers=3) as executor:
+            outStr = []
+            for v in tokens:
+                res = executor.submit(sendLineNotify, v, payload, file)
+                outStr.append(res)
+
+            for future in as_completed(outStr):
+                if future.result().status_code == 200:
+                    print('發送 LINE Notify 成功！')
+                else:
+                    print('發送 LINE Notify 失敗！')
         return
-    # print(starResult)
-    resMsg = ""
-    for i in range(len(starResult['contentsTitle'])):
-        if starResult['contentsTitle'][i]['day'] == tomorrowDate:
-            resMsg += "%s\n%s\n%s" % (tomorrowDate,
-                                      starResult['contents'][2*i+1].split("、")[1], starResult['contents'][2*i+2])
-            resImgURL = starResult['images'][i]['link']
-            resImg = requests.get(resImgURL, headers=headers, stream=True)
-            break
-    if resMsg == "":
+    except Exception as e:
+        print(e)
         return
-
-    payload = {'message': resMsg}
-    file = {'imageFile': resImg.raw}
-
-    tokens = [token, chocoToken]
-    with ThreadPoolExecutor(max_workers=3) as executor:
-        outStr = []
-        for v in tokens:
-            res = executor.submit(sendLineNotify, v, payload, file)
-            outStr.append(res)
-
-        for future in as_completed(outStr):
-            if future.result().status_code == 200:
-                print('發送 LINE Notify 成功！')
-            else:
-                print('發送 LINE Notify 失敗！')
-    return
 
 
 def star():
@@ -518,5 +523,5 @@ if __name__ == "__main__":
     # wether(title="放飯了~", loc=["台北+內湖", "台北+大安", "新北+汐止", "新北+三重"])
     # getInvoice()
     # star()
-    # starDay()
-    lottery("大樂透", "威力彩")
+    starDay()
+    # lottery("大樂透", "威力彩")
