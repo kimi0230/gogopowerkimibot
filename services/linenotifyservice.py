@@ -89,7 +89,7 @@ def starDay():
         starResult = nmnsservice.getStar(tomorrow.year, tomorrow.month)
         if starResult == "":
             return
-        print(starResult)
+
         resMsg = ""
         for i in range(len(starResult['contentsTitle'])):
             if starResult['contentsTitle'][i]['day'] == tomorrowDate:
@@ -104,8 +104,8 @@ def starDay():
         payload = {'message': resMsg}
         file = {'imageFile': resImg.raw}
 
-        # tokens = [token, chocoToken]
-        tokens = [token]
+        tokens = [token, chocoToken, carbeToken, etenToken]
+        # tokens = [token]
         with ThreadPoolExecutor(max_workers=3) as executor:
             outStr = []
             for v in tokens:
