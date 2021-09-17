@@ -415,24 +415,22 @@ def getInvoice(msg="發票"):
 def threeDayWether(loc="新北+汐止"):
     try:
         url = "https://zh-tw.wttr.in/%s%s?lang=%s" % (loc, ".png", "zh-tw")
-        res = requests.get(url, headers=headers, stream=True)
         payload = {'message': loc}
-
-        # 寫入檔案
-        # Set decode_content value to True, otherwise the downloaded image file's size will be zero.
-        # res.raw.decode_content = True
-        # # Open a local file with wb ( write binary ) permission.
-        # with open("New-Taipei.png", 'wb') as f:
-        #     shutil.copyfileobj(res.raw, f)
-        # f = open('New-Taipei.png', 'rb')  # create an empty demo file
-        # file = {'imageFile': f}
-        file = {'imageFile': res.raw}
-
       # tokens = [carbeToken, etenToken, chocoToken]
         tokens = [token]
         with ThreadPoolExecutor(max_workers=3) as executor:
             outStr = []
             for v in tokens:
+                res = requests.get(url, headers=headers, stream=True)
+                # 寫入檔案
+                # Set decode_content value to True, otherwise the downloaded image file's size will be zero.
+                # res.raw.decode_content = True
+                # # Open a local file with wb ( write binary ) permission.
+                # with open("New-Taipei.png", 'wb') as f:
+                #     shutil.copyfileobj(res.raw, f)
+                # f = open('New-Taipei.png', 'rb')  # create an empty demo file
+                # file = {'imageFile': f}
+                file = {'imageFile': res.raw}
                 res = executor.submit(sendLineNotify, v, payload, file)
                 outStr.append(res)
 
@@ -530,10 +528,10 @@ if __name__ == "__main__":
     # gasCPC()
     # getDailyAWord()
     # carbe()
-    # threeDayWether()
+    threeDayWether()
     # lunch("Taipei+Neihu", "New-Taipei+Xizhi")
     # wether(title="放飯了~", loc=["台北+內湖", "台北+大安", "新北+汐止", "新北+三重"])
     # getInvoice()
     # star()
-    starDay()
+    # starDay()
     # lottery("大樂透", "威力彩")
