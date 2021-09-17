@@ -88,16 +88,17 @@ def starDay():
     try:
         now = datetime.datetime.now()
         # 找明天
-        tomorrow = now + datetime.timedelta(days=1)
-        tomorrowDate = "%d/%d" % (tomorrow.month, tomorrow.day)
-        starResult = nmnsservice.getStar(tomorrow.year, tomorrow.month)
+        # tomorrow = now + datetime.timedelta(days=1)
+        # tomorrowDate = "%d/%d" % (tomorrow.month, tomorrow.day)
+        nowDate = "%d/%d" % (now.month, now.day)
+        starResult = nmnsservice.getStar(now.year, now.month)
         if starResult == "":
             return
 
         resMsg = ""
         for i in range(len(starResult['contentsTitle'])):
-            if starResult['contentsTitle'][i]['day'] == tomorrowDate:
-                resMsg += "%s\n%s\n%s" % (tomorrowDate,
+            if starResult['contentsTitle'][i]['day'] == nowDate:
+                resMsg += "%s\n%s\n%s" % (nowDate,
                                           starResult['contents'][2*i+1].split("、")[1], starResult['contents'][2*i+2])
                 resImgURL = starResult['images'][i]['link']
                 # resImg = requests.get(resImgURL, headers=headers, stream=True)
