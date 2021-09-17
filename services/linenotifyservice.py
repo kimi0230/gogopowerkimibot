@@ -1,15 +1,19 @@
+from services import covid19service
+import datetime
+from services import pttservice, gasservice, cambridgeservice, invoiceservice, nmnsservice, taiwanlotteryservice
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import requests
 from django.conf import settings
 from decouple import config
 from utility import tinyURL
 import re
-from services import pttservice, gasservice, cambridgeservice, invoiceservice, nmnsservice, taiwanlotteryservice
+import urllib
+import ssl
+import os
 
-import datetime
-from services import covid19service
+ssl._create_default_https_context = ssl._create_unverified_context
 
-import random
+
 try:
     token = settings.ZHIZHI_NOTIFY_TOKEN
 except:
@@ -96,19 +100,26 @@ def starDay():
                 resMsg += "%s\n%s\n%s" % (tomorrowDate,
                                           starResult['contents'][2*i+1].split("、")[1], starResult['contents'][2*i+2])
                 resImgURL = starResult['images'][i]['link']
-                resImg = requests.get(resImgURL, headers=headers, stream=True)
+                # resImg = requests.get(resImgURL, headers=headers, stream=True)
                 break
         if resMsg == "":
             return
 
         payload = {'message': resMsg}
-        file = {'imageFile': resImg.raw}
+
+        imgPath = "star.png"
+        fp = urllib.request.urlopen(resImgURL)
+        with open(imgPath, "wb") as fo:
+            fo.write(fp.read())
 
         tokens = [chocoToken, carbeToken, etenToken]
-        # tokens = [token]
+        # tokens = [token, token]
+
         with ThreadPoolExecutor(max_workers=3) as executor:
             outStr = []
             for v in tokens:
+                f = open(imgPath, 'rb')
+                file = {'imageFile': f}
                 res = executor.submit(sendLineNotify, v, payload, file)
                 outStr.append(res)
 
@@ -117,6 +128,7 @@ def starDay():
                     print('發送 LINE Notify 成功！')
                 else:
                     print('發送 LINE Notify 失敗！')
+        os.remove(imgPath)
         return
     except Exception as e:
         print(e)
