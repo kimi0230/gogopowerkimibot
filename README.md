@@ -166,6 +166,7 @@ Q_CLUSTER = {
 - [統一發票](https://invoice.etax.nat.gov.tw/invoice.xml)
 - https://django-q.readthedocs.io/en/latest/cluster.html
 - https://github.com/chubin/wttr.in
+- [Thread 用法](https://www.thepythoncode.com/article/using-threads-in-python)
 
 ## memo
 
