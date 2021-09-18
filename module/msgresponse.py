@@ -48,7 +48,7 @@ def sendStick(event, stickObj):  # 傳送貼圖
             event.reply_token, TextSendMessage(text='請支援收銀!'))
 
 
-def sendMulti(event, msg, imgURL, stickObj):  # 多項傳送
+def sendMulti(event, msg=None, imgURL=None, stickObj=None):  # 多項傳送
     try:
         message = []
         if msg != None:
