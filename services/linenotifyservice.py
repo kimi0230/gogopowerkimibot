@@ -89,7 +89,7 @@ def starDay():
         now = datetime.datetime.now()
         resMsg, resImgURL = nmnsservice.getStarDayText(now)
 
-        if resMsg == "":
+        if resMsg == "當日無資料":
             return
 
         payload = {'message': resMsg}
