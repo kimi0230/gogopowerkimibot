@@ -87,22 +87,8 @@ def carbe():
 def starDay():
     try:
         now = datetime.datetime.now()
-        # 找明天
-        # tomorrow = now + datetime.timedelta(days=1)
-        # tomorrowDate = "%d/%d" % (tomorrow.month, tomorrow.day)
-        nowDate = "%d/%d" % (now.month, now.day)
-        starResult = nmnsservice.getStar(now.year, now.month)
-        if starResult == "":
-            return
+        resMsg, resImgURL = nmnsservice.getStarDayText(now)
 
-        resMsg = ""
-        for i in range(len(starResult['contentsTitle'])):
-            if starResult['contentsTitle'][i]['day'] == nowDate:
-                resMsg += "%s\n%s\n%s" % (nowDate,
-                                          starResult['contents'][2*i+1].split("、")[1], starResult['contents'][2*i+2])
-                resImgURL = starResult['images'][i]['link']
-                # resImg = requests.get(resImgURL, headers=headers, stream=True)
-                break
         if resMsg == "":
             return
 
@@ -113,8 +99,8 @@ def starDay():
         with open(imgPath, "wb") as fo:
             fo.write(fp.read())
 
-        tokens = [chocoToken, carbeToken, etenToken]
-        # tokens = [token, token]
+        # tokens = [chocoToken, carbeToken, etenToken]
+        tokens = [token]
 
         with ThreadPoolExecutor(max_workers=3) as executor:
             outStr = []
@@ -529,10 +515,10 @@ if __name__ == "__main__":
     # gasCPC()
     # getDailyAWord()
     # carbe()
-    threeDayWether()
+    # threeDayWether()
     # lunch("Taipei+Neihu", "New-Taipei+Xizhi")
     # wether(title="放飯了~", loc=["台北+內湖", "台北+大安", "新北+汐止", "新北+三重"])
     # getInvoice()
     # star()
-    # starDay()
+    starDay()
     # lottery("大樂透", "威力彩")

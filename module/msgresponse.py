@@ -48,21 +48,23 @@ def sendStick(event, stickObj):  # 傳送貼圖
             event.reply_token, TextSendMessage(text='請支援收銀!'))
 
 
-def sendMulti(event):  # 多項傳送
+def sendMulti(event, msg, imgURL, stickObj):  # 多項傳送
     try:
-        message = [  # 串列
-            StickerSendMessage(  # 傳送貼圖 https://developers.line.biz/en/docs/messaging-api/sticker-list/
+        message = []
+        if msg != None:
+            message.append(TextSendMessage(  # 傳送y文字
+                text=msg
+            ))
+        if imgURL != None:
+            message.append(ImageSendMessage(  # 傳送圖片
+                original_content_url=imgURL,
+                preview_image_url=imgURL
+            ))
+        if stickObj != None:
+            message.append(StickerSendMessage(  # 傳送貼圖 https://developers.line.biz/en/docs/messaging-api/sticker-list/
                 package_id='446',
                 sticker_id='1988'
-            ),
-            TextSendMessage(  # 傳送y文字
-                text="這是 Pizza 圖片！"
-            ),
-            ImageSendMessage(  # 傳送圖片
-                original_content_url="https://i.imgur.com/IhQm1MI.png",
-                preview_image_url="https://i.imgur.com/IhQm1MI.png"
-            )
-        ]
+            ))
         line_bot_api.reply_message(event.reply_token, message)
     except:
         line_bot_api.reply_message(

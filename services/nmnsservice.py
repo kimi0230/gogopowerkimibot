@@ -66,6 +66,28 @@ def getStarText(year="", month=""):
     return msg
 
 
+def getStarDayText(now):
+    try:
+        nowDate = "%d/%d" % (now.month, now.day)
+        starResult = getStar(now.year, now.month)
+        if starResult == "":
+            return
+
+        resMsg = ""
+        for i in range(len(starResult['contentsTitle'])):
+            if starResult['contentsTitle'][i]['day'] == nowDate:
+                resMsg += "%s\n%s\n%s" % (nowDate,
+                                          starResult['contents'][2*i+1].split("、")[1], starResult['contents'][2*i+2])
+                resImgURL = starResult['images'][i]['link']
+                break
+        if resMsg == "":
+            return "當日無資料", ""
+        return resMsg, resImgURL
+    except Exception as e:
+        print(e)
+        return "", ""
+
+
 def transZhTime2Arabic(msg, reg):
     # year = str.split('年')[0]
     dateStr = re.search(reg, msg).group()

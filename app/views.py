@@ -12,6 +12,7 @@ from services import cwbservices, invoiceservice, covid19service, exchangeservic
 from urllib.parse import parse_qsl
 from myconst import cmdlist
 import re
+import datetime
 
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
@@ -109,6 +110,10 @@ def callback(request):
                     elif mtext == "穩":
                         msgresponse.sendImage(event, "stable")
                     elif mtext == "天文":
+                        now = datetime.datetime.now()
+                        resMsg, resImgURL = nmnsservice.getStarDayText(now)
+                        msgresponse.sendMulti(event, resMsg, resImgURL)
+                    elif mtext == "天文月":
                         msgresponse.sendText(event, nmnsservice.getStarText())
                     elif mtext in ["樂透", "威力彩", "大樂透"]:
                         msgresponse.sendText(

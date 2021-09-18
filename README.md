@@ -22,7 +22,8 @@ LINE 機器人, LINE Notify.
 - `te:{英文單字}`: 取得翻譯 音標 詞性 中英例句
 - `td:`: 取得每日一單字
 - `ls` : 顯示所有指令
-- `天文`: 當月天文景象 https://www.nmns.edu.tw/learn/feature/star/2021/202109/
+- `天文`: 當天天文景象+圖片
+- `天文月`: 當月天文景象 https://www.nmns.edu.tw/learn/feature/star/2021/202109/
 - `樂透`: 威力彩, 大樂透
 
 ## Install package
