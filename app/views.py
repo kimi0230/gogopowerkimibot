@@ -59,14 +59,9 @@ def callback(request):
                             msgresponse.sendText(event, resMsg)
                     elif re.match(r"^匯率", mtext) != None:
                         msg = mtext.replace('匯率', '').strip()
-                        res = exchangeservice.getBoTExchange(msg)
-                        if res != "":
-                            resMsg = "|幣別\t\t|即期買\t|即期賣\t|\n"
-                            for r in res:
-                                resMsg += "|%s | %s | %s |\n" % (
-                                    r, res[r][2], res[r][3])
-                            resMsg += "https://rate.bot.com.tw/xrt?Lang=zh-TW"
-                            msgresponse.sendText(event, resMsg)
+                        resMsg = exchangeservice.toMsg(exchangeservice.getBoTExchange(
+                            msg))
+                        msgresponse.sendText(event, resMsg)
                     elif re.match(r".*bug.*", mtext) != None:
                         msgresponse.sendText(event, "請支援收銀~")
                     elif mtext == "吱吱":
