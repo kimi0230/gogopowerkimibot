@@ -81,7 +81,7 @@ def getStarDayText(now):
                 resImgURL = starResult['images'][i]['link']
                 break
         if resMsg == "":
-            return "當日無資料", ""
+            return "當日無資料", None
         return resMsg, resImgURL
     except Exception as e:
         print(e)
