@@ -92,7 +92,7 @@ def toMsg(source=None):
             resMsg = "|幣別\t\t|即期買\t|即期賣\t|\n"
             for r in source:
                 resMsg += "|%s | %s | %s |\n" % (
-                    r, res[r][2], res[r][3])
+                    r, source[r][2], source[r][3])
             resMsg += "https://rate.bot.com.tw/xrt?Lang=zh-TW"
             return resMsg
         else:
@@ -102,4 +102,4 @@ def toMsg(source=None):
 
 
 if __name__ == "__main__":
-    print(getBoTExchange("日"))
+    print(toMsg(getBoTExchange()))
