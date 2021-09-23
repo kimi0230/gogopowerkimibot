@@ -59,14 +59,9 @@ def callback(request):
                             msgresponse.sendText(event, resMsg)
                     elif re.match(r"^匯率", mtext) != None:
                         msg = mtext.replace('匯率', '').strip()
-                        res = exchangeservice.getBoTExchange(msg)
-                        if res != "":
-                            resMsg = "|幣別\t\t|即期買\t|即期賣\t|\n"
-                            for r in res:
-                                resMsg += "|%s | %s | %s |\n" % (
-                                    r, res[r][2], res[r][3])
-                            resMsg += "https://rate.bot.com.tw/xrt?Lang=zh-TW"
-                            msgresponse.sendText(event, resMsg)
+                        resMsg = exchangeservice.toMsg(exchangeservice.getBoTExchange(
+                            msg))
+                        msgresponse.sendText(event, resMsg)
                     elif re.match(r".*bug.*", mtext) != None:
                         msgresponse.sendText(event, "請支援收銀~")
                     elif mtext == "吱吱":
@@ -89,24 +84,24 @@ def callback(request):
                     #     if resMsg != "":
                     #         msgresponse.sendText(event, resMsg)
                     elif re.match(r"^t:.*", mtext) != None:
+                        # 翻譯
                         msg = mtext.replace('t:', '').strip()
                         if msg != "":
                             resMsg = cambridgeservice.toMsg(
                                 cambridgeservice.transWord(msg), False)
-                        if resMsg != "":
                             msgresponse.sendText(event, resMsg)
                     elif re.match(r"^te:.*", mtext) != None:
+                        # 翻譯 + 範例
                         msg = mtext.replace('te:', '').strip()
                         if msg != "":
                             resMsg = cambridgeservice.toMsg(
                                 cambridgeservice.transWord(msg), True)
-                        if resMsg != "":
                             msgresponse.sendText(event, resMsg)
                     elif mtext == "td:":
+                        # 每日一句
                         resMsg = cambridgeservice.toMsg(
                             cambridgeservice.getDailyAWord(), True)
-                        if resMsg != "":
-                            msgresponse.sendText(event, resMsg)
+                        msgresponse.sendText(event, resMsg)
                     elif mtext == "穩":
                         msgresponse.sendImage(event, "stable")
                     elif mtext == "天文":

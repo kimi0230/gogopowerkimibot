@@ -48,19 +48,19 @@ def getBoTExchange(msg=""):
                     found = True
                     break
             if not found:
-                return ""
+                return None
 
         # fix: InsecureRequestWarning: Unverified HTTPS request is being made to host
         requests.packages.urllib3.disable_warnings()
         res = requests.get(url, headers=herders, verify=False)
         res.encoding = 'UTF-8'
         soup = BeautifulSoup(res.text, "lxml")
-        # print(soup)
+
         time = soup.find(
             "span", class_="time").text.strip()
-        # print(time)
+
         table = [s for s in soup.select("table.table tbody tr")]
-        # print(table[0].select("td"))
+
         queryResult = {}
         for t in table:
             currency = t.select("td div.visible-phone")[0].text.strip()
@@ -70,7 +70,7 @@ def getBoTExchange(msg=""):
             spotRateSell = t.select("td")[4].text.strip()
             queryResult[currency] = [cashRateBuy,
                                      cashRateSell, spotRateBuy, spotRateSell]
-        # print(queryResult)
+
         result = {}
         if msg == "":
             # 只抓預設值
@@ -81,25 +81,25 @@ def getBoTExchange(msg=""):
         if len(result) > 0:
             return result
 
-        return ""
+        return None
     except:
-        return ""
+        return None
+
+
+def toMsg(source=None):
+    try:
+        if source != None:
+            resMsg = "|幣別\t\t|即期買\t|即期賣\t|\n"
+            for r in source:
+                resMsg += "|%s | %s | %s |\n" % (
+                    r, res[r][2], res[r][3])
+            resMsg += "https://rate.bot.com.tw/xrt?Lang=zh-TW"
+            return resMsg
+        else:
+            return None
+    except:
+        return None
 
 
 if __name__ == "__main__":
-    # print(getBoTExchange())
-    # print(getBoTExchange("美金 (USD)"))
-    # print(getBoTExchange("jp"))
     print(getBoTExchange("日"))
-    # print(getBoTExchange("加拿大"))
-    # mtext = "匯率"
-    # msg = mtext.replace('匯率', '').strip()
-    # res = getBoTExchange(msg)
-    # if res != "":
-    #     print(res)
-    #     tb = pt.PrettyTable()
-    #     tb.field_names = ['幣別', '現金買入', '現金賣出', '即期買入', '即期賣出']
-    #     for r in res:
-    #         tb.add_row([r, res[r][0], res[r][1], res[r][2], res[r][3]])
-
-    #     print(tb)
