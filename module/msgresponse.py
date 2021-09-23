@@ -13,8 +13,10 @@ imgMap = {
 }
 
 
-def sendText(event, msg):  # 傳送文字
+def sendText(event, msg=None):  # 傳送文字
     try:
+        if msg == None:
+            return
         message = TextSendMessage(
             text=msg
         )

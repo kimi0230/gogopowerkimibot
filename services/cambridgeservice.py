@@ -14,10 +14,10 @@ headers = {
 }
 
 
-def transWord(word):
+def transWord(word=None):
     try:
-        if word == "":
-            return ""
+        if word == None:
+            return None
         word = word.strip()
         wordURL = 'https://dictionary.cambridge.org/zht/%E8%A9%9E%E5%85%B8/%E8%8B%B1%E8%AA%9E-%E6%BC%A2%E8%AA%9E-%E7%B9%81%E9%AB%94/'+word
         res = requests.get(wordURL, headers=headers)
@@ -45,7 +45,7 @@ def transWord(word):
                 {"uk": uk, "ukAudio": ukAudio, "us": us, "usAudio": usAudio, "partofspeech": partofspeech})
 
         if len(result["Head"]) <= 0:
-            return ""
+            return None
 
         # 中文意思
         chtTranslation = set(soup.select(".trans.dtrans.dtrans-se.break-cj")) - \
@@ -65,28 +65,7 @@ def transWord(word):
         return result
     except Exception as e:
         print(e)
-        return ""
-
-
-def toMsg(source, examp=True):
-    try:
-        if source != "":
-            result = "\n%s\n%s\n" % (
-                source["Word"], tinyURL.makeTiny(source["URL"]))
-            for head in source["Head"]:
-                result += "%s\n UK : %s US: %s \n" % (
-                    head["partofspeech"], head["uk"], head["us"])
-            result += "---------\n"
-            for k, v in enumerate(source["ChtTrans"]):
-                result += "%s \n %s  \n" % (v, source["EngTrans"][k])
-            if examp == True:
-                result += "\n---------\n"
-                result += "\nExample:\n "+"\n\n".join(source["Example"])
-        else:
-            return ""
-        return result
-    except:
-        return ""
+        return None
 
 
 def getDailyAWord():
@@ -100,6 +79,26 @@ def getDailyAWord():
         return ""
 
 
+def toMsg(source=None, examp=True):
+    try:
+        if source != None:
+            result = "\n%s\n%s\n" % (
+                source["Word"], tinyURL.makeTiny(source["URL"]))
+            for head in source["Head"]:
+                result += "%s\n UK : %s US: %s \n" % (
+                    head["partofspeech"], head["uk"], head["us"])
+            result += "---------\n"
+            for k, v in enumerate(source["ChtTrans"]):
+                result += "%s \n %s  \n" % (v, source["EngTrans"][k])
+            if examp == True:
+                result += "\n---------\n"
+                result += "\nExample:\n "+"\n\n".join(source["Example"])
+        else:
+            return None
+        return result
+    except:
+        return None
+
+
 if __name__ == "__main__":
     print(getDailyAWord())
-    # print(transWord("kioki"))

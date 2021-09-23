@@ -89,24 +89,24 @@ def callback(request):
                     #     if resMsg != "":
                     #         msgresponse.sendText(event, resMsg)
                     elif re.match(r"^t:.*", mtext) != None:
+                        # 翻譯
                         msg = mtext.replace('t:', '').strip()
                         if msg != "":
                             resMsg = cambridgeservice.toMsg(
                                 cambridgeservice.transWord(msg), False)
-                        if resMsg != "":
                             msgresponse.sendText(event, resMsg)
                     elif re.match(r"^te:.*", mtext) != None:
+                        # 翻譯 + 範例
                         msg = mtext.replace('te:', '').strip()
                         if msg != "":
                             resMsg = cambridgeservice.toMsg(
                                 cambridgeservice.transWord(msg), True)
-                        if resMsg != "":
                             msgresponse.sendText(event, resMsg)
                     elif mtext == "td:":
+                        # 每日一句
                         resMsg = cambridgeservice.toMsg(
                             cambridgeservice.getDailyAWord(), True)
-                        if resMsg != "":
-                            msgresponse.sendText(event, resMsg)
+                        msgresponse.sendText(event, resMsg)
                     elif mtext == "穩":
                         msgresponse.sendImage(event, "stable")
                     elif mtext == "天文":
