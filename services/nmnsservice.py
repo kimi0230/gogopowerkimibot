@@ -59,14 +59,14 @@ def getStar(year="", month=""):
 
 def getStarText(year="", month=""):
     try:
-        star = getStar(year, month)
-        if star == None:
+        starResult = getStar(year, month)
+        if starResult == None:
             return "無資料"
 
-        msg = star['title']+"\t"+star['url'] + \
-            "\n"+star['contents'][0] + "\n\n"
+        msg = starResult['title']+"\t"+starResult['url'] + \
+            "\n"+starResult['contents'][0] + "\n\n"
 
-        msg += "\n".join(s['title'] for s in star['contentsTitle'])
+        msg += "\n".join(s['title'] for s in starResult['contentsTitle'])
         return msg
     except Exception as e:
         print(e)
@@ -77,8 +77,8 @@ def getStarDayText(now):
     try:
         nowDate = "%d/%d" % (now.month, now.day)
         starResult = getStar(now.year, now.month)
-        if starResult == "":
-            return
+        if starResult == None:
+            return "無資料"
 
         resMsg = ""
         for i in range(len(starResult['contentsTitle'])):
