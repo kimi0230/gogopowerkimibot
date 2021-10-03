@@ -25,7 +25,7 @@ def getStar(year="", month=""):
         url = link % (year, year, month)
         res = requests.get(url, headers=headers)
         if res.status_code != 200:
-            return
+            return None
 
         soup = BeautifulSoup(res.text, "lxml")
 
@@ -58,12 +58,19 @@ def getStar(year="", month=""):
 
 
 def getStarText(year="", month=""):
-    star = getStar(year, month)
-    msg = star['title']+"\t"+star['url'] + \
-        "\n"+star['contents'][0] + "\n\n"
+    try:
+        star = getStar(year, month)
+        if star == None:
+            return "無資料"
 
-    msg += "\n".join(s['title'] for s in star['contentsTitle'])
-    return msg
+        msg = star['title']+"\t"+star['url'] + \
+            "\n"+star['contents'][0] + "\n\n"
+
+        msg += "\n".join(s['title'] for s in star['contentsTitle'])
+        return msg
+    except Exception as e:
+        print(e)
+        return None
 
 
 def getStarDayText(now):
