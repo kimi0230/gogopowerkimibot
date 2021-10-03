@@ -78,7 +78,7 @@ def getStarDayText(now):
         nowDate = "%d/%d" % (now.month, now.day)
         starResult = getStar(now.year, now.month)
         if starResult == None:
-            return "無資料"
+            return "無資料", None
 
         resMsg = ""
         for i in range(len(starResult['contentsTitle'])):
@@ -92,7 +92,7 @@ def getStarDayText(now):
         return resMsg, resImgURL
     except Exception as e:
         print(e)
-        return "", ""
+        return None, None
 
 
 def transZhTime2Arabic(msg, reg):
@@ -119,8 +119,9 @@ def transZhTime2Arabic(msg, reg):
 
 if __name__ == "__main__":
     # python3 -B -m services.nmnsservice
+    now = datetime.datetime.now()
     # getStar()
-    getStarText()
+    getStarDayText(now)
     # transZhTime2Arabic("二、九月九日 水星合月", r"[\u4e00-\u9fa5]+月[\u4e00-\u9fa5]日+")
     # a, b = transZhTime2Arabic(
     #     "二、九月一九日 水星合月", r"[\u4e00-\u9fa5]{1,2}月[\u4e00 -\u9fa5]{1,2}日")
