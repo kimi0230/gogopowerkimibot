@@ -99,8 +99,8 @@ def starDay():
         with open(imgPath, "wb") as fo:
             fo.write(fp.read())
 
-        # tokens = [chocoToken, carbeToken, etenToken]
-        tokens = [token]
+        tokens = [chocoToken, carbeToken, etenToken]
+        # tokens = [token]
 
         with ThreadPoolExecutor(max_workers=3) as executor:
             outStr = []
