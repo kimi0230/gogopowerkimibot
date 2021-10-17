@@ -1,4 +1,5 @@
 # GoGoPowerKimi
+[![Wake Up Heroku](https://github.com/kimi0230/gogopowerkimibot/actions/workflows/wakeupheroku.yml/badge.svg)](https://github.com/kimi0230/gogopowerkimibot/actions/workflows/wakeupheroku.yml)
 
 LINE 機器人, LINE Notify.
 使用 Django, Django Q 排程, PostgreSQL, GitHub Active 自動部署至 Heroku
