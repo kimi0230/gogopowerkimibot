@@ -13,13 +13,19 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36'
 }
 
+dictLang = {
+    "zh": "英語-中文（繁體)",
+    "en": "英語"
+}
 
-def transWord(word=None):
+
+def transWord(word=None, lang="zh"):
     try:
         if word == None:
             return None
         word = word.strip()
-        wordURL = 'https://dictionary.cambridge.org/zht/%E8%A9%9E%E5%85%B8/%E8%8B%B1%E8%AA%9E-%E6%BC%A2%E8%AA%9E-%E7%B9%81%E9%AB%94/'+word
+        wordURL = "https://dictionary.cambridge.org/zht/詞典/%s/%s" % (
+            dictLang[lang], word)
         res = requests.get(wordURL, headers=headers)
         soup = BeautifulSoup(res.text, "lxml")
         result = {}
@@ -33,14 +39,18 @@ def transWord(word=None):
             # kk 音標
             kk = head.select('.ipa.dipa.lpr-2.lpl-1')
             uk = "[ %s ]" % (kk[0].text)
-            ukAudio = url + \
-                head.select('source')[0].get("src")
+            if len(head.select('source')) <= 0:
+                ukAudio = ""
+                usAudio = ""
+            else:
+                ukAudio = url + \
+                    head.select('source')[0].get("src")
+                usAudio = url + \
+                    head.select('source')[2].get("src")
             if len(kk) > 1:
                 us = "[ %s ]" % (kk[1].text)
             else:
                 us = uk
-            usAudio = url + \
-                head.select('source')[2].get("src")
             result["Head"].append(
                 {"uk": uk, "ukAudio": ukAudio, "us": us, "usAudio": usAudio, "partofspeech": partofspeech})
 
@@ -74,7 +84,11 @@ def getDailyAWord():
         res.encoding = 'UTF-8'
         soup = BeautifulSoup(res.text, "lxml")
         word = soup.select(".fs36.lmt-5.feature-w-big.wotd-hw a")[0].text
-        return transWord(word)
+        word = word.replace(" ", "-")
+        result = transWord(word)
+        if result == None:
+            result = transWord(word, "en")
+        return result
     except:
         return ""
 
