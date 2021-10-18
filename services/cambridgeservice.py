@@ -24,8 +24,9 @@ def transWord(word=None, lang="zh"):
         if word == None:
             return None
         word = word.strip()
+        wordTmp = word.replace(" ", "-")
         wordURL = "https://dictionary.cambridge.org/zht/詞典/%s/%s" % (
-            dictLang[lang], word)
+            dictLang[lang], wordTmp)
         res = requests.get(wordURL, headers=headers)
         soup = BeautifulSoup(res.text, "lxml")
         result = {}
@@ -84,7 +85,6 @@ def getDailyAWord():
         res.encoding = 'UTF-8'
         soup = BeautifulSoup(res.text, "lxml")
         word = soup.select(".fs36.lmt-5.feature-w-big.wotd-hw a")[0].text
-        word = word.replace(" ", "-")
         result = transWord(word)
         if result == None:
             result = transWord(word, "en")
