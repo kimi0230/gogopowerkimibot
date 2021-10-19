@@ -87,7 +87,7 @@ def getDailyAWord():
         word = soup.select(".fs36.lmt-5.feature-w-big.wotd-hw a")[0].text
         result = transWord(word)
         if result == None:
-            result = transWord(word, "en")
+            result = transWord(word, "zh")
         return result
     except:
         return ""
