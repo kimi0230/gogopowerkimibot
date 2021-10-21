@@ -271,7 +271,7 @@ def punchOut():
     msg = punchMsg(defaultTime, "下班尿尿瞜~", 6, 10) + "\n\n"
 
     # 取得天氣資料
-    loc = ["台北+內湖", "台北+大安", "新北+汐止", "新北+三重"]
+    loc = ["台北+大安", "新北+汐止", "新北+三重"]
     with ThreadPoolExecutor(max_workers=4) as executor:
         outStr = []
         for v in loc:
