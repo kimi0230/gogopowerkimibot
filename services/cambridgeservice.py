@@ -38,7 +38,8 @@ def transWord(word=None, lang="zh"):
             # 詞性
             partofspeech = head.select('.pos.dpos')[0].text
             # kk 音標
-            kk = head.select('.ipa.dipa.lpr-2.lpl-1')
+            kk = head.select('.ipa.dipa')
+
             uk = "[ %s ]" % (kk[0].text)
             if len(head.select('source')) <= 0:
                 ukAudio = ""
@@ -85,9 +86,9 @@ def getDailyAWord():
         res.encoding = 'UTF-8'
         soup = BeautifulSoup(res.text, "lxml")
         word = soup.select(".fs36.lmt-5.feature-w-big.wotd-hw a")[0].text
-        result = transWord(word)
+        result = transWord(word, "zh")
         if result == None:
-            result = transWord(word, "zh")
+            result = transWord(word, "en")
         return result
     except:
         return ""
