@@ -8,7 +8,7 @@ from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import MessageEvent, TextMessage, PostbackEvent
 from module import msgresponse
-from services import cwbservices, invoiceservice, covid19service, exchangeservice, cambridgeservice, nmnsservice, taiwanlotteryservice
+from services import cwbservices, invoiceservice, covid19service, exchangeservice, cambridgeservice, nmnsservice, taiwanlotteryservice, gasservice
 from urllib.parse import parse_qsl
 from myconst import cmdlist
 import re
@@ -113,6 +113,8 @@ def callback(request):
                     elif mtext in ["樂透", "威力彩", "大樂透"]:
                         msgresponse.sendText(
                             event, taiwanlotteryservice.getlotteryText())
+                    elif mtext == "油價":
+                        msgresponse.sendText(event, gasservice.getCPCText())
             if isinstance(event, PostbackEvent):  # PostbackTemplateAction觸發此事件
                 # 取得Postback資料
                 pass

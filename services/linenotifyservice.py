@@ -335,16 +335,12 @@ def netflixMangFee():
 
 
 def gasCPC():
-    source = gasservice.getCPC()
-    resMsg = ""
-    if source != "":
-        resMsg = "%s\t%s\n" % (
-            source["Date"], source["Title"])
-        for v in source["Data"]:
-            resMsg += "%s : %s \n" % (v["name"], v["price"])
-
+    resMsg = gasservice.getCPCText()
+    if resMsg == None:
+        return
     payload = {'message': resMsg}
-    tokens = [carbeToken, etenToken, chocoToken]
+    # tokens = [carbeToken, etenToken, chocoToken]
+    tokens = [token]
 
     with ThreadPoolExecutor(max_workers=2) as executor:
         outStr = []
@@ -512,7 +508,7 @@ if __name__ == "__main__":
     # covid19()
     # netflixMonList()
     # netflixMangFee()
-    # gasCPC()
+    gasCPC()
     # getDailyAWord()
     # carbe()
     # threeDayWether()
@@ -520,5 +516,5 @@ if __name__ == "__main__":
     # wether(title="放飯了~", loc=["台北+內湖", "台北+大安", "新北+汐止", "新北+三重"])
     # getInvoice()
     # star()
-    starDay()
+    # starDay()
     # lottery("大樂透", "威力彩")

@@ -23,5 +23,22 @@ def getCPC():
     return {"Title": title, "Data": gasList, "Date": date}
 
 
+def getCPCText():
+    try:
+        source = getCPC()
+        resMsg = ""
+        if source != "":
+            resMsg = "%s\t%s\n" % (
+                source["Date"], source["Title"])
+            for v in source["Data"]:
+                resMsg += "%s : %s \n" % (v["name"], v["price"])
+            return resMsg
+        else:
+            return None
+    except Exception as e:
+        print(e)
+        return None
+
+
 if __name__ == "__main__":
-    print(getCPC())
+    print(getCPCText())
