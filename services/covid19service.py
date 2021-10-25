@@ -49,19 +49,31 @@ def getCovid19():
         recovered = "0" if len(soup.select(
             ".country_recovered")) == 0 else soup.select(".country_recovered")[0].text
 
+        domesticRecovered = "0" if len(soup.select(
+            ".country_confirmed_percent")) < 1 else soup.select(".country_confirmed_percent")[1].text.split("本土病例 ")[1]
+
+        internationalRecovered = str(int(recovered)-int(domesticRecovered))
+
         # 疫苗接種人次
         vaccine = "0" if len(soup.select(
             ".country_deaths_change")) == 0 else soup.select(".country_deaths")[1].text
+
+        # 疫苗覆蓋率
+        vaccinePercent = "0" if len(soup.select(
+            ".country_deaths_change")) < 1 else soup.select(".country_deaths_percent")[0].text
 
         result = {
             "url": url,
             "time": time,
             "total": totalConfirmed,
             "recovered": recovered,
+            "domesticRecovered": domesticRecovered,
+            "internationalRecovered": internationalRecovered,
             "rateDeaths": rateDeaths,
             "newDeaths": newDeaths,
             "totalDeaths": totalDeaths,
             "vaccine": vaccine,
+            "vaccinePercent": vaccinePercent,
         }
         return result
     except:
@@ -85,5 +97,5 @@ def getGossipCovid19():
 
 
 if __name__ == "__main__":
-    # print(getCovid19())
-    print(getGossipCovid19())
+    print(getCovid19())
+    # print(getGossipCovid19())
