@@ -53,7 +53,7 @@ def callback(request):
                             resMsg = "%s\n%s\n%s\n" % (
                                 pttRes["Date"], pttRes["Title"], pttRes["Link"])
                         res = covid19service.getCovid19()
-                        resMsg += "\n%s\n 新增確診:\t %s (本土 %s, 境外 %s) \n 新增死亡:\t %s\n 累計確診:\t %s\n 累計死亡:\t %s\n 死亡率:\t %s\n 疫苗接種人次:\t %s (%s)\n %s" % (
+                        resMsg += "\n%s\n 新增確診:\t %s (本土 %s, 境外 %s) \n 新增死亡:\t %s\n 累計確診:\t %s\n 累計死亡:\t %s\n 死亡率:\t %s\n 疫苗接種人次:\t %s %s\n %s" % (
                             res["time"], res["recovered"], res["domesticRecovered"], res["internationalRecovered"], res["newDeaths"], res["total"], res["totalDeaths"], res["rateDeaths"], res["vaccine"], res["vaccinePercent"], res["url"])
                         if resMsg != "":
                             msgresponse.sendText(event, resMsg)
