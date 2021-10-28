@@ -129,10 +129,10 @@ def star():
         month = now.month
 
         # 找下一個月
-        month += 1
-        if month == 13:
-            month = 1
-            year += 1
+        # month += 1
+        # if month == 13:
+        #     month = 1
+        #     year += 1
 
         resMsg = nmnsservice.getStarText(year, month)
         if resMsg == "":
