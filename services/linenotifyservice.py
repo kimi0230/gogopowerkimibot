@@ -339,8 +339,8 @@ def gasCPC():
     if resMsg == None:
         return
     payload = {'message': resMsg}
-    # tokens = [carbeToken, etenToken, chocoToken]
-    tokens = [token]
+    tokens = [carbeToken, etenToken, chocoToken]
+    # tokens = [token]
 
     with ThreadPoolExecutor(max_workers=2) as executor:
         outStr = []
