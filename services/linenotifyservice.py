@@ -356,6 +356,28 @@ def gasCPC():
     return
 
 
+def getPresume():
+    resMsg = gasservice.getPresumeText()
+    if resMsg == None:
+        return
+    payload = {'message': resMsg}
+    tokens = [carbeToken, etenToken, chocoToken]
+    # tokens = [token]
+
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        outStr = []
+        for v in tokens:
+            res = executor.submit(sendLineNotify, v, payload)
+            outStr.append(res)
+
+        for future in as_completed(outStr):
+            if future.result().status_code == 200:
+                print('發送 LINE Notify 成功！')
+            else:
+                print('發送 LINE Notify 失敗！')
+    return
+
+
 def getDailyAWord(examp=True):
     resMsg = cambridgeservice.toMsg(cambridgeservice.getDailyAWord(), examp)
     payload = {'message': resMsg}
@@ -508,7 +530,7 @@ if __name__ == "__main__":
     # covid19()
     # netflixMonList()
     # netflixMangFee()
-    gasCPC()
+    # gasCPC()
     # getDailyAWord()
     # carbe()
     # threeDayWether()
@@ -518,3 +540,4 @@ if __name__ == "__main__":
     # star()
     # starDay()
     # lottery("大樂透", "威力彩")
+    getPresume()
