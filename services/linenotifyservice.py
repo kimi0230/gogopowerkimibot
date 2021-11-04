@@ -310,6 +310,7 @@ def netflixMonList():
         return
     payload = {'message': resMsg}
     tokens = [netflixGrupToken, etenToken, carbeToken]
+    # TODO: 有空拉出來
     with ThreadPoolExecutor(max_workers=2) as executor:
         outStr = []
         for v in tokens:
