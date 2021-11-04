@@ -74,7 +74,6 @@ def getPresumeText():
         if source != None:
             resMsg = "%s\t\n汽油預估:%s\n柴油預估:%s\n\n今日油價:\n98: %s\t 95: %s\n92: %s\t 柴油: %s\n本週原油: %s\t 本週匯率: %s\n上週原油: %s\t 上週匯率: %s\n%s" % (
                 source["Title"], source["GasChange"], source["DieselChange"], source["Now98"], source["Now95"], source["Now92"], source["NowDiesel"], source["NowCrude"], source["NowExchange"], source["PreCrude"], source["PreExchage"], source["URL"])
-            print("------------->", resMsg)
             return resMsg
         else:
             return None
