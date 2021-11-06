@@ -61,7 +61,7 @@ def getStarText(year="", month=""):
     try:
         starResult = getStar(year, month)
         if starResult == None:
-            return "無資料"
+            return None
 
         msg = starResult['title']+"\t"+starResult['url'] + \
             "\n"+starResult['contents'][0] + "\n\n"
