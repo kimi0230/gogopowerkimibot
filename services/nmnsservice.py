@@ -78,7 +78,7 @@ def getStarDayText(now):
         nowDate = "%d/%d" % (now.month, now.day)
         starResult = getStar(now.year, now.month)
         if starResult == None:
-            return "無資料", None
+            return "當日無資料", None
 
         resMsg = ""
         for i in range(len(starResult['contentsTitle'])):
