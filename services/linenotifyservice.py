@@ -135,7 +135,7 @@ def star():
         #     year += 1
 
         resMsg = nmnsservice.getStarText(year, month)
-        if resMsg == "":
+        if resMsg == None:
             return
 
         payload = {'message': resMsg}
