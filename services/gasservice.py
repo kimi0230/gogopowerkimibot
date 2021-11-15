@@ -36,8 +36,8 @@ def getPresume():
 
         # 預估下週油價
         title = soup.select('.h4.pull-left.page-title.mt-0')[0].text
-        gasChange, dieselChange = [item.text for item in soup.select(
-            '.text-center.mt-3 >.text-success')][:2]
+        gasChange, _, dieselChange, _ = [item.text for item in soup.select(
+            '.text-center.mt-3 > span')][:4]
 
         # 今日中油油價
         now98, now95, now92, nowDiesel = [item.text for item in soup.select(
