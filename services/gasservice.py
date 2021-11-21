@@ -82,15 +82,20 @@ def getPresumeText():
         return None
 
 
-def getCPCText():
+def getCPCText(tomorrow=None):
     try:
         source = getCPC()
         resMsg = ""
         if source != "":
+            if tomorrow != None and "%s月%s日" % (tomorrow.month, tomorrow.day) != source["Date"]:
+                source["Date"] = "\n%s\n\n%s" % (
+                    "(⊙▂⊙ ) 中油還沒更新 ", source["Date"])
+
             resMsg = "%s\t%s\n" % (
                 source["Date"], source["Title"])
             for v in source["Data"]:
                 resMsg += "%s : %s \n" % (v["name"], v["price"])
+            resMsg += "https://www.cpc.com.tw/"
             return resMsg
         else:
             return None

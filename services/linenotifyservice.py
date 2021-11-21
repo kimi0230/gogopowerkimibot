@@ -1,5 +1,5 @@
 from services import covid19service
-import datetime
+from datetime import datetime, timedelta
 from services import pttservice, gasservice, cambridgeservice, invoiceservice, nmnsservice, taiwanlotteryservice
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import requests
@@ -336,7 +336,11 @@ def netflixMangFee():
 
 
 def gasCPC():
-    resMsg = gasservice.getCPCText()
+    # 找出明天, 用來檢查星期日抓的日期中油是否有更新
+    now = datetime.now()
+    tomorrow = now + timedelta(days=1)
+
+    resMsg = gasservice.getCPCText(tomorrow)
     if resMsg == None:
         return
     payload = {'message': resMsg}
@@ -531,7 +535,7 @@ if __name__ == "__main__":
     # covid19()
     # netflixMonList()
     # netflixMangFee()
-    # gasCPC()
+    gasCPC()
     # getDailyAWord()
     # carbe()
     # threeDayWether()
@@ -541,4 +545,4 @@ if __name__ == "__main__":
     # star()
     # starDay()
     # lottery("大樂透", "威力彩")
-    getPresume()
+    # getPresume()
