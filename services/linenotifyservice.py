@@ -86,7 +86,7 @@ def carbe():
 
 def starDay():
     try:
-        now = datetime.datetime.now()
+        now = datetime.now()
         resMsg, resImgURL = nmnsservice.getStarDayText(now)
 
         if resMsg == "當日無資料":
@@ -124,7 +124,7 @@ def starDay():
 
 def star():
     try:
-        now = datetime.datetime.now()
+        now = datetime.now()
         year = now.year
         month = now.month
 
@@ -253,7 +253,7 @@ def punchMsg(times, msgtext, rmin=0, rmax=10):
 
 
 def punchIn():
-    time = datetime.datetime.now()
+    time = datetime.now()
     defaultTime = time.replace(hour=8, minute=40)
     msg = punchMsg(defaultTime, "上班睡覺瞜~", 0, 5)
     payload = {'message': msg}
@@ -266,7 +266,7 @@ def punchIn():
 
 
 def punchOut():
-    time = datetime.datetime.now()
+    time = datetime.now()
     defaultTime = time.replace(hour=17, minute=40)
     msg = punchMsg(defaultTime, "下班尿尿瞜~", 6, 10) + "\n\n"
 
@@ -304,7 +304,7 @@ def netflixMonList():
         resMsg = "%s\n%s\n%s\n" % (
             pttRes["Date"], pttRes["Title"], pttRes["Link"])
 
-    nowMonth = datetime.datetime.today().month
+    nowMonth = datetime.today().month
     regex = re.compile(r'.*'+str(nowMonth)+'.*月.*')
     if regex.match(pttRes["Title"]) == None:
         return
@@ -530,12 +530,12 @@ def lottery(*category):
 if __name__ == "__main__":
     # stock5pm()
     # punchIn()
-    # punchOut()
+    punchOut()
     # test()
     # covid19()
     # netflixMonList()
     # netflixMangFee()
-    gasCPC()
+    # gasCPC()
     # getDailyAWord()
     # carbe()
     # threeDayWether()
