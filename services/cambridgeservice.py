@@ -41,14 +41,22 @@ def transWord(word=None, lang="zh"):
             kk = head.select('.ipa.dipa')
 
             uk = "[ %s ]" % (kk[0].text)
-            if len(head.select('source')) <= 0:
+
+            audioSourceLen = len(head.select('source'))
+
+            if audioSourceLen <= 0:
                 ukAudio = ""
                 usAudio = ""
+            elif audioSourceLen == 2:
+                # 只有一個音擋
+                ukAudio = usAudio = url + \
+                    head.select('source')[0].get("src")
             else:
                 ukAudio = url + \
                     head.select('source')[0].get("src")
                 usAudio = url + \
                     head.select('source')[2].get("src")
+
             if len(kk) > 1:
                 us = "[ %s ]" % (kk[1].text)
             else:
