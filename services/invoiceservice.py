@@ -21,7 +21,7 @@ def getInvoice(msg):
         link = tree.find('channel')[1].text.replace('http', 'https')
         items = list(tree.iter(tag='item'))  # 取得item標籤內容
         title = items[index][0].text  # 期別
-        ptext = items[index][2].text  # 中獎號碼
+        ptext = items[index][3].text  # 中獎號碼
         ptext = ptext.replace('<p>', '').replace('</p>', '\n')
         message = link + '\n' + title + '月\n' + \
             ptext[:-1]  # ptext[:-1]為移除最後一個\n
