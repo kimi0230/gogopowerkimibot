@@ -176,8 +176,8 @@ def covid19():
 
         payload = {'message': resMsg}
 
-        # tokens = [carbeToken, etenToken, chocoToken]
-        tokens = [token]
+        tokens = [carbeToken, etenToken, chocoToken]
+        # tokens = [token]
         with ThreadPoolExecutor(max_workers=3) as executor:
             outStr = []
             for v in tokens:
