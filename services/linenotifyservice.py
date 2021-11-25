@@ -160,18 +160,24 @@ def star():
 
 def covid19():
     try:
+        print("123")
         pttRes = covid19service.getGossipCovid19()
         resMsg = ""
         if pttRes != "":
             resMsg = "%s\n%s\n%s\n" % (
                 pttRes["Date"], pttRes["Title"], pttRes["Link"])
+
+        officalRes = covid19service.getCovid19()
+        if officalRes != "":
+            resMsg += "\n%s\n 新增確診:\t %s (本土 %s, 境外 %s) \n 新增死亡:\t %s\n 累計確診:\t %s\n 累計死亡:\t %s\n 死亡率:\t %s\n 疫苗接種人次:\t %s %s\n %s" % (
+                officalRes["time"], officalRes["recovered"], officalRes["domesticRecovered"], officalRes["internationalRecovered"], officalRes["newDeaths"], officalRes["total"], officalRes["totalDeaths"], officalRes["rateDeaths"], officalRes["vaccine"], officalRes["vaccinePercent"], officalRes["url"])
         if resMsg == "":
             return
 
         payload = {'message': resMsg}
 
-        tokens = [carbeToken, etenToken, chocoToken]
-        # tokens = [token]
+        # tokens = [carbeToken, etenToken, chocoToken]
+        tokens = [token]
         with ThreadPoolExecutor(max_workers=3) as executor:
             outStr = []
             for v in tokens:
@@ -532,11 +538,11 @@ if __name__ == "__main__":
     # punchIn()
     # punchOut()
     # test()
-    # covid19()
+    covid19()
     # netflixMonList()
     # netflixMangFee()
     # gasCPC()
-    getDailyAWord()
+    # getDailyAWord()
     # carbe()
     # threeDayWether()
     # lunch("Taipei+Neihu", "New-Taipei+Xizhi")

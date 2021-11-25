@@ -57,8 +57,10 @@ def getPTT(url, regex=None, keyword=""):
             if found == False:
                 count += 1
             time.sleep(1)
-
-        return allTitle
+        if len(allTitle) > 0:
+            return allTitle
+        else:
+            return ""
     except Exception as e:
         print(e)
         return ""
