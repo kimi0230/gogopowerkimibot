@@ -118,9 +118,9 @@ def callback(request):
                     elif re.match(r"^ivy\s?\d{0,2}", mtext) != None:
                         nums = re.sub(r'\D', "", mtext)
                         if nums == "":
-                            nums = ivyservice.DEFAULTNUMS
+                            nums = 3
                         msgresponse.sendText(
-                            event, ivyservice.getLastNumsDaysText(nums=nums))
+                            event, ivyservice.getLastNumsDaysText(nums=int(nums)))
 
             if isinstance(event, PostbackEvent):  # PostbackTemplateAction觸發此事件
                 # 取得Postback資料
