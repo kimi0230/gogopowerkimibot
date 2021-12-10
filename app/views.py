@@ -115,9 +115,12 @@ def callback(request):
                             event, taiwanlotteryservice.getlotteryText())
                     elif mtext == "油價":
                         msgresponse.sendText(event, gasservice.getCPCText())
-                    elif mtext == "ivy":
+                    elif re.match(r"^ivy\s?\d{0,2}", mtext) != None:
+                        nums = re.sub(r'\D', "", mtext)
+                        if nums == "":
+                            nums = ivyservice.DEFAULTNUMS
                         msgresponse.sendText(
-                            event, ivyservice.getLastNumsDaysText(nums=1))
+                            event, ivyservice.getLastNumsDaysText(nums=nums))
 
             if isinstance(event, PostbackEvent):  # PostbackTemplateAction觸發此事件
                 # 取得Postback資料
