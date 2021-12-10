@@ -1,6 +1,6 @@
 from services import covid19service
 from datetime import datetime, timedelta
-from services import pttservice, gasservice, cambridgeservice, invoiceservice, nmnsservice, taiwanlotteryservice
+from services import pttservice, gasservice, cambridgeservice, invoiceservice, nmnsservice, taiwanlotteryservice, ivyservice
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import requests
 from django.conf import settings
@@ -533,12 +533,38 @@ def lottery(*category):
         return
 
 
+def ivy(nums=5):
+    try:
+        resMsg = ivyservice.getLastNumsDaysText(nums=nums)
+        if resMsg == "" or resMsg == None:
+            return
+
+        payload = {'message': "\n"+resMsg}
+        tokens = [token]
+        # 發送line
+        with ThreadPoolExecutor(max_workers=3) as executor:
+            outStr = []
+            for v in tokens:
+                res = executor.submit(sendLineNotify, v, payload)
+                outStr.append(res)
+
+            for future in as_completed(outStr):
+                if future.result().status_code == 200:
+                    print('發送 LINE Notify 成功！')
+                else:
+                    print('發送 LINE Notify 失敗！')
+        return
+    except Exception as e:
+        print(e)
+        return
+
+
 if __name__ == "__main__":
     # stock5pm()
     # punchIn()
     # punchOut()
     # test()
-    covid19()
+    # covid19()
     # netflixMonList()
     # netflixMangFee()
     # gasCPC()
@@ -552,3 +578,4 @@ if __name__ == "__main__":
     # starDay()
     # lottery("大樂透", "威力彩")
     # getPresume()
+    ivy(3)
