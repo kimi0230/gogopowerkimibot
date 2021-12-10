@@ -160,15 +160,19 @@ def star():
 
 def covid19():
     try:
-        print("123")
-        pttRes = covid19service.getGossipCovid19()
         resMsg = ""
+        pttRes = covid19service.getGossipCovid19()
         if pttRes != "":
             resMsg = "%s\n%s\n%s\n" % (
                 pttRes["Date"], pttRes["Title"], pttRes["Link"])
 
         officalRes = covid19service.getCovid19()
         if officalRes != "":
+            nowDateEng = datetime.now().strftime("%b-%d")
+            regex = re.compile(r'^Updated on '+nowDateEng+'.*')
+            if regex.match(officalRes["time"]) == None:
+                resMsg += "\n你家的政府官網沒更新!\n"
+
             resMsg += "\n%s\n 新增確診:\t %s (本土 %s, 境外 %s) \n 新增死亡:\t %s\n 累計確診:\t %s\n 累計死亡:\t %s\n 死亡率:\t %s\n 疫苗接種人次:\t %s %s\n %s" % (
                 officalRes["time"], officalRes["recovered"], officalRes["domesticRecovered"], officalRes["internationalRecovered"], officalRes["newDeaths"], officalRes["total"], officalRes["totalDeaths"], officalRes["rateDeaths"], officalRes["vaccine"], officalRes["vaccinePercent"], officalRes["url"])
         if resMsg == "":
@@ -190,7 +194,8 @@ def covid19():
                 else:
                     print('發送 LINE Notify 失敗！')
         return
-    except:
+    except Exception as e:
+        print(e)
         return
 
 
@@ -564,7 +569,7 @@ if __name__ == "__main__":
     # punchIn()
     # punchOut()
     # test()
-    # covid19()
+    covid19()
     # netflixMonList()
     # netflixMangFee()
     # gasCPC()
@@ -578,4 +583,4 @@ if __name__ == "__main__":
     # starDay()
     # lottery("大樂透", "威力彩")
     # getPresume()
-    ivy(3)
+    # ivy(3)
