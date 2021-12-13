@@ -397,7 +397,7 @@ def getPresume():
     if resMsg == None:
         return
     payload = {'message': resMsg}
-    tokens = [carbeToken, etenToken, chocoToken]
+    tokens = [carbeToken, etenToken, chocoToken, yelmiToken]
     # tokens = [token]
 
     with ThreadPoolExecutor(max_workers=2) as executor:
