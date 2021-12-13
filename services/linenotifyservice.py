@@ -119,7 +119,7 @@ def starDay():
         with open(imgPath, "wb") as fo:
             fo.write(fp.read())
 
-        tokens = [chocoToken, carbeToken, etenToken]
+        tokens = [chocoToken, carbeToken, etenToken, yelmiToken]
         # tokens = [token]
 
         with ThreadPoolExecutor(max_workers=3) as executor:
@@ -160,7 +160,7 @@ def star():
 
         payload = {'message': resMsg}
 
-        tokens = [token, chocoToken]
+        tokens = [token, chocoToken, etenToken, yelmiToken]
         # tokens = [token]
         with ThreadPoolExecutor(max_workers=3) as executor:
             outStr = []
@@ -200,7 +200,7 @@ def covid19():
 
         payload = {'message': resMsg}
 
-        tokens = [carbeToken, etenToken, chocoToken]
+        tokens = [carbeToken, etenToken, chocoToken, yelmiToken]
         # tokens = [token]
         with ThreadPoolExecutor(max_workers=3) as executor:
             outStr = []
@@ -375,7 +375,7 @@ def gasCPC():
     if resMsg == None:
         return
     payload = {'message': resMsg}
-    tokens = [carbeToken, etenToken, chocoToken]
+    tokens = [carbeToken, etenToken, chocoToken, yelmiToken]
     # tokens = [token]
 
     with ThreadPoolExecutor(max_workers=2) as executor:
@@ -437,7 +437,7 @@ def getInvoice(msg="發票"):
     resMsg = invoiceservice.getInvoice(msg)
     print(resMsg)
     payload = {'message': resMsg}
-    tokens = [carbeToken, etenToken, chocoToken]
+    tokens = [carbeToken, etenToken, chocoToken, yelmiToken]
 
     with ThreadPoolExecutor(max_workers=2) as executor:
         outStr = []
