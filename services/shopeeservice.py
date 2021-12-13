@@ -12,14 +12,16 @@ default_headers = {
 def getLucky(cookies):
     try:
         requestID = ("%.0f" % (random.random() * 10**20))[:16]
-        body = {
+        bodyJson = {
             "request_id": requestID,
             "app_id": "E9VFyxwmtgjnCR8uhL",
             "activity_code": "010ac47631cf4bb5",
             "source": 0
         }
         res = requests.post(
-            LUCKY_URL, headers=default_headers, cookies=cookies, data=body)
+            LUCKY_URL, headers=default_headers, cookies=cookies, json=bodyJson)
+        print(res.json())
+        return
         if res.status_code != 200:
             return None
         return res.json()
@@ -42,6 +44,6 @@ def checkin(cookies):
 
 
 if __name__ == "__main__":
-    c = ''
+    c = 'xxx'
     # print(checkin({"Cookie": c}))
     print(getLucky({"Cookie": c}))
