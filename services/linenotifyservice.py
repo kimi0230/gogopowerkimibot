@@ -611,13 +611,13 @@ def checkinShopee(source=[{"cookies": "", "tokenStr": ""}]):
             for v in source:
                 checkResult = shopeeservice.checkin(v["cookies"])
                 if checkResult == None:
-                    checkMsg = "失敗"
+                    checkMsg = "fail"
                 else:
                     checkMsg = checkResult["msg"]
 
                 luckyResult = shopeeservice.getLucky(v["cookies"])
                 if luckyResult == None:
-                    luckyMsg = "失敗"
+                    luckyMsg = "fail"
                 else:
                     if luckyResult["code"] == 0:
                         luckyMsg = luckyResult["data"]["package_name"]
