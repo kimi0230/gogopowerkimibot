@@ -39,12 +39,19 @@ try:
 except:
     netflixGrupToken = config('NETFLIXGRUP_NOTIFY_TOKEN')
 
+try:
+    yelmiToken = settings.YELMI_NOTIFY_TOKEN
+except:
+    yelmiToken = config('YELMI_NOTIFY_TOKEN')
+
+
 TOKEN_MAP = {
     "Kimi": token,
     "Carbe": carbeToken,
     "Acer": etenToken,
     "Choco": chocoToken,
-    "Netflix": netflixGrupToken
+    "Netflix": netflixGrupToken,
+    "YelMi": yelmiToken
 }
 
 

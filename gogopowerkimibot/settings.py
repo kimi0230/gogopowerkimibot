@@ -42,6 +42,8 @@ CHOCO_NOTIFY_TOKEN = config(
     'CHOCO_NOTIFY_TOKEN', default='')
 NETFLIXGRUP_NOTIFY_TOKEN = config(
     'NETFLIXGRUP_NOTIFY_TOKEN', default='')
+YELMI_NOTIFY_TOKEN = config(
+    'YELMI_NOTIFY_TOKEN', default='')
 
 # CWB
 CWB_TOKEN = config('CWB_TOKEN', default='')
