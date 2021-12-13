@@ -616,11 +616,13 @@ def checkinShopee(source=[{"cookies": "", "tokenStr": ""}]):
         with ThreadPoolExecutor(max_workers=3) as executor:
             outStr = []
             for v in source:
+                username = ""
                 checkResult = shopeeservice.checkin(v["cookies"])
                 if checkResult == None:
                     checkMsg = "fail"
                 else:
                     checkMsg = checkResult["msg"]
+                    username = checkResult["data"]["username"]
 
                 luckyResult = shopeeservice.getLucky(v["cookies"])
                 if luckyResult == None:
@@ -631,8 +633,8 @@ def checkinShopee(source=[{"cookies": "", "tokenStr": ""}]):
                     else:
                         luckyMsg = luckyResult["msg"]
 
-                payload = {'message': "\n 蝦皮打卡 : %s\n 蝦皮寶箱 : %s\n" % (
-                    checkMsg, luckyMsg)}
+                payload = {'message': "\n%s\n蝦皮打卡 : %s\n蝦皮寶箱 : %s\n" % (
+                    username, checkMsg, luckyMsg)}
 
                 res = executor.submit(
                     sendLineNotify, TOKEN_MAP[v["tokenStr"]], payload)
@@ -674,7 +676,7 @@ if __name__ == "__main__":
     #     "tokenStr": "Kimi"
     # }])
     checkinShopee([{
-        "cookies": {"Cookie": 'xxx'},
+        "cookies": {"Cookie": '去網頁上面找cookies'},
         "tokenStr": "Kimi"
     }])
     # tokens = list(map(lambda x: TOKEN_MAP[x], ["Kimi"]))
