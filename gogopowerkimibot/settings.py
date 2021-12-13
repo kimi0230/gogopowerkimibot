@@ -49,6 +49,9 @@ CWB_TOKEN = config('CWB_TOKEN', default='')
 # EPA
 EPA_TOKEN = config('EPA_TOKEN', default='')
 
+# Books Cookies
+BOOKS_COOKIES = config('EPA_TOKEN', default='')
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
