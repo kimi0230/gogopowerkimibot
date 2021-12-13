@@ -1,6 +1,6 @@
 from services import covid19service
 from datetime import datetime, timedelta
-from services import pttservice, gasservice, cambridgeservice, invoiceservice, nmnsservice, taiwanlotteryservice, ivyservice, booksservice
+from services import pttservice, gasservice, cambridgeservice, invoiceservice, nmnsservice, taiwanlotteryservice, ivyservice, booksservice, shopeeservice
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import requests
 from django.conf import settings
@@ -603,6 +603,45 @@ def checkinBooks(source=[{"cookies": "", "tokenStr": ""}]):
         return
 
 
+def checkinShopee(source=[{"cookies": "", "tokenStr": ""}]):
+    try:
+        # 發送line
+        with ThreadPoolExecutor(max_workers=3) as executor:
+            outStr = []
+            for v in source:
+                checkResult = shopeeservice.checkin(v["cookies"])
+                if checkResult == None:
+                    checkMsg = "失敗"
+                else:
+                    checkMsg = checkResult["msg"]
+
+                luckyResult = shopeeservice.getLucky(v["cookies"])
+                if luckyResult == None:
+                    luckyMsg = "失敗"
+                else:
+                    if luckyResult["code"] == 0:
+                        luckyMsg = luckyResult["data"]["package_name"]
+                    else:
+                        luckyMsg = luckyResult["msg"]
+
+                payload = {'message': "\n 蝦皮打卡 : %s\n 蝦皮寶箱 : %s\n" % (
+                    checkMsg, luckyMsg)}
+
+                res = executor.submit(
+                    sendLineNotify, TOKEN_MAP[v["tokenStr"]], payload)
+                outStr.append(res)
+
+            for future in as_completed(outStr):
+                if future.result().status_code == 200:
+                    print('發送 LINE Notify 成功！')
+                else:
+                    print('發送 LINE Notify 失敗！')
+        return
+    except Exception as e:
+        print(e)
+        return
+
+
 if __name__ == "__main__":
     # stock5pm()
     # punchIn()
@@ -623,8 +662,12 @@ if __name__ == "__main__":
     # lottery("大樂透", "威力彩")
     # getPresume()
     # ivy(3)
-    checkinBooks([{
-        "cookies": {"Cookie": ""},
+    # checkinBooks([{
+    #     "cookies": {"Cookie": ""},
+    #     "tokenStr": "Kimi"
+    # }])
+    checkinShopee([{
+        "cookies": {"Cookie": 'xxx'},
         "tokenStr": "Kimi"
     }])
     # tokens = list(map(lambda x: TOKEN_MAP[x], ["Kimi"]))
