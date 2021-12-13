@@ -20,8 +20,6 @@ def getLucky(cookies):
         }
         res = requests.post(
             LUCKY_URL, headers=default_headers, cookies=cookies, json=bodyJson)
-        print(res.json())
-        return
         if res.status_code != 200:
             return None
         return res.json()
