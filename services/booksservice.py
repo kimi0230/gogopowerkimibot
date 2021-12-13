@@ -8,10 +8,8 @@ default_headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36',
 }
 
-default_cookies = settings.BOOKS_COOKIES
 
-
-def updatelpkUrl(cookies=default_cookies):
+def updatelpkUrl(cookies):
     try:
         res = requests.get(
             GET_REOCRDER, headers=default_headers, cookies=cookies)
@@ -27,7 +25,7 @@ def updatelpkUrl(cookies=default_cookies):
         return None
 
 
-def checkin(cookies=default_cookies):
+def checkin(cookies):
     try:
         res = requests.post(
             CHECKIN_URL, headers=default_headers, cookies=cookies)
