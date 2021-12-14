@@ -676,7 +676,7 @@ if __name__ == "__main__":
     # getPresume()
     # ivy(3)
     checkinBooks([{
-        "cookies": {"Cookie": ""},
+        "cookies": {},
         "tokenStr": "Kimi"
     }])
     # checkinShopee([{

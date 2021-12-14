@@ -30,8 +30,8 @@ def checkin(cookies):
         res = requests.post(
             CHECKIN_URL, headers=default_headers, cookies=cookies)
         if res.status_code != 200:
-            return None
-        return res.json()
+            return None, res.status_code
+        return res.json(), None
     except Exception as e:
         print(e)
         return None, e
