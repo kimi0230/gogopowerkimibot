@@ -620,13 +620,12 @@ def checkinShopee(source=[{"cookies": "", "tokenStr": ""}]):
         with ThreadPoolExecutor(max_workers=3) as executor:
             outStr = []
             for v in source:
-                username = ""
+                username = v["name"]
                 checkResult = shopeeservice.checkin(v["cookies"])
                 if checkResult == None:
                     checkMsg = "fail"
                 else:
                     checkMsg = checkResult["msg"]
-                    username = checkResult["data"]["username"]
 
                 luckyResult = shopeeservice.getLucky(v["cookies"])
                 if luckyResult == None:
