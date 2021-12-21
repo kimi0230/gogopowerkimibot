@@ -1,6 +1,6 @@
 from services import covid19service
 from datetime import datetime, timedelta
-from services import pttservice, gasservice, cambridgeservice, invoiceservice, nmnsservice, taiwanlotteryservice, ivyservice, booksservice, shopeeservice
+from services import pttservice, gasservice, cambridgeservice, invoiceservice, nmnsservice, taiwanlotteryservice, ivyservice, booksservice, shopeeservice, stockservice
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import requests
 from django.conf import settings
@@ -654,6 +654,30 @@ def checkinShopee(source=[{"cookies": "", "tokenStr": ""}]):
         return
 
 
+def getThreeRrade():
+    try:
+        resMsg = stockservice.getThreeRrade()
+
+        payload = {'message': resMsg["data"]}
+        tokens = [token]
+        # 發送line
+        with ThreadPoolExecutor(max_workers=3) as executor:
+            outStr = []
+            for v in tokens:
+                res = executor.submit(sendLineNotify, v, payload)
+                outStr.append(res)
+
+            for future in as_completed(outStr):
+                if future.result().status_code == 200:
+                    print('發送 LINE Notify 成功！')
+                else:
+                    print('發送 LINE Notify 失敗！')
+        return
+    except Exception as e:
+        print(e)
+        return
+
+
 if __name__ == "__main__":
     # stock5pm()
     # punchIn()
@@ -674,13 +698,14 @@ if __name__ == "__main__":
     # lottery("大樂透", "威力彩")
     # getPresume()
     # ivy(3)
-    checkinBooks([{
-        "cookies": {},
-        "tokenStr": "Kimi"
-    }])
+    # checkinBooks([{
+    #     "cookies": {},
+    #     "tokenStr": "Kimi"
+    # }])
     # checkinShopee([{
     #     "cookies": {"Cookie": '去網頁上面找cookies'},
     #     "tokenStr": "Kimi"
     # }])
     # tokens = list(map(lambda x: TOKEN_MAP[x], ["Kimi"]))
     # print(tokens)
+    getThreeRrade()
