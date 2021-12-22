@@ -126,6 +126,7 @@ def callback(request):
                         nums = re.sub(r'\D', "", mtext)
                         if nums == "":
                             nums = 5
+                        print("-------------->外資", nums)
                         res = stockservice.getForeign(int(nums))
                         if res == None:
                             return
