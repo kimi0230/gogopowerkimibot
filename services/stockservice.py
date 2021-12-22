@@ -5,6 +5,7 @@ import numpy as np
 import requests
 from bs4 import BeautifulSoup
 from io import StringIO
+import locale
 import ssl
 
 headers = {
@@ -15,21 +16,21 @@ ssl._create_default_https_context = ssl._create_unverified_context
 plt.rcParams["font.sans-serif"] = [u'Arial Unicode MS']  # 設定中文字型
 plt.rcParams["axes.unicode_minus"] = False
 pd.options.mode.chained_assignment = None  # 取消顯示pandas資料重設警告
+locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
 
 def printTable(dfs):
-    print("{:<30} {:<15} {:<10} {:<10} ".format(
-        " ", *dfs.columns.values))
+    table = ("{:<30} {:<20} {:<20} {:<20} \n".format(" ", *dfs.columns.values))
     indexTitle = dfs.index.values
     for idx, v in enumerate(dfs.values):
-        # print(indexTitle[idx], *v)
-        # lang, perc, change = v
-        print("{:>10} {:<15} {:<15} {:<15}".format(indexTitle[idx], *v))
+        table += ("{:15} {:^20} {:^20} {:^20}\n".format(
+            indexTitle[idx], *[locale.currency(int(c), grouping=True)[:-3] for c in v]))
+    return table
 
 
 def getThreeRrade():
+    # 三大法人
     try:
-        # res.encoding = 'big5'
         url = "https://www.twse.com.tw/fund/BFI82U?response=html&dayDate=&weekDate=&monthDate=&type=day"
         res = requests.get(url, headers=headers)
         soup = BeautifulSoup(res.text, "lxml")
@@ -37,26 +38,22 @@ def getThreeRrade():
 
         dfs = pd.read_html(
             url, header=1, keep_default_na=False, index_col=0)[0]
-        # print(dfs.columns.values)
-        # print(dfs.index.values)
-        printTable(dfs)
-        return
-        # print(dfs.to_csv)
+
         result = {
             "title": title,
-            "data": dfs.to_csv()
+            "data": printTable(dfs)
         }
         return result
 
-        plt.figure(figsize=(10, 5))
-        ax = plt.axes(frame_on=False)  # 不要額外框線
-        ax.set_title("三大法人買賣超")
-        ax.xaxis.set_visible(False)  # 隱藏X軸刻度線
-        ax.yaxis.set_visible(False)  # 隱藏Y軸刻度線
+        # plt.figure(figsize=(10, 5))
+        # ax = plt.axes(frame_on=False)  # 不要額外框線
+        # ax.set_title("三大法人買賣超")
+        # ax.xaxis.set_visible(False)  # 隱藏X軸刻度線
+        # ax.yaxis.set_visible(False)  # 隱藏Y軸刻度線
         # ax.axis('off')
-        pd.plotting.table(ax, dfs, loc='center', colWidths=[0.1] * 3)
-        plt.savefig('table.png', dpi=200, bbox_inches='tight')     # 存檔
-        plt.show()
+        # pd.plotting.table(ax, dfs, loc='center', colWidths=[0.1] * 3)
+        # plt.savefig('table.png', dpi=200, bbox_inches='tight')     # 存檔
+        # plt.show()
         # f = open('table.png', 'rb')  # create an empty demo file
         # file = {'imageFile': f}
         # headers = {

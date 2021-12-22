@@ -656,9 +656,10 @@ def checkinShopee(source=[{"cookies": "", "tokenStr": ""}]):
 
 def getThreeRrade():
     try:
+        # 三大法人
         resMsg = stockservice.getThreeRrade()
 
-        payload = {'message': resMsg["data"]}
+        payload = {'message': resMsg["title"] + "\n" + resMsg["data"]}
         tokens = [token]
         # 發送line
         with ThreadPoolExecutor(max_workers=3) as executor:
