@@ -1,4 +1,5 @@
 # 匯入庫
+import re
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
@@ -134,9 +135,22 @@ def test():
         return ""
 
 
+def k():
+    mtext = "外資 1"
+    if re.match(r"^外資\s?\d{0,2}", mtext) != None:
+        nums = re.sub(r'\D', "", mtext)
+        if nums == "":
+            nums = 5
+        res = getForeign(int(nums))
+        print(res)
+    else:
+        print("kkk")
+
+
 if __name__ == "__main__":
+    k()
     # print(getThreeRrade())
-    getForeign()
+    # getForeign()
     # f = open('table.png', 'rb')  # create an empty demo file
     # file = {'imageFile': f}
     # payload = {'message': "121212"}

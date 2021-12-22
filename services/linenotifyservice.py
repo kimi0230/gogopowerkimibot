@@ -634,10 +634,10 @@ def getThreeRrade():
         return
 
 
-def getForeign():
+def getForeign(tops=10):
     try:
         # 三大法人
-        res = stockservice.getForeign()
+        res = stockservice.getForeign(tops)
         normalNotifyWithTitle(res, tokens=[token])
         return
     except Exception as e:
