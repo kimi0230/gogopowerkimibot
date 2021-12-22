@@ -658,9 +658,30 @@ def getThreeRrade():
     try:
         # 三大法人
         res = stockservice.getThreeRrade()
+        normalNotify(res, tokens=[carbeToken, chocoToken, yelmiToken])
+        return
+    except Exception as e:
+        print(e)
+        return
 
+
+def getForeign():
+    try:
+        # 三大法人
+        res = stockservice.getForeign()
+        normalNotify(res, tokens=[token])
+        return
+    except Exception as e:
+        print(e)
+        return
+
+
+def normalNotify(res, tokens=[carbeToken, chocoToken, yelmiToken]):
+    try:
+        if res == None or res == "":
+            return
         payload = {'message': res["title"] + "\n" + res["data"]}
-        tokens = [carbeToken, chocoToken, yelmiToken]
+
         # 發送line
         with ThreadPoolExecutor(max_workers=3) as executor:
             outStr = []
@@ -709,4 +730,5 @@ if __name__ == "__main__":
     # }])
     # tokens = list(map(lambda x: TOKEN_MAP[x], ["Kimi"]))
     # print(tokens)
-    getThreeRrade()
+    # getThreeRrade()
+    getForeign()

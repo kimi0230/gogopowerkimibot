@@ -19,7 +19,7 @@ pd.options.mode.chained_assignment = None  # 取消顯示pandas資料重設警�
 locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
 
-def printTable(dfs):
+def printThreeRradeTable(dfs):
     table = ""
     indexTitle = dfs.index.values
     for idx, v in enumerate(dfs.values):
@@ -47,7 +47,7 @@ def getThreeRrade():
 
         result = {
             "title": title+"(億)",
-            "data": printTable(dfs),
+            "data": printThreeRradeTable(dfs),
             "url": "https://tinyl.io/5PL9"
         }
         return result
@@ -72,6 +72,38 @@ def getThreeRrade():
         #     "https://notify-api.line.me/api/notify", headers=headers, params=params, files=file)
         # return notify
 
+    except Exception as e:
+        print(e)
+        return None
+
+
+def printForeignTable(dfs, tops=11):
+    buyRank = "買超\t股票\t超張數\t收盤價\t漲跌\n"
+    sellRank = "賣超\t股票\t超張數\t收盤價\t漲跌\n"
+    # ['股票名稱' '超張數' '收盤價' '漲跌' '名次' '股票名稱' '超張數' '收盤價' '漲跌']
+    for idx, v in enumerate(dfs.values[1:tops]):
+        buyRank += ("({}) {} {:^7} {:^7} {:^7}\n").format(idx+1, *v[:4])
+        sellRank += ("({}) {} {:^7} {:^7} {:^7}\n").format(idx+1, *v[5:])
+
+    return "%s\n%s" % (buyRank, sellRank)
+
+
+def getForeign():
+    try:
+        url = "https://fubon-ebrokerdj.fbs.com.tw/Z/ZG/ZGK_D.djhtm"
+        res = requests.get(url, headers=headers, verify=False)
+        soup = BeautifulSoup(res.text, "lxml")
+        title = soup.select("div.t11")[0].text
+        print(title)
+        dfs = pd.read_html(
+            url, header=1, keep_default_na=False, index_col=0)[1]
+
+        result = {
+            "title": title,
+            "data": printForeignTable(dfs),
+            "url": "https://tinyl.io/5PND"
+        }
+        return result
     except Exception as e:
         print(e)
         return None
@@ -104,8 +136,8 @@ def test():
 
 
 if __name__ == "__main__":
-    print(getThreeRrade())
-
+    # print(getThreeRrade())
+    getForeign()
     # f = open('table.png', 'rb')  # create an empty demo file
     # file = {'imageFile': f}
     # payload = {'message': "121212"}
