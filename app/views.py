@@ -119,7 +119,7 @@ def callback(request):
                         res = stockservice.getThreeRrade()
                         if res == None:
                             return
-                        resMsg = "%s\n%s\n\n%s" % (
+                        resMsg = "%s\n%s\n%s" % (
                             res["title"], res["data"], res["url"])
                         msgresponse.sendText(event, resMsg)
                     elif re.match(r"^ivy\s?\d{0,2}", mtext) != None:
