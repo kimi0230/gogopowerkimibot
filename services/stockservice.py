@@ -20,11 +20,17 @@ locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
 
 def printTable(dfs):
-    table = ("{:<30} {:<20} {:<20} {:<20} \n".format(" ", *dfs.columns.values))
+    table = ""
     indexTitle = dfs.index.values
     for idx, v in enumerate(dfs.values):
-        table += ("{:15} {:^20} {:^20} {:^20}\n".format(
-            indexTitle[idx], *[locale.currency(int(c), grouping=True)[:-3] for c in v]))
+        table += "* %s\n\t%s(買)\t\t%s(賣)\t\t%s(差)\t\t\n" % (indexTitle[idx], *[locale.currency(
+            float(c)/float(100000000), grouping=True) for c in v])
+
+    # table= ("{:^10} {:^10} {:^10} \n".format(*dfs.columns.values))
+    # indexTitle= dfs.index.values
+    # for idx, v in enumerate(dfs.values):
+    #     table += ("{:^15} {:^15} {:^15} {:15}\n".format(
+    #         *[locale.currency(float(c)/float(100000000), grouping=True) for c in v], indexTitle[idx]))
     return table
 
 
@@ -40,7 +46,7 @@ def getThreeRrade():
             url, header=1, keep_default_na=False, index_col=0)[0]
 
         result = {
-            "title": title,
+            "title": title+"(億)",
             "data": printTable(dfs)
         }
         return result

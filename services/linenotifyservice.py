@@ -660,7 +660,7 @@ def getThreeRrade():
         resMsg = stockservice.getThreeRrade()
 
         payload = {'message': resMsg["title"] + "\n" + resMsg["data"]}
-        tokens = [token]
+        tokens = [carbeToken, chocoToken, yelmiToken]
         # 發送line
         with ThreadPoolExecutor(max_workers=3) as executor:
             outStr = []
