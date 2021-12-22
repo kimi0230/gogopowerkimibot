@@ -122,6 +122,16 @@ def callback(request):
                         resMsg = "%s\n%s\n%s" % (
                             res["title"], res["data"], res["url"])
                         msgresponse.sendText(event, resMsg)
+                    elif re.match(r"^外資\s?\d{0,2}", mtext) != None:
+                        nums = re.sub(r'\D', "", mtext)
+                        if nums == "":
+                            nums = 5
+                        res = stockservice.getForeign(int(nums))
+                        if res == None:
+                            return
+                        resMsg = "%s\n%s\n%s" % (
+                            res["title"], res["data"], res["url"])
+                        msgresponse.sendText(event, resMsg)
                     elif re.match(r"^ivy\s?\d{0,2}", mtext) != None:
                         nums = re.sub(r'\D', "", mtext)
                         if nums == "":

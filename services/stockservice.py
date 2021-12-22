@@ -78,8 +78,7 @@ def getThreeRrade():
 
 
 def printForeignTable(dfs, tops=11):
-    buyRank = "買超\t股票\t超張數\t收盤價\t漲跌\n"
-    sellRank = "賣超\t股票\t超張數\t收盤價\t漲跌\n"
+    buyRank = sellRank = "買超\t股票\t超張數\t收盤價\t漲跌\n"
     # ['股票名稱' '超張數' '收盤價' '漲跌' '名次' '股票名稱' '超張數' '收盤價' '漲跌']
     for idx, v in enumerate(dfs.values[1:tops]):
         buyRank += ("({}) {} {:^7} {:^7} {:^7}\n").format(idx+1, *v[:4])
@@ -88,19 +87,19 @@ def printForeignTable(dfs, tops=11):
     return "%s\n%s" % (buyRank, sellRank)
 
 
-def getForeign():
+def getForeign(tops=10):
     try:
         url = "https://fubon-ebrokerdj.fbs.com.tw/Z/ZG/ZGK_D.djhtm"
         res = requests.get(url, headers=headers, verify=False)
         soup = BeautifulSoup(res.text, "lxml")
         title = soup.select("div.t11")[0].text
-        print(title)
         dfs = pd.read_html(
             url, header=1, keep_default_na=False, index_col=0)[1]
 
         result = {
             "title": title,
-            "data": printForeignTable(dfs),
+            # +1 因為開頭有['股票名稱' '超張數' '收盤價' '漲跌' '名次' '股票名稱' '超張數' '收盤價' '漲跌']欄位
+            "data": printForeignTable(dfs, tops+1),
             "url": "https://tinyl.io/5PND"
         }
         return result

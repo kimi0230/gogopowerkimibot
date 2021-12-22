@@ -69,18 +69,70 @@ headers = {
 
 
 def sendLineNotify(token, params=None, file=None):
-    headers = {
-        "Authorization": "Bearer " + token,
-        # "Content-Type": "application/x-www-form-urlencoded"
-    }
+    try:
+        headers = {
+            "Authorization": "Bearer " + token,
+            # "Content-Type": "application/x-www-form-urlencoded"
+        }
 
-    if params == None:
-        notify = requests.post(
-            "https://notify-api.line.me/api/notify", headers=headers, files=file)
-    else:
-        notify = requests.post(
-            "https://notify-api.line.me/api/notify", headers=headers, params=params, files=file)
-    return notify
+        if params == None:
+            notify = requests.post(
+                "https://notify-api.line.me/api/notify", headers=headers, files=file)
+        else:
+            notify = requests.post(
+                "https://notify-api.line.me/api/notify", headers=headers, params=params, files=file)
+        return notify
+    except Exception as e:
+        print('sendLineNotify 失敗！', e)
+        return
+
+
+def normalNotifyMessage(msg, tokens=[carbeToken, chocoToken, yelmiToken], workers=3):
+    try:
+        if msg == None or msg == "":
+            return
+        payload = {'message': msg}
+
+        # 發送line
+        with ThreadPoolExecutor(max_workers=workers) as executor:
+            outStr = []
+            for v in tokens:
+                res = executor.submit(sendLineNotify, v, payload)
+                outStr.append(res)
+
+            for future in as_completed(outStr):
+                if future.result().status_code == 200:
+                    print('發送 LINE Notify 成功！')
+                else:
+                    print('發送 LINE Notify 失敗！')
+        return
+    except Exception as e:
+        print(e)
+        return
+
+
+def normalNotifyWithTitle(res, tokens=[carbeToken, chocoToken, yelmiToken]):
+    try:
+        if res == None or res == "":
+            return
+        payload = {'message': res["title"] + "\n" + res["data"]}
+
+        # 發送line
+        with ThreadPoolExecutor(max_workers=3) as executor:
+            outStr = []
+            for v in tokens:
+                res = executor.submit(sendLineNotify, v, payload)
+                outStr.append(res)
+
+            for future in as_completed(outStr):
+                if future.result().status_code == 200:
+                    print('發送 LINE Notify 成功！')
+                else:
+                    print('發送 LINE Notify 失敗！')
+        return
+    except Exception as e:
+        print(e)
+        return
 
 
 def test():
@@ -148,31 +200,11 @@ def star():
         year = now.year
         month = now.month
 
-        # 找下一個月
-        # month += 1
-        # if month == 13:
-        #     month = 1
-        #     year += 1
-
         resMsg = nmnsservice.getStarText(year, month)
         if resMsg == None:
             return
-
-        payload = {'message': resMsg}
-
         tokens = [token, chocoToken, etenToken, yelmiToken]
-        # tokens = [token]
-        with ThreadPoolExecutor(max_workers=3) as executor:
-            outStr = []
-            for v in tokens:
-                res = executor.submit(sendLineNotify, v, payload)
-                outStr.append(res)
-
-            for future in as_completed(outStr):
-                if future.result().status_code == 200:
-                    print('發送 LINE Notify 成功！')
-                else:
-                    print('發送 LINE Notify 失敗！')
+        normalNotifyMessage(resMsg, tokens)
         return
     except:
         return
@@ -197,22 +229,10 @@ def covid19():
                 officalRes["time"], officalRes["recovered"], officalRes["domesticRecovered"], officalRes["internationalRecovered"], officalRes["newDeaths"], officalRes["total"], officalRes["totalDeaths"], officalRes["rateDeaths"], officalRes["vaccine"], officalRes["vaccinePercent"], officalRes["url"])
         if resMsg == "":
             return
-
-        payload = {'message': resMsg}
-
         tokens = [carbeToken, etenToken, chocoToken, yelmiToken]
         # tokens = [token]
-        with ThreadPoolExecutor(max_workers=3) as executor:
-            outStr = []
-            for v in tokens:
-                res = executor.submit(sendLineNotify, v, payload)
-                outStr.append(res)
+        normalNotifyMessage(resMsg, tokens)
 
-            for future in as_completed(outStr):
-                if future.result().status_code == 200:
-                    print('發送 LINE Notify 成功！')
-                else:
-                    print('發送 LINE Notify 失敗！')
         return
     except Exception as e:
         print(e)
@@ -284,153 +304,134 @@ def punchMsg(times, msgtext, rmin=0, rmax=10):
 
 
 def punchIn():
-    time = datetime.now()
-    defaultTime = time.replace(hour=8, minute=40)
-    msg = punchMsg(defaultTime, "上班睡覺瞜~", 0, 5)
-    payload = {'message': msg}
-    res = sendLineNotify(etenToken, payload)
+    try:
+        time = datetime.now()
+        defaultTime = time.replace(hour=8, minute=40)
+        msg = punchMsg(defaultTime, "上班睡覺瞜~", 0, 5)
+        payload = {'message': msg}
+        res = sendLineNotify(etenToken, payload)
 
-    if res.status_code == 200:
-        print('發送 LINE Notify 成功！')
-    else:
-        print('發送 LINE Notify 失敗！')
+        if res.status_code == 200:
+            print('發送 LINE Notify 成功！')
+        else:
+            print('發送 LINE Notify 失敗！')
+    except Exception as e:
+        print(e)
+        return
 
 
 def punchOut():
-    time = datetime.now()
-    defaultTime = time.replace(hour=17, minute=40)
-    msg = punchMsg(defaultTime, "下班尿尿瞜~", 6, 10) + "\n\n"
+    try:
+        time = datetime.now()
+        defaultTime = time.replace(hour=17, minute=40)
+        msg = punchMsg(defaultTime, "下班尿尿瞜~", 6, 10) + "\n\n"
 
-    # 取得天氣資料
-    loc = ["台北+大安", "新北+汐止", "新北+三重"]
-    with ThreadPoolExecutor(max_workers=4) as executor:
-        outStr = []
-        for v in loc:
-            res = executor.submit(getwttr, v)
-            outStr.append(res)
+        # 取得天氣資料
+        loc = ["台北+大安", "新北+汐止", "新北+三重"]
+        with ThreadPoolExecutor(max_workers=4) as executor:
+            outStr = []
+            for v in loc:
+                res = executor.submit(getwttr, v)
+                outStr.append(res)
 
-        for future in as_completed(outStr):
-            msg += future.result()+"\n"
+            for future in as_completed(outStr):
+                msg += future.result()+"\n"
 
-    payload = {'message': msg}
-    headers = {
-        "Authorization": "Bearer " + etenToken,
-        "Content-Type": "application/x-www-form-urlencoded"
-    }
-    notify = requests.post(
-        "https://notify-api.line.me/api/notify", headers=headers, params=payload)
-    if notify.status_code == 200:
-        print('發送 LINE Notify 成功！')
-    else:
-        print('發送 LINE Notify 失敗！')
+        payload = {'message': msg}
+        res = sendLineNotify(etenToken, payload)
+
+        if res.status_code == 200:
+            print('發送 LINE Notify 成功！')
+        else:
+            print('發送 LINE Notify 失敗！')
+    except Exception as e:
+        print(e)
+        return
 
 
 def netflixMonList():
-    url = "https://www.ptt.cc/bbs/EAseries/"
-    regex = re.compile(r'.*Netflix台灣.*片單.*')
-    pttRes = pttservice.getPTT(url, regex, "Netflix台灣")
+    try:
+        url = "https://www.ptt.cc/bbs/EAseries/"
+        regex = re.compile(r'.*Netflix台灣.*片單.*')
+        pttRes = pttservice.getPTT(url, regex, "Netflix台灣")
 
-    resMsg = ""
-    if pttRes != "":
-        resMsg = "%s\n%s\n%s\n" % (
-            pttRes["Date"], pttRes["Title"], pttRes["Link"])
+        resMsg = ""
+        if pttRes != "":
+            resMsg = "%s\n%s\n%s\n" % (
+                pttRes["Date"], pttRes["Title"], pttRes["Link"])
 
-    nowMonth = datetime.today().month
-    regex = re.compile(r'.*'+str(nowMonth)+'.*月.*')
-    if regex.match(pttRes["Title"]) == None:
+        nowMonth = datetime.today().month
+        regex = re.compile(r'.*'+str(nowMonth)+'.*月.*')
+        if regex.match(pttRes["Title"]) == None:
+            return
+
+        tokens = [netflixGrupToken, etenToken, carbeToken]
+        normalNotifyMessage(resMsg, tokens)
         return
-    payload = {'message': resMsg}
-    tokens = [netflixGrupToken, etenToken, carbeToken]
-    # TODO: 有空拉出來
-    with ThreadPoolExecutor(max_workers=2) as executor:
-        outStr = []
-        for v in tokens:
-            res = executor.submit(sendLineNotify, v, payload)
-            outStr.append(res)
-
-        for future in as_completed(outStr):
-            if future.result().status_code == 200:
-                print('發送 LINE Notify 成功！')
-            else:
-                print('發送 LINE Notify 失敗！')
-    return
+    except Exception as e:
+        print(e)
+        return
 
 
 def netflixMangFee():
-    resMsg = " \n 目前管理費(一季) 390/4*3 = 292.5 \n 1/5, 4/5, 7/5, 10/5 收款 ^ ^ \n匯款給我 292  就好 ~~ \n\n Hi~麻煩轉帳至台新銀行(812)帳號是 %s 或是點擊連結開啟Richart APP可以直接帶入我的帳號唷 %s " % (bankAccount, bankAccountLink)
-    payload = {'message': resMsg}
-    res = sendLineNotify(netflixGrupToken, payload)
-    if res.status_code == 200:
-        print('發送 LINE Notify 成功！')
-    else:
-        print('發送 LINE Notify 失敗！')
+    try:
+        resMsg = " \n 目前管理費(一季) 390/4*3 = 292.5 \n 1/5, 4/5, 7/5, 10/5 收款 ^ ^ \n匯款給我 292  就好 ~~ \n\n Hi~麻煩轉帳至台新銀行(812)帳號是 %s 或是點擊連結開啟Richart APP可以直接帶入我的帳號唷 %s " % (
+            bankAccount, bankAccountLink)
+        payload = {'message': resMsg}
+        res = sendLineNotify(netflixGrupToken, payload)
+        if res.status_code == 200:
+            print('發送 LINE Notify 成功！')
+        else:
+            print('發送 LINE Notify 失敗！')
+    except Exception as e:
+        print(e)
+        return
 
 
 def gasCPC():
-    # 找出明天, 用來檢查星期日抓的日期中油是否有更新
-    now = datetime.now()
-    tomorrow = now + timedelta(days=1)
+    try:
+        # 找出明天, 用來檢查星期日抓的日期中油是否有更新
+        now = datetime.now()
+        tomorrow = now + timedelta(days=1)
 
-    resMsg = gasservice.getCPCText(tomorrow)
-    if resMsg == None:
+        resMsg = gasservice.getCPCText(tomorrow)
+        if resMsg == None:
+            return
+        tokens = [carbeToken, etenToken, chocoToken, yelmiToken]
+        # tokens = [token]
+        normalNotifyMessage(resMsg, tokens)
         return
-    payload = {'message': resMsg}
-    tokens = [carbeToken, etenToken, chocoToken, yelmiToken]
-    # tokens = [token]
-
-    with ThreadPoolExecutor(max_workers=2) as executor:
-        outStr = []
-        for v in tokens:
-            res = executor.submit(sendLineNotify, v, payload)
-            outStr.append(res)
-
-        for future in as_completed(outStr):
-            if future.result().status_code == 200:
-                print('發送 LINE Notify 成功！')
-            else:
-                print('發送 LINE Notify 失敗！')
-    return
+    except Exception as e:
+        print(e)
+        return
 
 
 def getPresume():
-    resMsg = gasservice.getPresumeText()
-    if resMsg == None:
+    try:
+        resMsg = gasservice.getPresumeText()
+        if resMsg == None:
+            return
+        tokens = [carbeToken, etenToken, chocoToken, yelmiToken]
+        # tokens = [token]
+        normalNotifyMessage(resMsg, tokens)
         return
-    payload = {'message': resMsg}
-    tokens = [carbeToken, etenToken, chocoToken, yelmiToken]
-    # tokens = [token]
 
-    with ThreadPoolExecutor(max_workers=2) as executor:
-        outStr = []
-        for v in tokens:
-            res = executor.submit(sendLineNotify, v, payload)
-            outStr.append(res)
-
-        for future in as_completed(outStr):
-            if future.result().status_code == 200:
-                print('發送 LINE Notify 成功！')
-            else:
-                print('發送 LINE Notify 失敗！')
-    return
+    except Exception as e:
+        print(e)
+        return
 
 
 def getDailyAWord(examp=True):
-    resMsg = cambridgeservice.toMsg(cambridgeservice.getDailyAWord(), examp)
-    payload = {'message': resMsg}
-    tokens = [token]
+    try:
+        resMsg = cambridgeservice.toMsg(
+            cambridgeservice.getDailyAWord(), examp)
 
-    with ThreadPoolExecutor(max_workers=2) as executor:
-        outStr = []
-        for v in tokens:
-            res = executor.submit(sendLineNotify, v, payload)
-            outStr.append(res)
-
-        for future in as_completed(outStr):
-            if future.result().status_code == 200:
-                print('發送 LINE Notify 成功！')
-            else:
-                print('發送 LINE Notify 失敗！')
-    return
+        tokens = [token]
+        normalNotifyMessage(resMsg, tokens)
+        return
+    except Exception as e:
+        print(e)
+        return
 
 
 def getInvoice(msg="發票"):
@@ -487,14 +488,18 @@ def threeDayWether(loc="新北+汐止"):
 
 
 def getwttr(loc):
-    url = "https://zh-tw.wttr.in/%s?m&format=%s&lang=%s" % (
-        loc, '%l:+%c+%C+%t', "zh-tw")
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Macintosh Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36',
-        'Accept-Language': "zh-tw"
-    }
-    res = requests.get(url, headers=headers)
-    return res.text
+    try:
+        url = "https://zh-tw.wttr.in/%s?m&format=%s&lang=%s" % (
+            loc, '%l:+%c+%C+%t', "zh-tw")
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Macintosh Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36',
+            'Accept-Language': "zh-tw"
+        }
+        res = requests.get(url, headers=headers)
+        return res.text
+    except Exception as e:
+        print(e)
+        return
 
 
 def wether(title=None, loc=[]):
@@ -509,23 +514,11 @@ def wether(title=None, loc=[]):
 
             for future in as_completed(outStr):
                 msg += future.result()+"\n"
-        payload = {'message': title+"\n"+msg}
 
+        resMsg = title+"\n"+msg
         # tokens = [token]
         tokens = [etenToken]
-
-        # 發送line
-        with ThreadPoolExecutor(max_workers=3) as executor:
-            outStr = []
-            for v in tokens:
-                res = executor.submit(sendLineNotify, v, payload)
-                outStr.append(res)
-
-            for future in as_completed(outStr):
-                if future.result().status_code == 200:
-                    print('發送 LINE Notify 成功！')
-                else:
-                    print('發送 LINE Notify 失敗！')
+        normalNotifyMessage(resMsg, tokens)
         return
     except Exception as e:
         print(e)
@@ -538,20 +531,8 @@ def lottery(*category):
         if resMsg == "":
             return
 
-        payload = {'message': resMsg}
         tokens = [chocoToken, etenToken, carbeToken]
-        # 發送line
-        with ThreadPoolExecutor(max_workers=3) as executor:
-            outStr = []
-            for v in tokens:
-                res = executor.submit(sendLineNotify, v, payload)
-                outStr.append(res)
-
-            for future in as_completed(outStr):
-                if future.result().status_code == 200:
-                    print('發送 LINE Notify 成功！')
-                else:
-                    print('發送 LINE Notify 失敗！')
+        normalNotifyMessage(resMsg, tokens)
         return
     except Exception as e:
         print(e)
@@ -564,20 +545,8 @@ def ivy(nums=5):
         if resMsg == "" or resMsg == None:
             return
 
-        payload = {'message': "\n"+resMsg}
         tokens = [token]
-        # 發送line
-        with ThreadPoolExecutor(max_workers=3) as executor:
-            outStr = []
-            for v in tokens:
-                res = executor.submit(sendLineNotify, v, payload)
-                outStr.append(res)
-
-            for future in as_completed(outStr):
-                if future.result().status_code == 200:
-                    print('發送 LINE Notify 成功！')
-                else:
-                    print('發送 LINE Notify 失敗！')
+        normalNotifyMessage(resMsg, tokens)
         return
     except Exception as e:
         print(e)
@@ -658,7 +627,7 @@ def getThreeRrade():
     try:
         # 三大法人
         res = stockservice.getThreeRrade()
-        normalNotify(res, tokens=[carbeToken, chocoToken, yelmiToken])
+        normalNotifyMessage(res, tokens=[carbeToken, chocoToken, yelmiToken])
         return
     except Exception as e:
         print(e)
@@ -669,31 +638,7 @@ def getForeign():
     try:
         # 三大法人
         res = stockservice.getForeign()
-        normalNotify(res, tokens=[token])
-        return
-    except Exception as e:
-        print(e)
-        return
-
-
-def normalNotify(res, tokens=[carbeToken, chocoToken, yelmiToken]):
-    try:
-        if res == None or res == "":
-            return
-        payload = {'message': res["title"] + "\n" + res["data"]}
-
-        # 發送line
-        with ThreadPoolExecutor(max_workers=3) as executor:
-            outStr = []
-            for v in tokens:
-                res = executor.submit(sendLineNotify, v, payload)
-                outStr.append(res)
-
-            for future in as_completed(outStr):
-                if future.result().status_code == 200:
-                    print('發送 LINE Notify 成功！')
-                else:
-                    print('發送 LINE Notify 失敗！')
+        normalNotifyWithTitle(res, tokens=[token])
         return
     except Exception as e:
         print(e)
@@ -701,34 +646,4 @@ def normalNotify(res, tokens=[carbeToken, chocoToken, yelmiToken]):
 
 
 if __name__ == "__main__":
-    # stock5pm()
-    # punchIn()
-    # punchOut()
-    # test()
-    # covid19()
-    # netflixMonList()
-    # netflixMangFee()
-    # gasCPC()
-    # getDailyAWord()
-    # carbe()
-    # threeDayWether()
-    # lunch("Taipei+Neihu", "New-Taipei+Xizhi")
-    # wether(title="放飯了~", loc=["台北+內湖", "台北+大安", "新北+汐止", "新北+三重"])
-    # getInvoice()
-    # star()
-    # starDay()
-    # lottery("大樂透", "威力彩")
-    # getPresume()
-    # ivy(3)
-    # checkinBooks([{
-    #     "cookies": {},
-    #     "tokenStr": "Kimi"
-    # }])
-    # checkinShopee([{
-    #     "cookies": {"Cookie": '去網頁上面找cookies'},
-    #     "tokenStr": "Kimi"
-    # }])
-    # tokens = list(map(lambda x: TOKEN_MAP[x], ["Kimi"]))
-    # print(tokens)
-    # getThreeRrade()
     getForeign()
