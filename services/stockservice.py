@@ -47,7 +47,8 @@ def getThreeRrade():
 
         result = {
             "title": title+"(億)",
-            "data": printTable(dfs)
+            "data": printTable(dfs),
+            "url": "https://tinyl.io/5PL9"
         }
         return result
 
@@ -73,7 +74,7 @@ def getThreeRrade():
 
     except Exception as e:
         print(e)
-        return ""
+        return None
 
 
 def test():
