@@ -616,7 +616,7 @@ def getThreeRrade(tokens=[carbeToken, chocoToken, yelmiToken]):
     try:
         # 三大法人
         res = stockservice.getThreeRrade()
-        normalNotifyMessage(res, tokens=tokens)
+        normalNotifyWithTitle(res, tokens=tokens)
         return
     except Exception as e:
         print(e)
@@ -634,4 +634,5 @@ def getForeign(tops=10, tokens=[carbeToken, chocoToken, yelmiToken]):
 
 
 if __name__ == "__main__":
-    getForeign()
+    # getForeign()
+    getThreeRrade()
