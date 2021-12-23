@@ -156,7 +156,7 @@ def carbe():
         print('發送 LINE Notify 失敗！')
 
 
-def starDay():
+def starDay(tokens=[chocoToken, carbeToken, etenToken, yelmiToken]):
     try:
         now = datetime.now()
         resMsg, resImgURL = nmnsservice.getStarDayText(now)
@@ -170,9 +170,6 @@ def starDay():
         fp = urllib.request.urlopen(resImgURL)
         with open(imgPath, "wb") as fo:
             fo.write(fp.read())
-
-        tokens = [chocoToken, carbeToken, etenToken, yelmiToken]
-        # tokens = [token]
 
         with ThreadPoolExecutor(max_workers=3) as executor:
             outStr = []
@@ -194,7 +191,7 @@ def starDay():
         return
 
 
-def star():
+def star(tokens=[token, chocoToken, etenToken, yelmiToken]):
     try:
         now = datetime.now()
         year = now.year
@@ -203,14 +200,14 @@ def star():
         resMsg = nmnsservice.getStarText(year, month)
         if resMsg == None:
             return
-        tokens = [token, chocoToken, etenToken, yelmiToken]
+
         normalNotifyMessage(resMsg, tokens)
         return
     except:
         return
 
 
-def covid19():
+def covid19(tokens=[carbeToken, etenToken, chocoToken, yelmiToken]):
     try:
         resMsg = ""
         pttRes = covid19service.getGossipCovid19()
@@ -229,7 +226,7 @@ def covid19():
                 officalRes["time"], officalRes["recovered"], officalRes["domesticRecovered"], officalRes["internationalRecovered"], officalRes["newDeaths"], officalRes["total"], officalRes["totalDeaths"], officalRes["rateDeaths"], officalRes["vaccine"], officalRes["vaccinePercent"], officalRes["url"])
         if resMsg == "":
             return
-        tokens = [carbeToken, etenToken, chocoToken, yelmiToken]
+
         # tokens = [token]
         normalNotifyMessage(resMsg, tokens)
 
@@ -349,7 +346,7 @@ def punchOut():
         return
 
 
-def netflixMonList():
+def netflixMonList(tokens=[netflixGrupToken, etenToken, carbeToken]):
     try:
         url = "https://www.ptt.cc/bbs/EAseries/"
         regex = re.compile(r'.*Netflix台灣.*片單.*')
@@ -365,7 +362,6 @@ def netflixMonList():
         if regex.match(pttRes["Title"]) == None:
             return
 
-        tokens = [netflixGrupToken, etenToken, carbeToken]
         normalNotifyMessage(resMsg, tokens)
         return
     except Exception as e:
@@ -388,7 +384,7 @@ def netflixMangFee():
         return
 
 
-def gasCPC():
+def gasCPC(tokens=[carbeToken, etenToken, chocoToken, yelmiToken]):
     try:
         # 找出明天, 用來檢查星期日抓的日期中油是否有更新
         now = datetime.now()
@@ -397,8 +393,7 @@ def gasCPC():
         resMsg = gasservice.getCPCText(tomorrow)
         if resMsg == None:
             return
-        tokens = [carbeToken, etenToken, chocoToken, yelmiToken]
-        # tokens = [token]
+
         normalNotifyMessage(resMsg, tokens)
         return
     except Exception as e:
@@ -406,13 +401,12 @@ def gasCPC():
         return
 
 
-def getPresume():
+def getPresume(tokens=[carbeToken, etenToken, chocoToken, yelmiToken]):
     try:
         resMsg = gasservice.getPresumeText()
         if resMsg == None:
             return
-        tokens = [carbeToken, etenToken, chocoToken, yelmiToken]
-        # tokens = [token]
+
         normalNotifyMessage(resMsg, tokens)
         return
 
@@ -421,12 +415,11 @@ def getPresume():
         return
 
 
-def getDailyAWord(examp=True):
+def getDailyAWord(examp=True,  tokens=[token]):
     try:
         resMsg = cambridgeservice.toMsg(
             cambridgeservice.getDailyAWord(), examp)
 
-        tokens = [token]
         normalNotifyMessage(resMsg, tokens)
         return
     except Exception as e:
@@ -434,11 +427,10 @@ def getDailyAWord(examp=True):
         return
 
 
-def getInvoice(msg="發票"):
+def getInvoice(msg="發票", tokens=[carbeToken, etenToken, chocoToken, yelmiToken]):
     resMsg = invoiceservice.getInvoice(msg)
     print(resMsg)
     payload = {'message': resMsg}
-    tokens = [carbeToken, etenToken, chocoToken, yelmiToken]
 
     with ThreadPoolExecutor(max_workers=2) as executor:
         outStr = []
@@ -502,7 +494,7 @@ def getwttr(loc):
         return
 
 
-def wether(title=None, loc=[]):
+def wether(title=None, loc=[], tokens=[etenToken]):
     try:
         msg = ""
         # 取得天氣資料
@@ -516,8 +508,7 @@ def wether(title=None, loc=[]):
                 msg += future.result()+"\n"
 
         resMsg = title+"\n"+msg
-        # tokens = [token]
-        tokens = [etenToken]
+
         normalNotifyMessage(resMsg, tokens)
         return
     except Exception as e:
@@ -525,13 +516,12 @@ def wether(title=None, loc=[]):
         return
 
 
-def lottery(*category):
+def lottery(*category, tokens=[chocoToken, etenToken, carbeToken]):
     try:
         resMsg = taiwanlotteryservice.getlotteryText(category)
         if resMsg == "":
             return
 
-        tokens = [chocoToken, etenToken, carbeToken]
         normalNotifyMessage(resMsg, tokens)
         return
     except Exception as e:
@@ -539,13 +529,12 @@ def lottery(*category):
         return
 
 
-def ivy(nums=5):
+def ivy(nums=5, tokens=[token]):
     try:
         resMsg = ivyservice.getLastNumsDaysText(nums=nums)
         if resMsg == "" or resMsg == None:
             return
 
-        tokens = [token]
         normalNotifyMessage(resMsg, tokens)
         return
     except Exception as e:
@@ -623,22 +612,22 @@ def checkinShopee(source=[{"cookies": "", "tokenStr": ""}]):
         return
 
 
-def getThreeRrade():
+def getThreeRrade(tokens=[carbeToken, chocoToken, yelmiToken]):
     try:
         # 三大法人
         res = stockservice.getThreeRrade()
-        normalNotifyMessage(res, tokens=[carbeToken, chocoToken, yelmiToken])
+        normalNotifyMessage(res, tokens=tokens)
         return
     except Exception as e:
         print(e)
         return
 
 
-def getForeign(tops=10):
+def getForeign(tops=10, tokens=[token]):
     try:
         # 三大法人
         res = stockservice.getForeign(tops=tops)
-        normalNotifyWithTitle(res, tokens=[token])
+        normalNotifyWithTitle(res, tokens=tokens)
         return
     except Exception as e:
         print(e)
