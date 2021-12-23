@@ -612,7 +612,7 @@ def checkinShopee(source=[{"cookies": "", "tokenStr": ""}]):
         return
 
 
-def getThreeRrade(tokens=[carbeToken, chocoToken, yelmiToken]):
+def getThreeRrade(tokens=[token]]):
     try:
         # 三大法人
         res = stockservice.getThreeRrade()
@@ -623,7 +623,7 @@ def getThreeRrade(tokens=[carbeToken, chocoToken, yelmiToken]):
         return
 
 
-def getForeign(tops=10, tokens=[carbeToken, chocoToken, yelmiToken]):
+def getForeign(tops=10, tokens=[token]]):
     try:
         res = stockservice.getForeign(tops=tops)
         normalNotifyWithTitle(res, tokens=tokens)
