@@ -26,6 +26,9 @@ LINE 機器人, LINE Notify.
 - `天文`: 當天天文景象+圖片
 - `天文月`: 當月天文景象 https://www.nmns.edu.tw/learn/feature/star/2021/202109/
 - `樂透`: 威力彩, 大樂透
+- `三大`: 三大法人買賣
+- `外資{數字N}`: 外資買賣 N:代表前N名 ex. `外資1`
+
 
 ## Install package
 
