@@ -623,7 +623,7 @@ def getThreeRrade(tokens=[carbeToken, chocoToken, yelmiToken]):
         return
 
 
-def getForeign(tops=10, tokens=[token]):
+def getForeign(tops=10, tokens=[carbeToken, chocoToken, yelmiToken]):
     try:
         # 三大法人
         res = stockservice.getForeign(tops=tops)
