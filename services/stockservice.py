@@ -94,7 +94,7 @@ def getForeign(tops=10):
         url = "https://fubon-ebrokerdj.fbs.com.tw/Z/ZG/ZGK_D.djhtm"
         res = requests.get(url, headers=headers, verify=False)
         soup = BeautifulSoup(res.text, "lxml")
-        title = soup.select("div.t11")[0].text
+        title = soup.select("div.t11")[0].text + "外資買賣超"
         dfs = pd.read_html(
             url, header=1, keep_default_na=False, index_col=0)[1]
 

@@ -625,7 +625,6 @@ def getThreeRrade(tokens=[carbeToken, chocoToken, yelmiToken]):
 
 def getForeign(tops=10, tokens=[carbeToken, chocoToken, yelmiToken]):
     try:
-        # 三大法人
         res = stockservice.getForeign(tops=tops)
         normalNotifyWithTitle(res, tokens=tokens)
         return
