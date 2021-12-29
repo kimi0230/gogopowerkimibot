@@ -148,8 +148,20 @@ def k():
         print("kkk")
 
 
+sinotrade = "https://www.sinotrade.com.tw/richclub/weeklyreport"
+
+
+def weekEvent():
+    try:
+        # 永豐用GrapqhQL
+        pass
+    except Exception as e:
+        print(e)
+        return None
+
+
 if __name__ == "__main__":
-    k()
+    weekEvent()
     # print(getThreeRrade())
     # getForeign()
     # f = open('table.png', 'rb')  # create an empty demo file
