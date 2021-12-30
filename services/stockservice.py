@@ -5,11 +5,11 @@ import pandas as pd
 import numpy as np
 import requests
 from bs4 import BeautifulSoup
-from io import StringIO
 import locale
 import ssl
 from gql import gql, Client
 from gql.transport.requests import RequestsHTTPTransport
+from utility import tinyURL
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36'
@@ -219,8 +219,8 @@ def getWeekEvent():
         # Execute the query on the transport
         queryResult = client.execute(query, variable_values=params)
         title = queryResult["clientGetArticleList"]["filtered"][0]["title"]
-        link = ("{}{}-{}").format("https://www.sinotrade.com.tw/richclub/weeklyreport/",
-                                  re.sub('\W', '-', title), queryResult["clientGetArticleList"]["filtered"][0]["_id"])
+        link = tinyURL.makeTiny(("{}{}-{}").format("https://www.sinotrade.com.tw/richclub/weeklyreport/",
+                                                   re.sub('\W', '-', title), queryResult["clientGetArticleList"]["filtered"][0]["_id"]))
 
         result = {
             "title": title,
