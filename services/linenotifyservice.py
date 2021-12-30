@@ -633,6 +633,17 @@ def getForeign(tops=10, tokens=[token]):
         return
 
 
+def getWeekEvent(tokens=[token]):
+    try:
+        res = stockservice.getWeekEvent()
+        normalNotifyWithTitle(res, tokens=tokens)
+        return
+    except Exception as e:
+        print(e)
+        return
+
+
 if __name__ == "__main__":
     # getForeign()
-    getThreeRrade()
+    # getThreeRrade()
+    getWeekEvent()

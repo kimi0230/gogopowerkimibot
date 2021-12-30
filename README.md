@@ -162,6 +162,10 @@ Q_CLUSTER = {
 
 5. `python3 manage.py qcluster`
 
+
+## GraphQL Client
+`pip3 install --pre 'gql[all]'`
+
 ## Reference
 
 - https://github.com/henriquebastos/python-decouple

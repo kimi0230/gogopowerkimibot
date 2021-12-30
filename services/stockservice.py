@@ -8,6 +8,8 @@ from bs4 import BeautifulSoup
 from io import StringIO
 import locale
 import ssl
+from gql import gql, Client
+from gql.transport.requests import RequestsHTTPTransport
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36'
@@ -151,10 +153,83 @@ def k():
 sinotrade = "https://www.sinotrade.com.tw/richclub/weeklyreport"
 
 
-def weekEvent():
+def getWeekEvent():
     try:
         # 永豐用GrapqhQL
-        pass
+
+        transport = RequestsHTTPTransport(
+            url="https://www.sinotrade.com.tw/richclub/api/graphql",
+            verify=True, retries=3,
+        )
+
+        # Create a GraphQL client using the defined transport
+        client = Client(transport=transport, fetch_schema_from_transport=False)
+
+        # Provide a GraphQL query
+        query = gql(
+            """
+            query ($input: clientGetContentListInput) {
+                clientGetArticleList(input: $input) {
+                    total
+                    filtered {
+                    _id
+                    createdAt
+                    pubDate
+                    title
+                    updatedAt
+                    author {
+                        _id
+                        name {
+                        CN
+                        account
+                        __typename
+                        }
+                        __typename
+                    }
+                    channel {
+                        _id
+                        name {
+                        CN
+                        account
+                        __typename
+                        }
+                        __typename
+                    }
+                    stock {
+                        code
+                        name
+                        __typename
+                    }
+                    image
+                    __typename
+                    }
+                    __typename
+                }
+            }
+            """
+        )
+
+        params = {
+            "input": {
+                "page": 0,
+                "limit": 10,
+                "channel": "5ea796f104ce153684fa1b04"
+            }
+        }
+        # Execute the query on the transport
+        queryResult = client.execute(query, variable_values=params)
+        title = queryResult["clientGetArticleList"]["filtered"][0]["title"]
+        link = ("{}{}-{}").format("https://www.sinotrade.com.tw/richclub/weeklyreport/",
+                                  re.sub('\W', '-', title), queryResult["clientGetArticleList"]["filtered"][0]["_id"])
+
+        result = {
+            "title": title,
+            "data": link,
+            "images": [],
+            "url": link
+        }
+        return result
+
     except Exception as e:
         print(e)
         return None
