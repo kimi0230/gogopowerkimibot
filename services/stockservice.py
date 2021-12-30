@@ -153,7 +153,7 @@ def k():
 sinotrade = "https://www.sinotrade.com.tw/richclub/weeklyreport"
 
 
-def weekEvent():
+def getWeekEvent():
     try:
         # 永豐用GrapqhQL
 
@@ -217,10 +217,18 @@ def weekEvent():
             }
         }
         # Execute the query on the transport
-        result = client.execute(query, variable_values=params)
-        link = ("{}{}-{}").format("https://www.sinotrade.com.tw/richclub/weeklyreport/", re.sub('\W', '-',
-                                                                                                result["clientGetArticleList"]["filtered"][0]["title"]), result["clientGetArticleList"]["filtered"][0]["_id"])
-        print(link)
+        queryResult = client.execute(query, variable_values=params)
+        title = queryResult["clientGetArticleList"]["filtered"][0]["title"]
+        link = ("{}{}-{}").format("https://www.sinotrade.com.tw/richclub/weeklyreport/",
+                                  re.sub('\W', '-', title), queryResult["clientGetArticleList"]["filtered"][0]["_id"])
+
+        result = {
+            "title": title,
+            "data": link,
+            "images": [],
+            "url": link
+        }
+        return result
 
     except Exception as e:
         print(e)
