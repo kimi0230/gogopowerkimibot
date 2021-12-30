@@ -28,7 +28,7 @@ LINE Bot, LINE Notify.
 - `樂透`: 威力彩, 大樂透
 - `三大`: 三大法人買賣
 - `外資{數字N}`: 外資買賣 N:代表前N名 ex. `外資1`
-- `evnet`: 永豐一週財經大事
+- `event`: 永豐一週財經大事
 
 
 ## Install package
