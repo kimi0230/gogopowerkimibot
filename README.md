@@ -1,9 +1,9 @@
 # GoGoPowerKimi
 [![Wake Up Heroku](https://github.com/kimi0230/gogopowerkimibot/actions/workflows/wakeupheroku.yml/badge.svg)](https://github.com/kimi0230/gogopowerkimibot/actions/workflows/wakeupheroku.yml)
 
-LINE 機器人, LINE Notify.
-使用 Django, Django Q 排程, PostgreSQL, GitHub Active 自動部署至 Heroku
-發票, 天氣, 匯率, 疫情, ptt 爬蟲, [Cambridge Dictionary](https://dictionary.cambridge.org/zht)爬蟲
+LINE Bot, LINE Notify.
+使用 Django, Django Q 排程, PostgreSQL, GraphQL, GitHub Active 自動部署至 Heroku
+發票, 天氣, 天文, 匯率, 常春藤, 股市, 疫情, ptt 爬蟲, [Cambridge Dictionary](https://dictionary.cambridge.org/zht)爬蟲
 中油油價漲幅 notify
 每日英文單字 notify 等
 
@@ -28,6 +28,7 @@ LINE 機器人, LINE Notify.
 - `樂透`: 威力彩, 大樂透
 - `三大`: 三大法人買賣
 - `外資{數字N}`: 外資買賣 N:代表前N名 ex. `外資1`
+- `evnet`: 永豐一週財經大事
 
 
 ## Install package
