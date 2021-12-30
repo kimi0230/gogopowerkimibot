@@ -633,7 +633,7 @@ def getForeign(tops=10, tokens=[token]):
         return
 
 
-def getWeekEvent(tokens=[token]):
+def getWeekEvent(tokens=[yelmiToken, chocoToken]):
     try:
         res = stockservice.getWeekEvent()
         normalNotifyWithTitle(res, tokens=tokens)
