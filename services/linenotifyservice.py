@@ -217,7 +217,7 @@ def covid19(tokens=[carbeToken, etenToken, chocoToken, yelmiToken]):
 
         officalRes = covid19service.getCovid19()
         if officalRes != "":
-            nowDateEng = datetime.now().strftime("%b-%d")
+            nowDateEng = datetime.now().strftime("%b-%-d")
             regex = re.compile(r'^Updated on '+nowDateEng+'.*')
             if regex.match(officalRes["time"]) == None:
                 resMsg += "\n你家的政府官網沒更新!\n"
