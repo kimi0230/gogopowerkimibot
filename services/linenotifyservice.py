@@ -115,7 +115,8 @@ def normalNotifyWithTitle(res, tokens=[carbeToken, chocoToken, yelmiToken]):
     try:
         if res == None or res == "":
             return
-        payload = {'message': res["title"] + "\n" + res["data"]}
+        payload = {'message': res["title"] +
+                   "\n" + res["data"] + "\n" + res["url"]}
 
         # 發送line
         with ThreadPoolExecutor(max_workers=3) as executor:
@@ -645,5 +646,5 @@ def getWeekEvent(tokens=[yelmiToken, chocoToken]):
 
 if __name__ == "__main__":
     # getForeign()
-    # getThreeRrade()
-    getWeekEvent()
+    getThreeRrade()
+    # getWeekEvent()
