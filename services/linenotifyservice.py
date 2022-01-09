@@ -649,7 +649,7 @@ def getKimi0230():
     if msg == None:
         return
     payload = {
-        'message': "https://visitor-badge.glitch.me/badge?page_id=kimi0230 : " + msg}
+        'message': "https://github.com/kimi0230 : " + msg}
     res = sendLineNotify(token, payload)
 
     if res.status_code == 200:
