@@ -1,6 +1,6 @@
 from services import covid19service
 from datetime import datetime, timedelta
-from services import pttservice, gasservice, cambridgeservice, invoiceservice, nmnsservice, taiwanlotteryservice, ivyservice, booksservice, shopeeservice, stockservice
+from services import pttservice, gasservice, cambridgeservice, invoiceservice, nmnsservice, taiwanlotteryservice, ivyservice, booksservice, shopeeservice, stockservice, githubservice
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import requests
 from django.conf import settings
@@ -644,7 +644,22 @@ def getWeekEvent(tokens=[yelmiToken, chocoToken]):
         return
 
 
+def getKimi0230():
+    msg = githubservice.getKimi0230()
+    if msg == None:
+        return
+    payload = {
+        'message': "https://visitor-badge.glitch.me/badge?page_id=kimi0230 : " + msg}
+    res = sendLineNotify(token, payload)
+
+    if res.status_code == 200:
+        print('發送 LINE Notify 成功！')
+    else:
+        print('發送 LINE Notify 失敗！')
+
+
 if __name__ == "__main__":
     # getForeign()
-    getThreeRrade()
+    # getThreeRrade()
     # getWeekEvent()
+    getKimi0230()
