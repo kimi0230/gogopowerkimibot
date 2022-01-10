@@ -8,7 +8,7 @@ from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import MessageEvent, TextMessage, PostbackEvent
 from module import msgresponse
-from services import cwbservices, invoiceservice, covid19service, exchangeservice, cambridgeservice, nmnsservice, taiwanlotteryservice, gasservice, ivyservice, stockservice
+from services import cwbservices, invoiceservice, covid19service, exchangeservice, cambridgeservice, nmnsservice, taiwanlotteryservice, gasservice, ivyservice, stockservice, githubservice
 from urllib.parse import parse_qsl
 from myconst import cmdlist
 import re
@@ -139,6 +139,11 @@ def callback(request):
                         resMsg = "%s\n%s" % (
                             res["title"], res["data"])
                         msgresponse.sendText(event, resMsg)
+                    elif mtext == "kimi":
+                        res = githubservice.getKimi0230()
+                        if res == None:
+                            return
+                        msgresponse.sendText(event, res)
                     elif re.match(r"^ivy\s?\d{0,2}", mtext) != None:
                         nums = re.sub(r'\D', "", mtext)
                         if nums == "":
