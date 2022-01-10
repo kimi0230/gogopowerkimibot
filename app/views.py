@@ -143,7 +143,9 @@ def callback(request):
                         res = githubservice.getKimi0230()
                         if res == None:
                             return
-                        msgresponse.sendText(event, res)
+                        resMsg = ("{}:{}".format(
+                            "https://github.com/kimi0230", res))
+                        msgresponse.sendText(event, resMsg)
                     elif re.match(r"^ivy\s?\d{0,2}", mtext) != None:
                         nums = re.sub(r'\D', "", mtext)
                         if nums == "":
