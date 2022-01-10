@@ -139,7 +139,7 @@ def callback(request):
                         resMsg = "%s\n%s" % (
                             res["title"], res["data"])
                         msgresponse.sendText(event, resMsg)
-                    elif mtext == "kimi":
+                    elif mtext == "kimi" or mtext == "蔡章章":
                         res = githubservice.getKimi0230()
                         if res == None:
                             return
