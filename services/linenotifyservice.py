@@ -656,6 +656,7 @@ def getKimi0230():
         print('發送 LINE Notify 成功！')
     else:
         print('發送 LINE Notify 失敗！')
+    return
 
 
 if __name__ == "__main__":
