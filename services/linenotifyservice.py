@@ -650,13 +650,14 @@ def getKimi0230():
         if msg == None:
             return
         payload = {
-            'message': "https://github.com/kimi0230 :\t" + msg}
+            'message': "https://github.com/kimi0230 : " + msg}
         res = sendLineNotify(token, payload)
-
+        print("--->", res)
         if res.status_code == 200:
             print('發送 LINE Notify 成功！')
         else:
             print('發送 LINE Notify 失敗！')
+
         return
     except Exception as e:
         print("getKimi0230:", e)
@@ -664,7 +665,7 @@ def getKimi0230():
 
 
 if __name__ == "__main__":
-    getForeign()
+    # getForeign()
     # getThreeRrade()
     # getWeekEvent()
-    # getKimi0230()
+    getKimi0230()
