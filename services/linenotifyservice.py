@@ -645,18 +645,22 @@ def getWeekEvent(tokens=[yelmiToken, chocoToken]):
 
 
 def getKimi0230():
-    msg = githubservice.getKimi0230()
-    if msg == None:
-        return
-    payload = {
-        'message': "https://github.com/kimi0230 :\t" + msg}
-    res = sendLineNotify(token, payload)
+    try:
+        msg = githubservice.getKimi0230()
+        if msg == None:
+            return
+        payload = {
+            'message': "https://github.com/kimi0230 :\t" + msg}
+        res = sendLineNotify(token, payload)
 
-    if res.status_code == 200:
-        print('發送 LINE Notify 成功！')
-    else:
-        print('發送 LINE Notify 失敗！')
-    return
+        if res.status_code == 200:
+            print('發送 LINE Notify 成功！')
+        else:
+            print('發送 LINE Notify 失敗！')
+        return
+    except Exception as e:
+        print("getKimi0230:", e)
+        return
 
 
 if __name__ == "__main__":
