@@ -659,7 +659,7 @@ def getKimi0230():
 
 
 if __name__ == "__main__":
-    # getForeign()
-    getThreeRrade()
+    getForeign()
+    # getThreeRrade()
     # getWeekEvent()
     # getKimi0230()

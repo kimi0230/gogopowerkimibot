@@ -81,12 +81,15 @@ def getThreeRrade():
 
 
 def printForeignTable(dfs, tops=11):
-    buyRank = "買超\t股票\t超張數\t收盤價\t漲跌\n"
-    sellRank = "賣超\t股票\t超張數\t收盤價\t漲跌\n"
+    buyRank = "買超\n股票\t超張數\t漲跌\n"
+    sellRank = "賣超\n股票\t超張數\t漲跌\n"
     # ['股票名稱' '超張數' '收盤價' '漲跌' '名次' '股票名稱' '超張數' '收盤價' '漲跌']
     for idx, v in enumerate(dfs.values[1:tops]):
-        buyRank += ("({}) {} {:^7} {:^7} {:^7}\n").format(idx+1, *v[:4])
-        sellRank += ("({}) {} {:^7} {:^7} {:^7}\n").format(idx+1, *v[5:])
+        # buyRank += ("({}) {}\n{:^7} {:^7} {:^7}\n").format(idx+1, *v[:4])
+        buyRank += ("({}) {}: {}元\n {:^7},\t{}%\n").format(idx +
+                                                           1, v[0], v[2], v[1], v[3])
+        sellRank += ("({}) {}: {}元\n {:^7},\t{}%\n").format(idx +
+                                                            1, v[5], v[7], v[6], v[8])
 
     return "%s\n%s" % (buyRank, sellRank)
 
