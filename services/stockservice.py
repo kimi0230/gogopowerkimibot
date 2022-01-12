@@ -28,12 +28,6 @@ def printThreeRradeTable(dfs):
     for idx, v in enumerate(dfs.values):
         table += "## %s\n(買) %s\t(賣) %s\n(差) %s\n\n" % (indexTitle[idx], *[
             round(float(c)/float(100000000), 2) for c in v])
-
-    # table= ("{:^10} {:^10} {:^10} \n".format(*dfs.columns.values))
-    # indexTitle= dfs.index.values
-    # for idx, v in enumerate(dfs.values):
-    #     table += ("{:^15} {:^15} {:^15} {:15}\n".format(
-    #         *[locale.currency(float(c)/float(100000000), grouping=True) for c in v], indexTitle[idx]))
     return table
 
 
@@ -55,26 +49,6 @@ def getThreeRrade():
         }
         return result
 
-        # plt.figure(figsize=(10, 5))
-        # ax = plt.axes(frame_on=False)  # 不要額外框線
-        # ax.set_title("三大法人買賣超")
-        # ax.xaxis.set_visible(False)  # 隱藏X軸刻度線
-        # ax.yaxis.set_visible(False)  # 隱藏Y軸刻度線
-        # ax.axis('off')
-        # pd.plotting.table(ax, dfs, loc='center', colWidths=[0.1] * 3)
-        # plt.savefig('table.png', dpi=200, bbox_inches='tight')     # 存檔
-        # plt.show()
-        # f = open('table.png', 'rb')  # create an empty demo file
-        # file = {'imageFile': f}
-        # headers = {
-        #     "Authorization": "Bearer " + "msgG1hovWso1zkinUPL0335RVNV1h5TTzET9F1W92Q6",
-        #     # "Content-Type": "application/x-www-form-urlencoded"
-        # }
-        # params = {'message': "ddd"}
-        # notify = requests.post(
-        #     "https://notify-api.line.me/api/notify", headers=headers, params=params, files=file)
-        # return notify
-
     except Exception as e:
         print(e)
         return None
@@ -85,7 +59,6 @@ def printForeignTable(dfs, tops=11):
     sellRank = "賣超\n股票\t超張數\t漲跌\n"
     # ['股票名稱' '超張數' '收盤價' '漲跌' '名次' '股票名稱' '超張數' '收盤價' '漲跌']
     for idx, v in enumerate(dfs.values[1:tops]):
-        # buyRank += ("({}) {}\n{:^7} {:^7} {:^7}\n").format(idx+1, *v[:4])
         buyRank += ("({}) {}: {}元\n {:^7},\t{}%\n").format(idx +
                                                            1, v[0], v[2], v[1], v[3])
         sellRank += ("({}) {}: {}元\n {:^7},\t{}%\n").format(idx +
@@ -118,7 +91,6 @@ def getForeign(tops=10):
 def test():
     try:
         url = "https://www.twse.com.tw/zh/page/trading/fund/BFI82U.html"
-        res = requests.get(url, headers=headers)
 
         # 用Numpy建立樣本
         table = np.random.rand(10, 5)
