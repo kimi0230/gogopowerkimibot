@@ -26,13 +26,8 @@ def printThreeRradeTable(dfs):
     table = ""
     indexTitle = dfs.index.values
     for idx, v in enumerate(dfs.values):
-        buy = round(float(v[0])/float(100000000), 2)
-        sell = round(float(v[1])/float(100000000), 2)
-        diff = round(float(v[2])/float(100000000), 2)
-        table += "## %s\n(買) %s\t(賣) %s\n(差) %s\n\n" % (
-            indexTitle[idx], diff, buy, sell)
-        # table += "## %s\n\t\t%s(買)\t\t%s(賣)\t\t%s(差)\t\t\n" % (indexTitle[idx], *[locale.currency(
-        #     float(c)/float(100000000), grouping=True) for c in v])
+        table += "## %s\n(買) %s\t(賣) %s\n(差) %s\n\n" % (indexTitle[idx], *[
+            round(float(c)/float(100000000), 2) for c in v])
 
     # table= ("{:^10} {:^10} {:^10} \n".format(*dfs.columns.values))
     # indexTitle= dfs.index.values
@@ -168,7 +163,8 @@ def getWeekEvent():
         )
 
         # Create a GraphQL client using the defined transport
-        client = Client(transport=transport, fetch_schema_from_transport=False)
+        client = Client(transport=transport,
+                        fetch_schema_from_transport=False)
 
         # Provide a GraphQL query
         query = gql(
