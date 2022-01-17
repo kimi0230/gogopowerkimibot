@@ -59,10 +59,10 @@ def printForeignTable(dfs, tops=11):
     sellRank = "賣超\n股票\t超張數\t漲跌\n"
     # ['股票名稱' '超張數' '收盤價' '漲跌' '名次' '股票名稱' '超張數' '收盤價' '漲跌']
     for idx, v in enumerate(dfs.values[1:tops]):
-        buyRank += ("({}) {}: {}元\n {:^7},\t{}%\n").format(idx +
-                                                           1, v[0], v[2], v[1], v[3])
-        sellRank += ("({}) {}: {}元\n {:^7},\t{}%\n").format(idx +
-                                                            1, v[5], v[7], v[6], v[8])
+        buyRank += ("({}) {}: {}元\n {:^7},\t{}\n").format(idx +
+                                                          1, v[0], v[2], v[1], v[3])
+        sellRank += ("({}) {}: {}元\n {:^7},\t{}\n").format(idx +
+                                                           1, v[5], v[7], v[6], v[8])
 
     return "%s\n%s" % (buyRank, sellRank)
 
