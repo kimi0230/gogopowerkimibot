@@ -59,7 +59,7 @@ def callback(request):
                             if regex.match(officalRes["time"]) == None:
                                 resMsg += "\n你家的政府官網沒更新!\n"
                         resMsg += "\n%s\n 新增確診:\t %s (本土 %s, 境外 %s) \n 新增死亡:\t %s\n 累計確診:\t %s\n 累計死亡:\t %s\n 死亡率:\t %s\n 疫苗接種人次:\t %s %s\n %s" % (
-                            res["time"], res["recovered"], res["domesticRecovered"], res["internationalRecovered"], res["newDeaths"], res["total"], res["totalDeaths"], res["rateDeaths"], res["vaccine"], res["vaccinePercent"], res["url"])
+                            officalRes["time"], officalRes["recovered"], officalRes["domesticRecovered"], officalRes["internationalRecovered"], officalRes["newDeaths"], officalRes["total"], officalRes["totalDeaths"], officalRes["rateDeaths"], officalRes["vaccine"], officalRes["vaccinePercent"], officalRes["url"])
                         if resMsg != "":
                             msgresponse.sendText(event, resMsg)
                     elif re.match(r"^匯率", mtext) != None:
