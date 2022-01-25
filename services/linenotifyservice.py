@@ -430,7 +430,7 @@ def getDailyAWord(examp=True,  tokens=[token]):
 
 def getInvoice(msg="發票", tokens=[carbeToken, etenToken, chocoToken, yelmiToken]):
     resMsg = invoiceservice.getInvoice(msg)
-    print(resMsg)
+
     payload = {'message': resMsg}
 
     with ThreadPoolExecutor(max_workers=2) as executor:
