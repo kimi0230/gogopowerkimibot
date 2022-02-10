@@ -60,6 +60,10 @@ def callback(request):
                                 resMsg += "\n你家的政府官網沒更新!\n"
                         resMsg += "\n%s\n 新增確診:\t %s (本土 %s, 境外 %s) \n 新增死亡:\t %s\n 累計確診:\t %s\n 累計死亡:\t %s\n 死亡率:\t %s\n 疫苗接種人次:\t %s %s\n %s" % (
                             officalRes["time"], officalRes["recovered"], officalRes["domesticRecovered"], officalRes["internationalRecovered"], officalRes["newDeaths"], officalRes["total"], officalRes["totalDeaths"], officalRes["rateDeaths"], officalRes["vaccine"], officalRes["vaccinePercent"], officalRes["url"])
+                        # 縣市
+                        officalResList = ["\n%s:\t%s" %
+                                          (k, v)for k, v in officalRes["countrysDict"].items()]
+                        resMsg += "".join(officalResList)
                         if resMsg != "":
                             msgresponse.sendText(event, resMsg)
                     elif re.match(r"^匯率", mtext) != None:

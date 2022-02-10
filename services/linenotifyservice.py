@@ -1,3 +1,4 @@
+from time import time
 from services import covid19service
 from datetime import datetime, timedelta
 from services import pttservice, gasservice, cambridgeservice, invoiceservice, nmnsservice, taiwanlotteryservice, ivyservice, booksservice, shopeeservice, stockservice, githubservice
@@ -217,14 +218,23 @@ def covid19(tokens=[carbeToken, etenToken, chocoToken, yelmiToken]):
                 pttRes["Date"], pttRes["Title"], pttRes["Link"])
 
         officalRes = covid19service.getCovid19()
+
         if officalRes != "":
             nowDateEng = datetime.now().strftime("%b-%-d")
             regex = re.compile(r'^Updated on '+nowDateEng+'.*')
             if regex.match(officalRes["time"]) == None:
                 resMsg += "\n你家的政府官網沒更新!\n"
 
-            resMsg += "\n%s\n 新增確診:\t %s (本土 %s, 境外 %s) \n 新增死亡:\t %s\n 累計確診:\t %s\n 累計死亡:\t %s\n 死亡率:\t %s\n 疫苗接種人次:\t %s %s\n %s" % (
+            resMsg += "\n%s\n 新增確診:\t %s (本土 %s, 境外 %s) \n 新增死亡:\t %s\n 累計確診:\t %s\n 累計死亡:\t %s\n 死亡率:\t %s\n 疫苗接種人次:\t %s %s\n %s\n" % (
                 officalRes["time"], officalRes["recovered"], officalRes["domesticRecovered"], officalRes["internationalRecovered"], officalRes["newDeaths"], officalRes["total"], officalRes["totalDeaths"], officalRes["rateDeaths"], officalRes["vaccine"], officalRes["vaccinePercent"], officalRes["url"])
+
+            # 縣市
+            # for k, v in officalRes["countrysDict"].items():
+            #     resMsg += "\n%s:\t%s" % (k, v)
+            officalResList = ["\n%s:\t%s" %
+                              (k, v)for k, v in officalRes["countrysDict"].items()]
+            resMsg += "".join(officalResList)
+
         if resMsg == "":
             return
 
@@ -668,4 +678,5 @@ if __name__ == "__main__":
     # getForeign()
     # getThreeRrade()
     # getWeekEvent()
-    getKimi0230()
+    # getKimi0230()
+    covid19()

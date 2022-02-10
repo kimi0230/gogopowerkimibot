@@ -62,6 +62,21 @@ def getCovid19():
         vaccinePercent = "0" if len(soup.select(
             ".country_deaths_change")) < 1 else soup.select(".country_deaths_percent")[0].text
 
+        # 本土病例分佈
+        # local = "" if len(soup.select(
+        #     ".btn btn-success btn-lg")) < 1 else soup.select(".btn btn-success btn-lg")[0].text
+        countrys = [] if len(soup.select(".col-lg-12")
+                             ) < 1 else soup.select(".col-lg-12")[1]
+        countrysDict = {}
+        for country in countrys.select("a"):
+            countryTodayCount = country.select(
+                "span")[1].text.replace(u'\xa0', u'').replace("\n", "")
+            # print("countryTodayCount = ", countryTodayCount, "kk")
+            if countryTodayCount != "":
+                countryTotalCount = country.select(
+                    "span")[0].text.split("+")[0]
+                countrysDict[countryTotalCount] = countryTodayCount
+
         result = {
             "url": url,
             "time": time,
@@ -74,6 +89,7 @@ def getCovid19():
             "totalDeaths": totalDeaths,
             "vaccine": vaccine,
             "vaccinePercent": vaccinePercent,
+            "countrysDict": countrysDict
         }
         return result
     except:
