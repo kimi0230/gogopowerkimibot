@@ -10,7 +10,8 @@ default_headers = {
 
 def getKimi0230():
     try:
-        url = "https://visitor-badge.glitch.me/badge?page_id=kimi0230"
+        # url = "https://visitor-badge.glitch.me/badge?page_id=kimi0230"
+        url = "https://steel-quark-crabapple.glitch.me/badge?page_id=kimi0230"
         res = requests.get(url, headers=default_headers, verify=False)
         res.encoding = 'UTF-8'
         soup = BeautifulSoup(res.text, "lxml")
