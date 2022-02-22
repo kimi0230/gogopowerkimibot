@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     'myconst',
     'utility',
     'django_q',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -83,6 +84,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'gogopowerkimibot.urls'
@@ -185,3 +187,5 @@ Q_CLUSTER = {
 # patch for Python 3.8
 # https://github.com/Koed00/django-q/issues/389
 set_start_method('fork')
+
+CORS_ORIGIN_ALLOW_ALL = False
