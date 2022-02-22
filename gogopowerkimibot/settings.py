@@ -55,7 +55,8 @@ EPA_TOKEN = config('EPA_TOKEN', default='')
 BOOKS_COOKIES = config('EPA_TOKEN', default='')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = False
 
 # CORS Config
 WHITELIST = config(
