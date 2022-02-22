@@ -60,15 +60,15 @@ DEBUG = True
 # CORS Config
 WHITELIST = config(
     'WHITELIST', default='你的Domain')
+WHITELIST_ARRAY = WHITELIST.split(",")
 
-CORS_ORIGIN_WHITELIST = [
-    WHITELIST
-]
+CORS_ORIGIN_WHITELIST = WHITELIST_ARRAY
+
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = False
 
-ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]', WHITELIST]
-
+ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]']
+ALLOWED_HOSTS.extend(WHITELIST_ARRAY)
 
 # Application definition
 
