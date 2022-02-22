@@ -146,8 +146,11 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # CORS Config
+WHITELIST = config(
+    'WHITELIST', default='你的Domain')
+
 CORS_ORIGIN_WHITELIST = [
-    'https://website.com'
+    WHITELIST
 ]
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = False
