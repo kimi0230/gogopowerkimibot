@@ -2,7 +2,6 @@
 source from https://github.com/jwenjian/visitor-badge
 """
 from hashlib import md5
-from os import environ
 from pybadges import badge
 import requests
 import datetime
