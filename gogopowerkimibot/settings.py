@@ -57,7 +57,17 @@ BOOKS_COOKIES = config('EPA_TOKEN', default='')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]']
+# CORS Config
+WHITELIST = config(
+    'WHITELIST', default='你的Domain')
+
+CORS_ORIGIN_WHITELIST = [
+    WHITELIST
+]
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ALLOW_CREDENTIALS = False
+
+ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]', WHITELIST]
 
 
 # Application definition
@@ -145,15 +155,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# CORS Config
-WHITELIST = config(
-    'WHITELIST', default='你的Domain')
-
-CORS_ORIGIN_WHITELIST = [
-    WHITELIST
-]
-CORS_ORIGIN_ALLOW_ALL = False
-CORS_ALLOW_CREDENTIALS = False
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
