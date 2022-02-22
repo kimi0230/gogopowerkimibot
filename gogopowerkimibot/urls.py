@@ -21,6 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 import datetime
 from django.http import HttpResponse
+from app import vistorbadge
 
 
 def Hello(request):
@@ -31,4 +32,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url('^callback', app.callback),
     url('^$', Hello),
+    url('^badge', vistorbadge.visitor_svg),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
