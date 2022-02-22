@@ -67,8 +67,10 @@ CORS_ORIGIN_WHITELIST = WHITELIST_ARRAY
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = False
 
+HOSTS_LIST = config(
+    'HOSTS_LIST', default='你的Domain').split(",")
 ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]']
-ALLOWED_HOSTS.extend(WHITELIST_ARRAY)
+ALLOWED_HOSTS.extend(HOSTS_LIST)
 
 # Application definition
 
