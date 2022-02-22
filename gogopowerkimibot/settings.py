@@ -57,7 +57,7 @@ BOOKS_COOKIES = config('EPA_TOKEN', default='')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]']
 
 
 # Application definition
@@ -79,12 +79,12 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'gogopowerkimibot.urls'
@@ -145,6 +145,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# CORS Config
+CORS_ORIGIN_WHITELIST = [
+    'https://website.com'
+]
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ALLOW_CREDENTIALS = False
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
@@ -187,5 +193,3 @@ Q_CLUSTER = {
 # patch for Python 3.8
 # https://github.com/Koed00/django-q/issues/389
 set_start_method('fork')
-
-CORS_ORIGIN_ALLOW_ALL = False
