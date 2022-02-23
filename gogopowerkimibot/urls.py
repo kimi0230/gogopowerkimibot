@@ -23,7 +23,10 @@ import datetime
 from django.http import HttpResponse
 from app import vistorbadge
 
+from ratelimit.decorators import ratelimit
 
+
+@ratelimit(key='ip', rate='1/d')
 def Hello(request):
     return HttpResponse("Hello Kimi : " + datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S"))
 

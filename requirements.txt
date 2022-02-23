@@ -27,3 +27,4 @@ gql==3.0.0rc0
 requests-toolbelt==0.9.1
 pybadges==1.1.0
 django-cors-headers==3.11.0
+django-ratelimit==3.0.1

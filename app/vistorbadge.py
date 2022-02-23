@@ -6,10 +6,11 @@ from pybadges import badge
 import requests
 import datetime
 from django.http import HttpResponse
-
+from ratelimit.decorators import ratelimit
 from decouple import config
 
 
+@ratelimit(key='ip', rate='3/s')
 def invalid_count_resp(err_msg):
     """
     Return a svg badge with error info when cannot process repo_id param from request
@@ -54,7 +55,7 @@ def visitor_svg(request):
 
     :return: A svg badge with latest visitor count
     """
-
+    print("kkk", request.headers)
     req_source = identity_request_source(request)
 
     if not req_source:

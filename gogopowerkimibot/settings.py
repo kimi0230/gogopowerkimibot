@@ -59,11 +59,12 @@ BOOKS_COOKIES = config('EPA_TOKEN', default='')
 DEBUG = False
 
 # CORS Config
+# https://github.com/adamchainz/django-cors-headers
 CORS_ORIGIN_WHITELIST = config(
     'WHITELIST', default='你的Domain').split(",")
 
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = False
 
 HOSTS_LIST = config(
     'HOSTS_LIST', default='你的Domain').split(",")
@@ -197,3 +198,11 @@ Q_CLUSTER = {
 # patch for Python 3.8
 # https://github.com/Koed00/django-q/issues/389
 set_start_method('fork')
+
+# CACHES
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/var/tmp/django_cache',
+    }
+}

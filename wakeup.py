@@ -2,7 +2,7 @@ import urllib.request
 
 
 def wakeup():
-    url = "https://gogopowerkimibot.herokuapp.com/"
+    url = "https://xxx.com"
     conn = urllib.request.urlopen(url)
 
     for key, value in conn.getheaders():
