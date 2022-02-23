@@ -55,8 +55,8 @@ EPA_TOKEN = config('EPA_TOKEN', default='')
 BOOKS_COOKIES = config('EPA_TOKEN', default='')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = False
+DEBUG = True
+# DEBUG = False
 
 # CORS Config
 # https://github.com/adamchainz/django-cors-headers
@@ -88,6 +88,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -96,6 +98,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'gogopowerkimibot.urls'
@@ -118,6 +121,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'gogopowerkimibot.wsgi.application'
 
+# CACHES
+# https://docs.djangoproject.com/en/dev/topics/cache/
+# CACHES Base on File
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/var/tmp/django_cache',
+    }
+}
+
+# CACHES Base on Memory
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+#         'LOCATION': 'unique-snowflake',
+#     }
+# }
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -198,11 +218,3 @@ Q_CLUSTER = {
 # patch for Python 3.8
 # https://github.com/Koed00/django-q/issues/389
 set_start_method('fork')
-
-# CACHES
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/var/tmp/django_cache',
-    }
-}

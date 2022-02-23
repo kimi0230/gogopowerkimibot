@@ -26,7 +26,7 @@ from app import vistorbadge
 from ratelimit.decorators import ratelimit
 
 
-@ratelimit(key='ip', rate='1/d')
+@ratelimit(key="ip", rate='1/s', block=True)
 def Hello(request):
     return HttpResponse("Hello Kimi : " + datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S"))
 

@@ -10,7 +10,6 @@ from ratelimit.decorators import ratelimit
 from decouple import config
 
 
-@ratelimit(key='ip', rate='3/s')
 def invalid_count_resp(err_msg):
     """
     Return a svg badge with error info when cannot process repo_id param from request
@@ -49,6 +48,7 @@ def identity_request_source(request):
     return None
 
 
+@ratelimit(key='get:page_id', rate='1/d')
 def visitor_svg(request):
     """
     Return a svg badge with latest visitor count of 'Referer' header value
