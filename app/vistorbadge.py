@@ -8,6 +8,7 @@ import datetime
 from django.http import HttpResponse
 from ratelimit.decorators import ratelimit
 from decouple import config
+import re
 
 
 def invalid_count_resp(err_msg):
@@ -56,11 +57,17 @@ def visitor_svg(request):
 
     :return: A svg badge with latest visitor count
     """
-    print("kkk", request.headers)
+    expiry_time = datetime.datetime.utcnow() - datetime.timedelta(minutes=10)
+    headers = {'Cache-Control': 'no-cache,max-age=0,no-store,s-maxage=0,proxy-revalidate',
+               'Expires': expiry_time.strftime("%a, %d %b %Y %H:%M:%S GMT")}
     req_source = identity_request_source(request)
 
     if not req_source:
         return invalid_count_resp('Missing required param: page_id')
+
+    if re.match(r"^kimi0230\.{0,1}.*", request.GET.get('page_id')) == None:
+        # https://steel-quark-crabapple.glitch.me/badge?page_id=kimi0230
+        return HttpResponse('Please try : https://steel-quark-crabapple.glitch.me/badge?page_id=xxx', headers=headers)
 
     latest_count = update_counter(req_source)
 
@@ -82,10 +89,5 @@ def visitor_svg(request):
 
     svg = badge(left_text=left_text, right_text=str(latest_count),
                 left_color=str(left_color), right_color=str(right_color))
-
-    expiry_time = datetime.datetime.utcnow() - datetime.timedelta(minutes=10)
-
-    headers = {'Cache-Control': 'no-cache,max-age=0,no-store,s-maxage=0,proxy-revalidate',
-               'Expires': expiry_time.strftime("%a, %d %b %Y %H:%M:%S GMT")}
 
     return HttpResponse(svg, content_type="image/svg+xml", headers=headers)
