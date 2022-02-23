@@ -48,7 +48,8 @@ def identity_request_source(request):
     return None
 
 
-@ratelimit(key='get:page_id', rate='1/d')
+@ratelimit(key='ip', rate='10/s', block=True)
+@ratelimit(key='get:page_id', rate='5/s', block=True)
 def visitor_svg(request):
     """
     Return a svg badge with latest visitor count of 'Referer' header value

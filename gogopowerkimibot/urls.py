@@ -19,21 +19,13 @@ from app import views as app
 from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
-import datetime
-from django.http import HttpResponse
 from app import vistorbadge
-
-from ratelimit.decorators import ratelimit
-
-
-@ratelimit(key="ip", rate='1/s', block=True)
-def Hello(request):
-    return HttpResponse("Hello Kimi : " + datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S"))
-
+from app import hello
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('kimisogood/login/', hello.extend_admin_login),
+    path('kimisogood/', admin.site.urls),
     url('^callback', app.callback),
-    url('^$', Hello),
+    url('^$', hello.Hello),
     url('^badge', vistorbadge.visitor_svg),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
