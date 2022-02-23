@@ -59,14 +59,11 @@ BOOKS_COOKIES = config('EPA_TOKEN', default='')
 DEBUG = False
 
 # CORS Config
-WHITELIST = config(
-    'WHITELIST', default='你的Domain')
-WHITELIST_ARRAY = WHITELIST.split(",")
-
-CORS_ORIGIN_WHITELIST = WHITELIST_ARRAY
+CORS_ORIGIN_WHITELIST = config(
+    'WHITELIST', default='你的Domain').split(",")
 
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ALLOW_CREDENTIALS = False
+CORS_ALLOW_CREDENTIALS = True
 
 HOSTS_LIST = config(
     'HOSTS_LIST', default='你的Domain').split(",")
