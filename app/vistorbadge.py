@@ -67,7 +67,7 @@ def visitor_svg(request):
 
     if re.match(r"^kimi0230\.{0,1}.*", request.GET.get('page_id')) == None:
         # https://steel-quark-crabapple.glitch.me/badge?page_id=kimi0230
-        return HttpResponse('Please try : https://steel-quark-crabapple.glitch.me/badge?page_id=xxx', headers=headers)
+        return HttpResponse('Please try : https://steel-quark-crabapple.glitch.me/badge?page_id=xxx or https://visitor-badge.glitch.me/badge?page_id=kimi0230', headers=headers)
 
     latest_count = update_counter(req_source)
 
