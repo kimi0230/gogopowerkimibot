@@ -55,8 +55,8 @@ EPA_TOKEN = config('EPA_TOKEN', default='')
 BOOKS_COOKIES = config('EPA_TOKEN', default='')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = False
+# DEBUG = True
+DEBUG = False
 
 # CORS Config
 # https://github.com/adamchainz/django-cors-headers
