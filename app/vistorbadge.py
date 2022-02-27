@@ -49,7 +49,7 @@ def identity_request_source(request):
     return None
 
 
-@ratelimit(key='ip', rate='10/s', block=True)
+@ratelimit(key='ip', rate='100/s', block=True)
 @ratelimit(key='get:page_id', rate='5/s', block=True)
 def visitor_svg(request):
     """
