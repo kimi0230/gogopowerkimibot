@@ -33,7 +33,7 @@ def callback(request):
         for event in events:
             if isinstance(event, MessageEvent):
                 if isinstance(event.message, TextMessage):
-                    mtext = event.message.text
+                    mtext = event.message.text.strip()
                     if mtext == '卡比請客':
                         msgresponse.sendText(event, "謝謝卡比 讚嘆卡比 卡比讚讚讚")
                     elif mtext == "ls":
