@@ -24,7 +24,7 @@ def getInvoice(msg):
         title = items[index][0].text  # 期別
         ptext = items[index][3].text  # 中獎號碼
         ptext = ptext.replace('<p>', '').replace('</p>', '\n')
-        message = link + '\n' + title + '月\n' + \
+        message = link + '\n' + title + '\n' + \
             ptext[:-1] + '\n'+office_web  # ptext[:-1]為移除最後一個\n
         return message
     except:
