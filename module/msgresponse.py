@@ -10,6 +10,7 @@ imgMap = {
     "zhizhi": "https://i.imgur.com/IhQm1MI.png",
     "mouse": "https://i.imgur.com/LFqbHF8.png",
     "stable": "https://imgur.com/mDZ6PqN.png",
+    "bad": "https://i.imgur.com/ZjrBz79.png",
 }
 
 

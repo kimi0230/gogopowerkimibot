@@ -46,6 +46,8 @@ def callback(request):
                         msgresponse.sendStick(event, stickObj)
                     elif mtext == "笑鼠人":
                         msgresponse.sendImage(event, "mouse")
+                    elif mtext == "壞":
+                        msgresponse.sendImage(event, "bad")
                     elif mtext == "疫情":
                         pttRes = covid19service.getGossipCovid19()
                         resMsg = ""
