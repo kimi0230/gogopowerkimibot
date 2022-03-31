@@ -48,7 +48,7 @@ def callback(request):
                         msgresponse.sendImage(event, "mouse")
                     elif mtext == "壞":
                         msgresponse.sendImage(event, "bad")
-                    elif mtext == "辛苦了" | mtext == "知道了":
+                    elif mtext == "辛苦了" or mtext == "知道了":
                         msgresponse.sendImage(event, "cp")
                     elif mtext == "疫情":
                         pttRes = covid19service.getGossipCovid19()
