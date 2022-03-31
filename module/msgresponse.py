@@ -11,7 +11,7 @@ imgMap = {
     "mouse": "https://i.imgur.com/LFqbHF8.png",
     "stable": "https://imgur.com/mDZ6PqN.png",
     "bad": "https://i.imgur.com/ZjrBz79.png",
-    "cp": "https://imgur.com/YP48ccb",
+    "cp": "https://imgur.com/YP48ccb.png",
 }
 
 
