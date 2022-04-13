@@ -13,6 +13,7 @@ from urllib.parse import parse_qsl
 from myconst import cmdlist
 import re
 from datetime import datetime
+from decouple import config
 
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
@@ -77,6 +78,8 @@ def callback(request):
                         msgresponse.sendText(event, resMsg)
                     elif re.match(r".*bug.*", mtext) != None:
                         msgresponse.sendText(event, "請支援收銀~")
+                    elif mtext=="cp下班":
+                        msgresponse.sendText(event, config('ETEN_DIARY', ""))
                     elif mtext == "吱吱":
                         msgresponse.sendImage(event, "zhizhi")
                     elif re.match(r".*發票.*", mtext) != None:
