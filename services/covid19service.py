@@ -31,13 +31,14 @@ def getCovid19():
         # 累積死亡
         totalDeaths = "0" if len(soup.select(
             ".country_deaths")) == 0 else soup.select(".country_deaths")[0].text
-
+        # print("totalDeaths ", totalDeaths)
         # 死亡率
         rateDeaths = "0%" if len(soup.select(
             "#country_cfr")) == 0 else soup.select("#country_cfr")[0].text
         m = re.search(r'\d+\.?\d*%?', rateDeaths)
         if m != None:
             rateDeaths = m.group()
+        # print("rateDeaths ", rateDeaths)
 
         # 新增死亡
         newDeaths = "0" if len(soup.select(
@@ -48,10 +49,13 @@ def getCovid19():
         # 新增確診
         recovered = "0" if len(soup.select(
             ".country_recovered")) == 0 else soup.select(".country_recovered")[0].text
+        recovered = re.sub("[+,]", "", recovered)
 
+        # 本土
         domesticRecovered = "0" if len(soup.select(
             ".country_confirmed_percent")) < 1 else soup.select(".country_confirmed_percent")[1].text.split("本土病例 ")[1]
 
+        # 本土
         internationalRecovered = str(int(recovered)-int(domesticRecovered))
 
         # 疫苗接種人次
@@ -91,6 +95,7 @@ def getCovid19():
             "vaccinePercent": vaccinePercent,
             "countrysDict": countrysDict
         }
+        # print(result)
         return result
     except:
         return ""
