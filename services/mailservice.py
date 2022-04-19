@@ -13,7 +13,8 @@ def HelloWord():
 
 
 def SendMail(to, subject, body):
-    mailBody = "Subject: %s\n%s" % (subject, body)
+    mailBody = "Subject: %s\n%s" % (subject, body.as_string())
+    # print("mailBody --->", config('GMAIL_USER'), mailBody)
     smtpObj.sendmail(config('GMAIL_USER'), to,
                      mailBody)
 

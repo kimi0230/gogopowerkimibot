@@ -10,6 +10,8 @@ import ssl
 from gql import gql, Client
 from gql.transport.requests import RequestsHTTPTransport
 from utility import tinyURL
+from services import mailservice
+from email.mime.text import MIMEText
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36'
@@ -210,11 +212,52 @@ def getWeekEvent():
         print(e)
         return None
 
+# 永豐理財行事曆
+
+
+def Calendar(event):
+    # A=0&B=&C=0, A事件 B 起始日期(2022-4-23) C 上下兩週(-2/0/2)
+    # 事件 A
+    #  "0"         所有
+    #  "EV000100"  上櫃轉上市掛牌
+    #  "EV000130"  交易所類股調整
+    #  "EV000060"  法人說明會
+    #  "EV000010"  股東會
+    #  "EV000011"  股東臨時會
+    #  "EV000050"  重大訊息
+    #  "EV000170"  海外法人說明會
+    #  "EV000160"  特別股掛牌
+    #  "EV000080"  記者會
+    #  "EV000020"  除權息
+    #  "EV000110"  終止掛牌
+    #  "EV000120"  減資後新股掛牌
+    #  "EV000090"  新股掛牌
+    #  "EV000140"  新產品發表會
+    #  "EV000070"  業績發表會
+    #  "EV000150"  增資股上市
+    #  "EV000101"  興櫃掛牌
+    b = ""
+    c = "0"
+    # 玉山
+    # url = "https://sjmain.esunsec.com.tw/z/ze/zej/zej.djhtm?A=%s&B=%s&C=%s" % (event, b, c)
+    # 永豐
+    url = "https://stockchannelnew.sinotrade.com.tw/z/ze/zej/zej.djhtm?A=%s&B=%s&C=%s" % (
+        event, b, c)
+    print("url = ", url)
+    dfs = pd.read_html(url)
+
+    # 讓email 發中文 https://books.bod.idv.tw/2019/07/pythongmailsmtputf8-base64.html
+    body = MIMEText("<h1>"+url+"</h1><br><br>" +
+                    dfs[3].to_html(), 'html', 'utf-8')
+    mailservice.SendMail("kimi0230@gmail.com", "kk",
+                         body)
+
 
 if __name__ == "__main__":
     # weekEvent()
     # print(getThreeRrade())
-    getForeign()
+    # getForeign()
     # f = open('table.png', 'rb')  # create an empty demo file
     # file = {'imageFile': f}
     # payload = {'message': "121212"}
+    Calendar("EV000020")
