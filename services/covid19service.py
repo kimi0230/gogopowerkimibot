@@ -23,7 +23,7 @@ def getCovid19():
         r = get_redis_connection("heroku")
         keyExist = r.exists(redisKey)
         if keyExist:
-            rResult = r.get(redisKey)
+            rResult = r.get(redisKey).replace("'", '"')
             return json.loads(rResult)
 
         # fix: InsecureRequestWarning: Unverified HTTPS request is being made to host
