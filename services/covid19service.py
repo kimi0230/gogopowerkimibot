@@ -120,7 +120,7 @@ def getGossipCovid19():
     time = datetime.datetime.today().strftime("%-m/%d")
     keyExist = r.exists("Covid19:ptt:"+time)
     print("keyExist = ", keyExist)
-    if not keyExist:
+    if keyExist:
         print("======= Covid19:ptt:%s" % (time))
         rResult = r.get("Covid19:ptt:"+time)
         return rResult
