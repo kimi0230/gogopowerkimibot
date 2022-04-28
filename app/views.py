@@ -57,9 +57,9 @@ def callback(request):
 
                             benchTime = time(15, 40).strftime("%H:%M")
                             currentTime = datetime.now().strftime("%H:%M")
+                            print("benchTime =", benchTime)
+                            print("currentTime =", currentTime)
                             if currentTime < benchTime:
-                                print("benchTime =", benchTime)
-                                print("currentTime =", currentTime)
                                 pttRes = covid19service.getGossipCovid19()
                                 if len(pttRes) > 0:
                                     resMsg = "%s\n%s\n%s\n" % (
