@@ -18,6 +18,14 @@ headers = {
 
 def getCovid19():
     try:
+        nowDateEng = datetime.datetime.now().strftime("%b-%-d")
+        redisKey = "Covid19:offical:"+nowDateEng
+        r = get_redis_connection("heroku")
+        keyExist = r.exists(redisKey)
+        if keyExist:
+            rResult = r.get(redisKey)
+            return rResult
+
         # fix: InsecureRequestWarning: Unverified HTTPS request is being made to host
         requests.packages.urllib3.disable_warnings()
 
@@ -86,6 +94,7 @@ def getCovid19():
         result = {
             "url": url,
             "time": time,
+            "date": time.split(" ")[2],  # Updated on Apr-28 UTC + 8
             "total": totalConfirmed,
             "recovered": recovered,
             "domesticRecovered": domesticRecovered,
@@ -97,7 +106,10 @@ def getCovid19():
             "vaccinePercent": vaccinePercent,
             "countrysDict": countrysDict
         }
-        # print(result)
+
+        redisKey = "Covid19:offical:"+result["date"]
+        if keyExist:
+            r.set(redisKey, result, timeout=60*60*12)
         return result
     except:
         return ""
@@ -117,19 +129,20 @@ def getGossipCovid19():
     link = "https://www.ptt.cc/bbs/Gossiping/"
     regex = re.compile(r'^\[爆卦\] 本.*')
     r = get_redis_connection("heroku")
-    time = datetime.datetime.today().strftime("%-m/%d")
-    keyExist = r.exists("Covid19:ptt:"+time)
+    date = datetime.datetime.today().strftime("%-m/%d")
+    redisKey = "Covid19:ptt:"+date
+    keyExist = r.exists(redisKey)
     print("keyExist = ", keyExist)
     if keyExist:
-        print("======= Covid19:ptt:%s" % (time))
-        rResult = r.get("Covid19:ptt:"+time)
+        print("======= Covid19:ptt:%s" % (date))
+        rResult = r.get(redisKey)
         return rResult
     result = pttservice.getPTT(link, regex)
-    r.set("Covid19:ptt:"+time, result, timeout=60*60*12)
+    r.set("Covid19:ptt:"+result["Date"], result, timeout=60*60*12)
     return result
 
 
 if __name__ == "__main__":
     # print(getCovid19())
-    getGossipCovid19()
+    print(getCovid19())
     # print(getGossipCovid19())

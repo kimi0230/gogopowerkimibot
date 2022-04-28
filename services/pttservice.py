@@ -32,6 +32,7 @@ def getPTT(url, regex=None, keyword=""):
         page = 10
         allTitle = []
         while found == False and count <= page:
+            print(found, count)
             if keyword != "":
                 tmpurl = "%s&page=%d" % (url, count)
             else:
