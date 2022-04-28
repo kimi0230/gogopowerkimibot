@@ -8,7 +8,7 @@ from django.views.decorators.cache import never_cache
 
 
 @never_cache
-@ratelimit(key='ip', rate='1000/s', block=True)
+@ratelimit(key='ip', rate='100/s', block=True)
 def Hello(request):
     time = datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S")
     expiry_time = datetime.datetime.utcnow() - datetime.timedelta(minutes=10)
@@ -20,7 +20,7 @@ def Hello(request):
 
 
 @never_cache
-@ratelimit(key='ip', rate='1000/s', block=True)
+@ratelimit(key='ip', rate='1/s', block=True)
 def Redis(request):
     # Use the name you have defined for Redis in settings.CACHES
     r = get_redis_connection("heroku")

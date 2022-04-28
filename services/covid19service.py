@@ -2,6 +2,8 @@ import requests
 import re
 from bs4 import BeautifulSoup
 from services import pttservice
+from django_redis import get_redis_connection
+import datetime
 
 # fix: InsecureRequestWarning: Unverified HTTPS request is being made to host
 import requests.packages.urllib3
@@ -114,10 +116,18 @@ def getGossipCovid19():
     #     time.sleep(1)
     link = "https://www.ptt.cc/bbs/Gossiping/"
     regex = re.compile(r'^\[爆卦\] 本.*')
-    return pttservice.getPTT(link, regex)
+    r = get_redis_connection("local")
+    time = datetime.datetime.today().strftime("%m/%d")
+    rResult = r.get("Covid19:ptt:"+time)
+    if rResult != "":
+        print("======= Covid19:ptt:%s" % (time))
+        return rResult
+    result = pttservice.getPTT(link, regex)
+    r.set("Covid19:ptt:"+time, result, timeout=60*60*12)
+    return result
 
 
 if __name__ == "__main__":
     # print(getCovid19())
-    K()
+    getGossipCovid19()
     # print(getGossipCovid19())

@@ -68,13 +68,13 @@ def getPTT(url, regex=None, keyword=""):
 
 if __name__ == "__main__":
     # 八卦版疫情
-    # url = "https://www.ptt.cc/bbs/Gossiping/"
-    # regex = re.compile(r'^\[爆卦\] 本土\+.*')
-    # print(getPTT(url, regex, "[爆卦] 本土+"))
+    url = "https://www.ptt.cc/bbs/Gossiping/"
+    regex = re.compile(r'^\[爆卦\] 本土\+.*')
+    print(getPTT(url, regex, "[爆卦] 本土+"))
 
     # 爬netflix片單
-    url = "https://www.ptt.cc/bbs/EAseries/"
-    regex = re.compile(r'.*Netflix台灣.*片單.*')
-    print(getPTT(url, regex, "Netflix台灣"))
+    # url = "https://www.ptt.cc/bbs/EAseries/"
+    # regex = re.compile(r'.*Netflix台灣.*片單.*')
+    # print(getPTT(url, regex, "Netflix台灣"))
     # print(getPTT(url, regex))
     # print(getPTT(url))
