@@ -12,7 +12,7 @@ from services import cwbservices, invoiceservice, covid19service, exchangeservic
 from urllib.parse import parse_qsl
 from myconst import cmdlist
 import re
-from datetime import datetime
+from datetime import datetime, time
 from decouple import config
 
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
@@ -55,8 +55,7 @@ def callback(request):
                         elif mtext == "疫情":
                             resMsg = ""
 
-                            benchTime = datetime(
-                                hour=15, minute=40).strptime("%H:%M")
+                            benchTime = time(15, 40).strptime("%H:%M")
                             currentTime = datetime.now().strptime("%H:%M")
                             if currentTime < benchTime:
                                 print(benchTime, currentTime)
