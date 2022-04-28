@@ -116,7 +116,7 @@ def getGossipCovid19():
     #     time.sleep(1)
     link = "https://www.ptt.cc/bbs/Gossiping/"
     regex = re.compile(r'^\[爆卦\] 本.*')
-    r = get_redis_connection("local")
+    r = get_redis_connection("heroku")
     time = datetime.datetime.today().strftime("%m/%d")
     rResult = r.get("Covid19:ptt:"+time)
     if rResult != "":
