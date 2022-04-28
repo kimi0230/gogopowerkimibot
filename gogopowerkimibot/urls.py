@@ -29,5 +29,5 @@ urlpatterns = [
     url('^callback', app.callback),
     url('^$', hello.Hello),
     url('^badge', vistorbadge.visitor_svg),
-    path('redis4/', hello.Redis),
+    path('redis/', hello.Redis),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
