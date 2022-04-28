@@ -111,6 +111,7 @@ def getCovid19():
         if not keyExist:
             print("----->", "Covid19:offical:"+result["date"])
             r.set(redisKey, result, timeout=60*60*12)
+            print("get ", r.get(redisKey))
         return result
     except:
         return ""
@@ -139,7 +140,10 @@ def getGossipCovid19():
         rResult = r.get(redisKey)
         return rResult
     result = pttservice.getPTT(link, regex)
-    r.set("Covid19:ptt:"+result["Date"], result, timeout=60*60*12)
+
+    redisKey = "Covid19:ptt:"+result["Date"]
+    if not keyExist:
+        r.set("Covid19:ptt:"+result["Date"], result, timeout=60*60*12)
     return result
 
 
