@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from services import pttservice
 from django_redis import get_redis_connection
 import datetime
-
+import json
 # fix: InsecureRequestWarning: Unverified HTTPS request is being made to host
 import requests.packages.urllib3
 
@@ -24,7 +24,7 @@ def getCovid19():
         keyExist = r.exists(redisKey)
         if keyExist:
             rResult = r.get(redisKey)
-            return rResult
+            return json.loads(rResult)
 
         # fix: InsecureRequestWarning: Unverified HTTPS request is being made to host
         requests.packages.urllib3.disable_warnings()
@@ -108,7 +108,7 @@ def getCovid19():
         }
 
         redisKey = "Covid19:offical:"+result["date"]
-        if r.setnx(redisKey, result):
+        if r.setnx(redisKey, str(result)):
             r.expire(redisKey, 60*60*12)
         print("get ", r.get(redisKey))
         return result
@@ -138,11 +138,11 @@ def getGossipCovid19():
     if keyExist:
         print("======= Covid19:ptt:%s" % (date))
         rResult = r.get(redisKey)
-        return rResult
+        return json.loads(rResult)
     result = pttservice.getPTT(link, regex)
 
     redisKey = "Covid19:ptt:"+result["Date"]
-    if r.setnx(redisKey, result):
+    if r.setnx(redisKey, str(result)):
         r.expire(redisKey, 60*60*12)
 
     return result
