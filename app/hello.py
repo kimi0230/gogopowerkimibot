@@ -21,7 +21,8 @@ def Redis(request):
     # Use the name you have defined for Redis in settings.CACHES
     r = get_redis_connection("heroku")
     print(r.ping())
-    return HttpResponse("Hello Redis = "+r.ping())
+    msg = "Redis Check = " + r.ping()
+    return HttpResponse(msg)
 
 
 # 覆蓋預設的admin登入方法實現登入限流
