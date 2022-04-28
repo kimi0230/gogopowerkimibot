@@ -119,35 +119,39 @@ def getCovid19():
 
 
 def getGossipCovid19():
-    # start = 39254  # 設定起始網頁 (務必自行調整)
-    # number = 5    # 設定要從開始頁面往後爬多少個
-    # end = start - number
-    # for i in range(start, end, -1):
-    #     # 組成 正確 URL
-    #     link = "https://www.ptt.cc/bbs/Gossiping/index"+str(i)+".html"
-    #     # 執行單頁面網頁爬蟲
-    #     getPTT(link)
-    #     # 避免被太快被 PTT 封鎖請求
-    #     time.sleep(1)
-    link = "https://www.ptt.cc/bbs/Gossiping/"
-    regex = re.compile(r'^\[爆卦\] 本.*')
-    r = get_redis_connection("heroku")
-    date = datetime.datetime.today().strftime("%-m/%d")
-    redisKey = "Covid19:ptt:"+date
-    keyExist = r.exists(redisKey)
+    try:
+        # start = 39254  # 設定起始網頁 (務必自行調整)
+        # number = 5    # 設定要從開始頁面往後爬多少個
+        # end = start - number
+        # for i in range(start, end, -1):
+        #     # 組成 正確 URL
+        #     link = "https://www.ptt.cc/bbs/Gossiping/index"+str(i)+".html"
+        #     # 執行單頁面網頁爬蟲
+        #     getPTT(link)
+        #     # 避免被太快被 PTT 封鎖請求
+        #     time.sleep(1)
+        link = "https://www.ptt.cc/bbs/Gossiping/"
+        regex = re.compile(r'^\[爆卦\] 本.*')
+        r = get_redis_connection("heroku")
+        date = datetime.datetime.today().strftime("%-m/%d")
+        redisKey = "Covid19:ptt:"+date
+        keyExist = r.exists(redisKey)
 
-    if keyExist:
-        rResult = r.get(redisKey)
-        rdict = rResult.decode("UTF-8")
-        rData = ast.literal_eval(rdict)
-        return rData
+        if keyExist:
+            rResult = r.get(redisKey)
+            rdict = rResult.decode("UTF-8")
+            rData = ast.literal_eval(rdict)
+            return rData
 
-    result = pttservice.getPTT(link, regex)
-    newRedisKey = "Covid19:ptt:"+result["Date"]
-    if r.setnx(newRedisKey, str(result)):
-        r.expire(newRedisKey, 60*60*12)
+        result = pttservice.getPTT(link, regex)
+        newRedisKey = "Covid19:ptt:"+result["Date"]
+        if r.setnx(newRedisKey, str(result)):
+            r.expire(newRedisKey, 60*60*12)
 
-    return result
+        return result
+    except Exception as e:
+        print(e)
+        return ""
 
 
 if __name__ == "__main__":
