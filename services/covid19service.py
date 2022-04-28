@@ -113,7 +113,8 @@ def getCovid19():
             r.set(redisKey, result, timeout=60*60*12)
             print("get ", r.get(redisKey))
         return result
-    except:
+    except Exception as e:
+        print(e)
         return ""
 
 

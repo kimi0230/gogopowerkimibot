@@ -135,7 +135,8 @@ CACHES = {
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "CONNECTION_POOL_KWARGS": {
-                "ssl_cert_reqs": None
+                "ssl_cert_reqs": None,
+                "max_connections": 18
             },
         }
     },
