@@ -118,5 +118,6 @@ def getGossipCovid19():
 
 
 if __name__ == "__main__":
-    print(getCovid19())
+    # print(getCovid19())
+    K()
     # print(getGossipCovid19())

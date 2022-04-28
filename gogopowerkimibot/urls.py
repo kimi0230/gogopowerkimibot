@@ -21,6 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from app import vistorbadge
 from app import hello
+from services import covid19service
 
 urlpatterns = [
     path('kimisogood/login/', hello.extend_admin_login),
@@ -28,4 +29,5 @@ urlpatterns = [
     url('^callback', app.callback),
     url('^$', hello.Hello),
     url('^badge', vistorbadge.visitor_svg),
+    path('redis/', hello.Redis),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from ratelimit.decorators import ratelimit
 import datetime
 from django.contrib import admin
+from django_redis import get_redis_connection
 
 
 @ratelimit(key='ip', rate='1000/s', block=True)
@@ -13,6 +14,14 @@ def Hello(request):
         'Expires': expiry_time.strftime("%a, %d %b %Y %H:%M:%S GMT")
     }
     return HttpResponse("Hello Kimi ! \n " + time, headers=headers)
+
+
+@ratelimit(key='ip', rate='1/s', block=True)
+def Redis(request):
+    # Use the name you have defined for Redis in settings.CACHES
+    r = get_redis_connection("heroku")
+    print(r.ping())
+    return HttpResponse("Hello Redis = "+r.ping())
 
 
 # 覆蓋預設的admin登入方法實現登入限流
