@@ -52,11 +52,13 @@ def callback(request):
                     elif mtext == "辛苦了" or mtext == "知道了":
                         msgresponse.sendImage(event, "cp")
                     elif mtext == "疫情":
-                        pttRes = covid19service.getGossipCovid19()
                         resMsg = ""
-                        if len(pttRes) > 0:
-                            resMsg = "%s\n%s\n%s\n" % (
-                                pttRes["Date"], pttRes["Title"], pttRes["Link"])
+
+                        # pttRes = covid19service.getGossipCovid19()
+                        # if len(pttRes) > 0:
+                        #     resMsg = "%s\n%s\n%s\n" % (
+                        #         pttRes["Date"], pttRes["Title"], pttRes["Link"])
+
                         officalRes = covid19service.getCovid19()
                         if officalRes != "":
                             nowDateEng = datetime.now().strftime("%b-%-d")
@@ -78,7 +80,7 @@ def callback(request):
                         msgresponse.sendText(event, resMsg)
                     elif re.match(r".*bug.*", mtext) != None:
                         msgresponse.sendText(event, "請支援收銀~")
-                    elif mtext=="cp下班":
+                    elif mtext == "cp下班":
                         msgresponse.sendText(event, config('ETEN_DIARY', ""))
                     elif mtext == "吱吱":
                         msgresponse.sendImage(event, "zhizhi")
