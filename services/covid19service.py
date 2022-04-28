@@ -118,9 +118,10 @@ def getGossipCovid19():
     regex = re.compile(r'^\[爆卦\] 本.*')
     r = get_redis_connection("heroku")
     time = datetime.datetime.today().strftime("%m/%d")
-    rResult = r.get("Covid19:ptt:"+time)
-    if rResult != "":
+    keyExist = r.exists("Covid19:ptt:"+time)
+    if not keyExist:
         print("======= Covid19:ptt:%s" % (time))
+        rResult = r.get("Covid19:ptt:"+time)
         return rResult
     result = pttservice.getPTT(link, regex)
     r.set("Covid19:ptt:"+time, result, timeout=60*60*12)
