@@ -117,8 +117,9 @@ def getGossipCovid19():
     link = "https://www.ptt.cc/bbs/Gossiping/"
     regex = re.compile(r'^\[爆卦\] 本.*')
     r = get_redis_connection("heroku")
-    time = datetime.datetime.today().strftime("%m/%d")
+    time = datetime.datetime.today().strftime("%-m/%d")
     keyExist = r.exists("Covid19:ptt:"+time)
+    print("keyExist = ", keyExist)
     if not keyExist:
         print("======= Covid19:ptt:%s" % (time))
         rResult = r.get("Covid19:ptt:"+time)
