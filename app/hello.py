@@ -16,13 +16,18 @@ def Hello(request):
     return HttpResponse("Hello Kimi ! \n " + time, headers=headers)
 
 
-@ratelimit(key='ip', rate='1/s', block=True)
+@ratelimit(key='ip', rate='1000/s', block=True)
 def Redis(request):
     # Use the name you have defined for Redis in settings.CACHES
     r = get_redis_connection("heroku")
-    print(r.ping())
     msg = "Redis Check = " + r.ping()
-    return HttpResponse(msg)
+    print(msg)
+    expiry_time = datetime.datetime.utcnow() - datetime.timedelta(minutes=10)
+    headers = {
+        'Cache-Control': 'no-cache,max-age=0,no-store,s-maxage=0,proxy-revalidate',
+        'Expires': expiry_time.strftime("%a, %d %b %Y %H:%M:%S GMT")
+    }
+    return HttpResponse(msg, headers=headers)
 
 
 # 覆蓋預設的admin登入方法實現登入限流
