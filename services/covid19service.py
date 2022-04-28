@@ -109,6 +109,7 @@ def getCovid19():
 
         redisKey = "Covid19:offical:"+result["date"]
         if keyExist:
+            print("----->", "Covid19:offical:"+result["date"])
             r.set(redisKey, result, timeout=60*60*12)
         return result
     except:
