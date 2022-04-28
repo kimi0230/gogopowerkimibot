@@ -54,10 +54,10 @@ def callback(request):
                     elif mtext == "疫情":
                         resMsg = ""
 
-                        # pttRes = covid19service.getGossipCovid19()
-                        # if len(pttRes) > 0:
-                        #     resMsg = "%s\n%s\n%s\n" % (
-                        #         pttRes["Date"], pttRes["Title"], pttRes["Link"])
+                        pttRes = covid19service.getGossipCovid19()
+                        if len(pttRes) > 0:
+                            resMsg = "%s\n%s\n%s\n" % (
+                                pttRes["Date"], pttRes["Title"], pttRes["Link"])
 
                         officalRes = covid19service.getCovid19()
                         if officalRes != "":

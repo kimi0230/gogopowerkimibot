@@ -109,10 +109,9 @@ def getCovid19():
             "countrysDict": countrysDict
         }
 
-        redisKey = "Covid19:offical:"+result["date"]
-        if r.setnx(redisKey, str(result)):
-            r.expire(redisKey, 60*60*12)
-        print("get ", r.get(redisKey))
+        newRedisKey = "Covid19:offical:"+result["date"]
+        if r.setnx(newRedisKey, str(result)):
+            r.expire(newRedisKey, 60*60*12)
         return result
     except Exception as e:
         print(e)
@@ -136,18 +135,17 @@ def getGossipCovid19():
     date = datetime.datetime.today().strftime("%-m/%d")
     redisKey = "Covid19:ptt:"+date
     keyExist = r.exists(redisKey)
-    print("keyExist = ", keyExist)
+
     if keyExist:
-        print("======= Covid19:ptt:%s" % (date))
         rResult = r.get(redisKey)
         rdict = rResult.decode("UTF-8")
         rData = ast.literal_eval(rdict)
         return rData
-    result = pttservice.getPTT(link, regex)
 
-    redisKey = "Covid19:ptt:"+result["Date"]
-    if r.setnx(redisKey, str(result)):
-        r.expire(redisKey, 60*60*12)
+    result = pttservice.getPTT(link, regex)
+    newRedisKey = "Covid19:ptt:"+result["Date"]
+    if r.setnx(newRedisKey, str(result)):
+        r.expire(newRedisKey, 60*60*12)
 
     return result
 
