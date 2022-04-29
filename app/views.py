@@ -14,6 +14,7 @@ from myconst import cmdlist
 import re
 from datetime import datetime, time
 from decouple import config
+from utility import timeUtility
 
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
@@ -54,16 +55,17 @@ def callback(request):
                             msgresponse.sendImage(event, "cp")
                         elif mtext == "疫情":
                             resMsg = ""
-
-                            benchTime = time(15, 40).strftime("%H:%M")
-                            currentTime = datetime.now().strftime("%H:%M")
-                            print("benchTime =", benchTime)
-                            print("currentTime =", currentTime)
-                            if currentTime < benchTime:
+                            startTime = time(13, 30)
+                            endTime = time(15, 40)
+                            currentTime = datetime.now().time()
+                            if timeUtility.timeInRange(startTime, endTime, currentTime):
                                 pttRes = covid19service.getGossipCovid19()
                                 if len(pttRes) > 0:
                                     resMsg = "%s\n%s\n%s\n" % (
                                         pttRes["Date"], pttRes["Title"], pttRes["Link"])
+                            else:
+                                print("=== %s ~ %s 不抓 PTT 資料 ===" %
+                                      (startTime, endTime))
 
                             officalRes = covid19service.getCovid19()
                             if officalRes != "":

@@ -144,6 +144,8 @@ def getGossipCovid19():
             return rData
 
         result = pttservice.getPTT(link, regex)
+        if result == "":
+            return ""
         newRedisKey = "Covid19:ptt:"+result["Date"]
         if r.setnx(newRedisKey, str(result)):
             r.expire(newRedisKey, 60*60*12)
