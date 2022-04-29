@@ -90,7 +90,7 @@ def callback(request):
                         elif re.match(r".*bug.*", mtext) != None:
                             msgresponse.sendText(event, "請支援收銀~")
                         elif mtext == "cp下班":
-                            msgresponse.sendImage(event, "cp")
+                            msgresponse.sendImage(event, "cp2")
                         elif mtext == "吱吱":
                             msgresponse.sendImage(event, "zhizhi")
                         elif re.match(r".*發票.*", mtext) != None:
