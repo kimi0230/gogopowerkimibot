@@ -55,8 +55,8 @@ def callback(request):
                             msgresponse.sendImage(event, "cp")
                         elif mtext == "疫情":
                             resMsg = ""
-                            startTime = time(13, 30)
-                            endTime = time(15, 40)
+                            startTime = time(13, 50)
+                            endTime = time(16, 50)
                             currentTime = datetime.now().time()
                             if timeUtility.timeInRange(startTime, endTime, currentTime):
                                 pttRes = covid19service.getGossipCovid19()
