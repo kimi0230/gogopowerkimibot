@@ -5,6 +5,8 @@ from services import pttservice
 from django_redis import get_redis_connection
 import datetime
 import ast
+from utility import redisUtility
+
 # fix: InsecureRequestWarning: Unverified HTTPS request is being made to host
 import requests.packages.urllib3
 
@@ -21,8 +23,7 @@ def getCovid19():
         nowDateEng = datetime.datetime.now().strftime("%b-%-d")
         redisKey = "Covid19:offical:"+nowDateEng
         r = get_redis_connection("heroku")
-        keyExist = r.exists(redisKey)
-        if keyExist:
+        if r.exists(redisKey):
             rResult = r.get(redisKey)
             rdict = rResult.decode("UTF-8")
             rData = ast.literal_eval(rdict)
@@ -110,8 +111,8 @@ def getCovid19():
         }
 
         newRedisKey = "Covid19:offical:"+result["date"]
-        if r.setnx(newRedisKey, str(result)):
-            r.expire(newRedisKey, 60*60*12)
+        redisUtility.acquireLock(r, newRedisKey, str(result), 60*60*12)
+
         return result
     except Exception as e:
         print(e)
@@ -135,9 +136,7 @@ def getGossipCovid19():
         r = get_redis_connection("heroku")
         date = datetime.datetime.today().strftime("%-m/%d")
         redisKey = "Covid19:ptt:"+date
-        keyExist = r.exists(redisKey)
-
-        if keyExist:
+        if r.exists(redisKey):
             rResult = r.get(redisKey)
             rdict = rResult.decode("UTF-8")
             rData = ast.literal_eval(rdict)
@@ -147,8 +146,7 @@ def getGossipCovid19():
         if result == "":
             return ""
         newRedisKey = "Covid19:ptt:"+result["Date"]
-        if r.setnx(newRedisKey, str(result)):
-            r.expire(newRedisKey, 60*60*12)
+        redisUtility.acquireLock(r, newRedisKey, str(result), 60*60*12)
 
         return result
     except Exception as e:
