@@ -43,7 +43,7 @@ def getPTT(url, regex=None, keyword=""):
 
             for entry in soup.select('.r-ent'):
                 title = entry.select('.title')[0].text.strip()
-                date = entry.select('.date')[0].text
+                date = entry.select('.date')[0].text.strip()
                 if regex != None:
                     m = regex.match(title)
                     if m != None:

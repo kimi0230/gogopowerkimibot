@@ -13,3 +13,5 @@ start = datetime.time(23, 0, 0)
 end = datetime.time(1, 0, 0)
 print(time_in_range(start, end, datetime.time(23, 30, 0)))
 print(time_in_range(start, end, datetime.time(12, 30, 0)))
+
+print(datetime.datetime.today().strftime("%-m/%d"))
