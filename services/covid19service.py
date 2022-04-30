@@ -142,7 +142,7 @@ def getGossipCovid19():
             rData = ast.literal_eval(rdict)
             return rData
 
-        result = pttservice.getPTT(link, regex)
+        result = pttservice.getPTT(link, regex, "[爆卦] 本土+")
         if result == "":
             return ""
         newRedisKey = "Covid19:ptt:"+result["Date"]
