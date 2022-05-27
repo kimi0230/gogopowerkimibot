@@ -37,7 +37,7 @@ def getPTT(url, regex=None, keyword=""):
             else:
                 tmpurl = "%sindex%d.html" % (url, nowIndex-count)
 
-            res = requests.get(tmpurl, headers=headers)
+            res = requests.get(tmpurl, headers=headers, timeout=10)
             # res.encoding = 'UTF-8'
             soup = BeautifulSoup(res.text, "lxml")
 

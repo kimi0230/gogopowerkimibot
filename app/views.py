@@ -81,9 +81,8 @@ def callback(request):
                             officalResList = ["\n%s:\t%s" %
                                               (k, v)for k, v in officalRes["countrysDict"].items()]
                             resMsg += "".join(officalResList)
-                            sleep(30)
                             if resMsg != "":
-                                msgresponse.sendText(event, resMsg, 40)
+                                msgresponse.sendText(event, resMsg)
                         elif re.match(r"^匯率", mtext) != None:
                             msg = mtext.replace('匯率', '').strip()
                             resMsg = exchangeservice.toMsg(exchangeservice.getBoTExchange(
