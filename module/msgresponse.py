@@ -16,14 +16,14 @@ imgMap = {
 }
 
 
-def sendText(event, msg=None):  # 傳送文字
+def sendText(event, msg=None, timeout=None):  # 傳送文字
     try:
         if msg == None:
             return
         message = TextSendMessage(
             text=msg
         )
-        line_bot_api.reply_message(event.reply_token, message)
+        line_bot_api.reply_message(event.reply_token, message, timeout)
     except:
         line_bot_api.reply_message(
             event.reply_token, TextSendMessage(text='請支援收銀!'))

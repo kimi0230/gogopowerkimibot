@@ -1,3 +1,4 @@
+from time import sleep
 from django.shortcuts import render
 
 from django.conf import settings
@@ -80,8 +81,9 @@ def callback(request):
                             officalResList = ["\n%s:\t%s" %
                                               (k, v)for k, v in officalRes["countrysDict"].items()]
                             resMsg += "".join(officalResList)
+                            sleep(3)
                             if resMsg != "":
-                                msgresponse.sendText(event, resMsg)
+                                msgresponse.sendText(event, resMsg, 10)
                         elif re.match(r"^匯率", mtext) != None:
                             msg = mtext.replace('匯率', '').strip()
                             resMsg = exchangeservice.toMsg(exchangeservice.getBoTExchange(
