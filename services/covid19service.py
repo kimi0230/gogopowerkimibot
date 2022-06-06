@@ -33,7 +33,11 @@ def getCovid19():
         requests.packages.urllib3.disable_warnings()
 
         # 台灣疫情報告
-        res = requests.get(url, headers=headers, verify=False, timeout=10)
+        try:
+            res = requests.get(url, headers=headers, verify=False, timeout=8)
+        except requests.Timeout:
+            print("TIMEOUT : https://covid-19.nchc.org.tw/dt_005-covidTable_taiwan.php")
+            return ""
 
         res.encoding = 'UTF-8'
         soup = BeautifulSoup(res.text, "lxml")
