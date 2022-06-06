@@ -33,7 +33,8 @@ def getCovid19():
         requests.packages.urllib3.disable_warnings()
 
         # 台灣疫情報告
-        res = requests.get(url, headers=headers, verify=False, timeout=5)
+        res = requests.get(url, headers=headers, verify=False, timeout=15)
+        if res.
         res.encoding = 'UTF-8'
         soup = BeautifulSoup(res.text, "lxml")
         time = soup.find(
@@ -115,7 +116,7 @@ def getCovid19():
 
         return result
     except Exception as e:
-        print(e)
+        print("getCovid19 : ", e)
         return ""
 
 
