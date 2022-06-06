@@ -34,7 +34,7 @@ def getCovid19():
 
         # 台灣疫情報告
         try:
-            res = requests.get(url, headers=headers, verify=False, timeout=8)
+            res = requests.get(url, headers=headers, verify=False, timeout=15)
         except requests.Timeout:
             print("TIMEOUT : https://covid-19.nchc.org.tw/dt_005-covidTable_taiwan.php")
             return ""
