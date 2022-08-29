@@ -8,7 +8,7 @@ sched = BlockingScheduler()
 
 @sched.scheduled_job('interval', minutes=25)
 def scheduled_job():
-    url = "http://127.0.0.1:8000"
+    url = "http://127.0.0.1:8080"
     conn = urllib.request.urlopen(url)
 
     for key, value in conn.getheaders():

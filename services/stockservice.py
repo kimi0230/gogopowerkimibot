@@ -21,7 +21,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 plt.rcParams["font.sans-serif"] = [u'Arial Unicode MS']  # 設定中文字型
 plt.rcParams["axes.unicode_minus"] = False
 pd.options.mode.chained_assignment = None  # 取消顯示pandas資料重設警告
-locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+# locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
 
 def printThreeRradeTable(dfs):

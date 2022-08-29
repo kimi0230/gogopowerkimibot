@@ -1,0 +1,19 @@
+version: '3'
+
+networks:
+    linebot-network:
+        driver: bridge
+
+services:
+  linebot-django:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gogopowerkimibot_com
+    restart: always
+    ports: 
+      - '8000:8000'
+    expose:
+      - "8000"
+    networks:
+      - linebot-network

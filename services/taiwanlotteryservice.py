@@ -32,12 +32,12 @@ def getlottery():
 
         # 威力彩, 38樂合彩, 大樂透, 49樂合彩, 六組數字, 抓出威力彩跟大樂透
         titles = ["威力彩", "38樂合彩", "大樂透", "49樂合彩"]
-        locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+        # locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
         topDollar = [] if len(soup.select(".top_dollar")) == 0 else [
             locale.currency(int(dollar.text), grouping=True) for dollar in soup.select(".top_dollar")]
         lottos = {} if len(soup.select(".contents_box02")) == 0 else {
             titles[idx]: extractionlotto(box, 6) for idx, box in enumerate(soup.select(".contents_box02")) if idx % 2 == 0}
-        if len(topDollar)<2:
+        if len(topDollar) < 2:
             lottos["威力彩"]["topDollar"] = "更新中"
             lottos["大樂透"]["topDollar"] = "更新中"
         else:
