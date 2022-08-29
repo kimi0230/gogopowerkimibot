@@ -22,7 +22,7 @@ def getCovid19():
     try:
         nowDateEng = datetime.datetime.now().strftime("%b-%-d")
         redisKey = "Covid19:offical:"+nowDateEng
-        r = get_redis_connection("heroku")
+        r = get_redis_connection("fly")
         if r.exists(redisKey):
             rResult = r.get(redisKey)
             rdict = rResult.decode("UTF-8")

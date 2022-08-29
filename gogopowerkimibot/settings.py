@@ -140,6 +140,17 @@ CACHES = {
             },
         }
     },
+    "fly": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": os.environ.get('REDIS_URL'),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "CONNECTION_POOL_KWARGS": {
+                # "ssl_cert_reqs": None,
+                "max_connections": 18
+            },
+        }
+    },
     'local': {
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/1",

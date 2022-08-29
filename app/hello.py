@@ -23,7 +23,7 @@ def Hello(request):
 @ratelimit(key='ip', rate='1/s', block=True)
 def Redis(request):
     # Use the name you have defined for Redis in settings.CACHES
-    r = get_redis_connection("heroku")
+    r = get_redis_connection("fly")
     msg = "Redis Check = %r" % (r.ping())
     print(msg)
     return HttpResponse(msg)

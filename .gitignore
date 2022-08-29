@@ -1,4 +1,5 @@
 .env
+.env.flyio
 
 *.pyc
 __pycache__
