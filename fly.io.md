@@ -49,3 +49,4 @@ flyctl secrets import < .env.flyio
 ## 
 * https://rajasimon.io/blog/deploy-django-flyio/
 * https://fly.io/docs/reference/redis/
+* https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/
