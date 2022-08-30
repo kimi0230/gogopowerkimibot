@@ -184,7 +184,7 @@ DATABASES = {
     },
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('POSTGRE_DATABASE', ""),
+        'NAME': config('POSTGRE_DATABASE', "gogopowerkimi"),
         'USER': config('POSTGRE_USER', ""),
         'PASSWORD': config('POSTGRE_PASSWORD', ""),
         'HOST': config('POSTGRE_HOST', ""),
