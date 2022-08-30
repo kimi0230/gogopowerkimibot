@@ -15,21 +15,17 @@ except:
     GMAIL_USER = config('GMAIL_USER')
     GMAIL_PASSWORD = config('GMAIL_PASSWORD')
 
-smtpObj = smtplib.SMTP(GMAIL_SMTP, GMAIL_TLS_PORT)
-smtpObj.ehlo()
-smtpObj.starttls()
-smtpObj.login(GMAIL_USER, GMAIL_PASSWORD)
-
-
-def HelloWord():
-    smtpObj.sendmail('kimi0x03@gmail.com', 'kimi0230@gmail.com',
-                     'Subject: Hello World\nHi Kimi,\nHow are you?')
-
 
 def SendMail(to, subject, body):
+    smtpObj = smtplib.SMTP(GMAIL_SMTP, GMAIL_TLS_PORT)
+    smtpEhloResp = smtpObj.ehlo()
+    print(f'smtpEhloResp==> {smtpEhloResp}')
+    smtpObj.starttls()
+    smtpObj.login(GMAIL_USER, GMAIL_PASSWORD)
     mailBody = "Subject: %s\n%s" % (subject, body)
     smtpObj.sendmail(GMAIL_USER, to,
                      mailBody)
+    smtpObj.quit()
 
 
 if __name__ == "__main__":
