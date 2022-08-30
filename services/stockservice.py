@@ -5,13 +5,13 @@ import pandas as pd
 import numpy as np
 import requests
 from bs4 import BeautifulSoup
-import locale
 import ssl
 from gql import gql, Client
 from gql.transport.requests import RequestsHTTPTransport
 from utility import tinyURL
 from services import mailservice
 from email.mime.text import MIMEText
+# import locale
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36'

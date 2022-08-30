@@ -58,6 +58,12 @@ BOOKS_COOKIES = config('EPA_TOKEN', default='')
 # DEBUG = True
 DEBUG = False
 
+# Mail
+GMAIL_SMTP = config('GMAIL_SMTP', default='')
+GMAIL_USER = config('GMAIL_USER', default='')
+GMAIL_PASSWORD = config('GMAIL_PASSWORD', default='')
+GMAIL_TLS_PORT = config('GMAIL_TLS_PORT', default='')
+
 # CORS Config
 # https://github.com/adamchainz/django-cors-headers
 CORS_ORIGIN_WHITELIST = config(

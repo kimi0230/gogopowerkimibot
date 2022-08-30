@@ -1,12 +1,12 @@
 import smtplib
 import os
-from decouple import config
+from django.conf import settings
 
-smtpObj = smtplib.SMTP(os.environ.get('GMAIL_SMTP'),
-                       os.environ.get('GMAIL_TLS_PORT'))
+smtpObj = smtplib.SMTP(settings.GMAIL_SMTP,
+                       settings.GMAIL_TLS_PORT)
 smtpObj.ehlo()
 smtpObj.starttls()
-smtpObj.login(os.environ.get('GMAIL_USER'), os.environ.get('GMAIL_PASSWORD'))
+smtpObj.login(settings.GMAIL_USER, settings.GMAIL_PASSWORD)
 
 
 def HelloWord():
@@ -17,7 +17,7 @@ def HelloWord():
 def SendMail(to, subject, body):
     mailBody = "Subject: %s\n%s" % (subject, body.as_string())
     # print("mailBody --->", config('GMAIL_USER'), mailBody)
-    smtpObj.sendmail(s.environ.get('GMAIL_USER'), to,
+    smtpObj.sendmail(settings.GMAIL_USER, to,
                      mailBody)
 
 
