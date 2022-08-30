@@ -67,7 +67,7 @@ GMAIL_TLS_PORT = config('GMAIL_TLS_PORT', default='')
 # CORS Config
 # https://github.com/adamchainz/django-cors-headers
 CORS_ORIGIN_WHITELIST = config(
-    'WHITELIST', default='你的Domain').split(",")
+    'WHITELIST', default='https://你的Domain').split(",")
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = False
