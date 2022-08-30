@@ -16,7 +16,7 @@ except:
     GMAIL_PASSWORD = config('GMAIL_PASSWORD')
 
 smtpObj = smtplib.SMTP(GMAIL_SMTP, GMAIL_TLS_PORT)
-smtpObj.ehlo()
+# smtpObj.ehlo()
 smtpObj.starttls()
 smtpObj.login(GMAIL_USER, GMAIL_PASSWORD)
 
