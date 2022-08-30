@@ -16,7 +16,7 @@ except:
     GMAIL_PASSWORD = config('GMAIL_PASSWORD')
 
 smtpObj = smtplib.SMTP(GMAIL_SMTP, GMAIL_TLS_PORT)
-# smtpObj.ehlo()
+smtpObj.ehlo()
 smtpObj.starttls()
 smtpObj.login(GMAIL_USER, GMAIL_PASSWORD)
 
@@ -27,7 +27,7 @@ def HelloWord():
 
 
 def SendMail(to, subject, body):
-    mailBody = "Subject: %s\n%s" % (subject, body.as_string())
+    mailBody = "Subject: %s\n%s" % (subject, body)
     smtpObj.sendmail(GMAIL_USER, to,
                      mailBody)
 
