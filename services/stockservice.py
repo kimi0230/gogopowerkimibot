@@ -206,7 +206,7 @@ def getWeekEvent():
             "data": link,
             "images": [],
             "url": link,
-            "date": datetime.utcfromtimestamp(date).strftime('%Y-%m-%d %H:%M:%S')
+            "date": datetime.utcfromtimestamp(int(date)).strftime('%Y-%m-%d %H:%M:%S')
         }
         return result
 
