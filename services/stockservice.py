@@ -11,7 +11,7 @@ from gql.transport.requests import RequestsHTTPTransport
 from utility import tinyURL
 from services import mailservice
 from email.mime.text import MIMEText
-# import locale
+from datetime import datetime
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36'
@@ -199,12 +199,13 @@ def getWeekEvent():
         title = queryResult["clientGetArticleList"]["filtered"][0]["title"]
         link = tinyURL.makeTiny(("{}{}-{}").format("https://www.sinotrade.com.tw/richclub/weeklyreport/",
                                                    re.sub('\W', '-', title), queryResult["clientGetArticleList"]["filtered"][0]["_id"]))
-
+        date = queryResult["clientGetArticleList"]["filtered"][0]["updatedAt"]
         result = {
             "title": title,
             "data": link,
             "images": [],
-            "url": link
+            "url": link,
+            "date": datetime.fromtimestamp(int(date)/1000).strftime('%Y-%m-%d %H:%M:%S')
         }
         return result
 
