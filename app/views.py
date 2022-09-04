@@ -162,12 +162,12 @@ def callback(request):
                             resMsg = "%s\n%s\n%s" % (
                                 res["title"], res["data"], res["url"])
                             msgresponse.sendText(event, resMsg)
-                        elif mtext == "event":
+                        elif mtext.lower() == "event":
                             res = stockservice.getWeekEvent()
                             if res == None:
                                 return
-                            resMsg = "%s\n%s" % (
-                                res["title"], res["data"])
+                            resMsg = "%s\n%s\n%s" % (
+                                res["date"], res["title"], res["data"])
                             msgresponse.sendText(event, resMsg)
                         elif mtext == "kimi" or mtext == "Kimi" or mtext == "蔡章章":
                             res = githubservice.getKimi0230()
@@ -176,7 +176,7 @@ def callback(request):
                             resMsg = ("{} : {}".format(
                                 "https://github.com/kimi0230", res))
                             msgresponse.sendText(event, resMsg)
-                        elif re.match(r"^ivy\s?\d{0,2}", mtext) != None:
+                        elif re.match(r"^ivy\s?\d{0,2}", mtext.lower()) != None:
                             nums = re.sub(r'\D', "", mtext)
                             if nums == "":
                                 nums = 3

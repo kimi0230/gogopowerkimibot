@@ -199,12 +199,13 @@ def getWeekEvent():
         title = queryResult["clientGetArticleList"]["filtered"][0]["title"]
         link = tinyURL.makeTiny(("{}{}-{}").format("https://www.sinotrade.com.tw/richclub/weeklyreport/",
                                                    re.sub('\W', '-', title), queryResult["clientGetArticleList"]["filtered"][0]["_id"]))
-
+        date = queryResult["clientGetArticleList"]["filtered"][0]["updatedAt"]
         result = {
             "title": title,
             "data": link,
             "images": [],
-            "url": link
+            "url": link,
+            "date": date
         }
         return result
 
