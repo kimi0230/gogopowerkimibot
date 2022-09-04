@@ -12,6 +12,7 @@ from gql.transport.requests import RequestsHTTPTransport
 from utility import tinyURL
 from services import mailservice
 from email.mime.text import MIMEText
+from datetime import datetime
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36'
@@ -205,7 +206,7 @@ def getWeekEvent():
             "data": link,
             "images": [],
             "url": link,
-            "date": date
+            "date": datetime.utcfromtimestamp(date).strftime('%Y-%m-%d %H:%M:%S')
         }
         return result
 
