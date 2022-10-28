@@ -19,7 +19,7 @@ def getLucky(email="", password="", securityDeviceFingerprint=""):
     try:
         r = get_redis_connection("heroku")
         redisKey = "Cookies:shopee:"+email
-        if not r.exists(redisKey):
+        if r.exists(redisKey):
             mycookies = r.get(redisKey)
             mycookies = mycookies.decode("UTF-8")
         else:
@@ -49,13 +49,14 @@ def checkin(email="", password="", securityDeviceFingerprint=""):
     try:
         r = get_redis_connection("heroku")
         redisKey = "Cookies:shopee:"+email
-        if not r.exists(redisKey):
+        if r.exists(redisKey):
             mycookies = r.get(redisKey)
             mycookies = mycookies.decode("UTF-8")
+            print("-- mycookies redis--", mycookies)
         else:
-            print("-- securityDeviceFingerprint --", securityDeviceFingerprint)
             mycookies = getCookies(email, password, securityDeviceFingerprint)
             redisUtility.acquireLock(r, redisKey, mycookies, 60*60*24*3)
+            print("-- mycookies --", mycookies)
 
         testCookies = {'Cookie': mycookies}
         res = requests.post(
