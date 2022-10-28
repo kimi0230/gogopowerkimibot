@@ -594,13 +594,15 @@ def checkinShopee(source=[{"email": "", "password": "", "securityDeviceFingerpri
             outStr = []
             for v in source:
                 username = v["name"]
-                checkResult = shopeeservice.checkin(v["email"], v["password"])
+                checkResult = shopeeservice.checkin(
+                    v["email"], v["password"], v["securityDeviceFingerprint"])
                 if checkResult == None:
                     checkMsg = "fail"
                 else:
                     checkMsg = checkResult["msg"]
 
-                luckyResult = shopeeservice.getLucky(v["email"], v["password"])
+                luckyResult = shopeeservice.getLucky(
+                    v["email"], v["password"], v["securityDeviceFingerprint"])
                 if luckyResult == None:
                     luckyMsg = "fail"
                 else:
