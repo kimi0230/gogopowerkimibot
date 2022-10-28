@@ -587,7 +587,7 @@ def checkinBooks(source=[{"cookies": "", "tokenStr": ""}]):
         return
 
 
-def checkinShopee(source=[{"email": "", "password": "", "tokenStr": ""}]):
+def checkinShopee(source=[{"email": "", "password": "", "securityDeviceFingerprint": "", "tokenStr": ""}]):
     try:
         # 發送line
         with ThreadPoolExecutor(max_workers=3) as executor:

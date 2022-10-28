@@ -15,7 +15,7 @@ default_headers = {
 }
 
 
-def getLucky(email="", password=""):
+def getLucky(email="", password="", securityDeviceFingerprint=""):
     try:
         r = get_redis_connection("heroku")
         redisKey = "Cookies:shopee:"+email
@@ -23,7 +23,8 @@ def getLucky(email="", password=""):
             mycookies = r.get(redisKey)
             mycookies = mycookies.decode("UTF-8")
         else:
-            mycookies = getCookies(email, password)
+            mycookies = getCookies(
+                email, password, securityDeviceFingerprint)
             redisUtility.acquireLock(r, redisKey, mycookies, 60*60*12*7)
 
         requestID = ("%.0f" % (random.random() * 10**20))[:16]
@@ -44,7 +45,7 @@ def getLucky(email="", password=""):
         return None
 
 
-def checkin(email="", password=""):
+def checkin(email="", password="", securityDeviceFingerprint=""):
     try:
         r = get_redis_connection("heroku")
         redisKey = "Cookies:shopee:"+email
@@ -53,11 +54,11 @@ def checkin(email="", password=""):
             mycookies = mycookies.decode("UTF-8")
             print("-------redddd--->", mycookies)
         else:
-            mycookies = getCookies(email, password)
+            mycookies = getCookies(email, password, securityDeviceFingerprint)
             redisUtility.acquireLock(r, redisKey, mycookies, 60*60*12*7)
             print("-------reqqq--->", mycookies)
 
-        testCookies = {'Cookie': 'REC_T_ID=c45d9001-567d-11ed-a14d-f4ee08043528;SPC_F=QqLOl80EAn54snz2Yyb1H8l7M2n81IbX;SPC_R_T_ID=vlypED+JtJ1Om3lcfFfl6cSNSvQwDRoRXDi9bIqfbfqNFa+T+vCCkHPzpiOBoG2udc/kEL43alzx2TSzSKKMaIP2h9c/fW8RlQspa7WnePrJqzwfnKA4wzvgs4JGWb9ic7Zsi/o/o/mrA2dmdp/TVpkaHIZFKM4OQiHEd32AcKg=;SPC_R_T_IV=YkpmYVg0Vm1ZUTdPZG1Ndg==;SPC_SI=vhVRYwAAAAB6V25PcE11a8GIawAAAAAAQ1c3U1NLdDQ=;SPC_T_ID=vlypED+JtJ1Om3lcfFfl6cSNSvQwDRoRXDi9bIqfbfqNFa+T+vCCkHPzpiOBoG2udc/kEL43alzx2TSzSKKMaIP2h9c/fW8RlQspa7WnePrJqzwfnKA4wzvgs4JGWb9ic7Zsi/o/o/mrA2dmdp/TVpkaHIZFKM4OQiHEd32AcKg=;SPC_T_IV=YkpmYVg0Vm1ZUTdPZG1Ndg=='}
+        testCookies = {'Cookie': mycookies}
         res = requests.post(
             CHECKIN_URL, headers=default_headers, cookies=testCookies)
         print("------------------>", res.json())
@@ -69,12 +70,15 @@ def checkin(email="", password=""):
         return None
 
 
-def getCookies(email="", password=""):
+def getCookies(email="", password="", securityDeviceFingerprint=""):
     try:
         payload = {
             "email": email,
             "password": password,
-            "support_ivs": True
+            "support_ivs": True,
+            "client_identifier": {
+                "security_device_fingerprint": securityDeviceFingerprint
+            }
         }
         retry = 3
         for i in range(0, retry):
@@ -98,8 +102,16 @@ def getCookies(email="", password=""):
         return None
 
 
+def test():
+    testCookies = {'Cookie': ''}
+    res = requests.post(
+        CHECKIN_URL, headers=default_headers, cookies=testCookies)
+    print("------------------>", res.json())
+
+
 if __name__ == "__main__":
     c = 'Sc'
-    print(checkin("", ""))
+    # print(checkin("", ""))
     # print(getLucky())
-    # print(getCookies())
+    print(getCookies("kimi0230@gmail.com", "kkjkjkjakdfjkdjkfad"))
+    # print(test())
