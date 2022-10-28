@@ -21,6 +21,7 @@ def getLucky(email="", password=""):
         redisKey = "Cookies:shopee:"+email
         if r.exists(redisKey):
             mycookies = r.get(redisKey)
+            mycookies = mycookies.decode("UTF-8")
         else:
             mycookies = getCookies(email, password)
             redisUtility.acquireLock(r, redisKey, mycookies, 60*60*12*7)
@@ -49,6 +50,7 @@ def checkin(email="", password=""):
         redisKey = "Cookies:shopee:"+email
         if r.exists(redisKey):
             mycookies = r.get(redisKey)
+            mycookies = mycookies.decode("UTF-8")
         else:
             mycookies = getCookies(email, password)
             redisUtility.acquireLock(r, redisKey, mycookies, 60*60*12*7)
