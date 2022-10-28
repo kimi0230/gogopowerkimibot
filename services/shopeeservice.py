@@ -52,11 +52,9 @@ def checkin(email="", password="", securityDeviceFingerprint=""):
         if r.exists(redisKey):
             mycookies = r.get(redisKey)
             mycookies = mycookies.decode("UTF-8")
-            print("-- mycookies redis--", mycookies)
         else:
             mycookies = getCookies(email, password, securityDeviceFingerprint)
             redisUtility.acquireLock(r, redisKey, mycookies, 60*60*24*3)
-            print("-- mycookies --", mycookies)
 
         testCookies = {'Cookie': mycookies}
         res = requests.post(
