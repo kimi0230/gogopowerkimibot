@@ -34,7 +34,7 @@ def getLucky(email="", password=""):
             "source": 0
         }
         res = requests.post(
-            LUCKY_URL, headers=default_headers, cookies={"Cookie": mycookies}, json=bodyJson)
+            LUCKY_URL, headers=default_headers, cookies={"Cookie": "'"+mycookies+"'"}, json=bodyJson)
 
         if res.status_code != 200:
             return None
@@ -58,7 +58,7 @@ def checkin(email="", password=""):
             print("-------reqqq--->", mycookies)
 
         res = requests.post(
-            CHECKIN_URL, headers=default_headers, cookies={"Cookie": mycookies})
+            CHECKIN_URL, headers=default_headers, cookies={"Cookie": "'"+mycookies+"'"})
         print("------------------>", res.json())
         if res.status_code != 200:
             return None
