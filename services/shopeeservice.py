@@ -25,7 +25,7 @@ def getLucky(email="", password="", securityDeviceFingerprint=""):
         else:
             mycookies = getCookies(
                 email, password, securityDeviceFingerprint)
-            redisUtility.acquireLock(r, redisKey, mycookies, 60*60*12*7)
+            redisUtility.acquireLock(r, redisKey, mycookies, 60*60*24*3)
 
         requestID = ("%.0f" % (random.random() * 10**20))[:16]
         bodyJson = {
@@ -49,19 +49,17 @@ def checkin(email="", password="", securityDeviceFingerprint=""):
     try:
         r = get_redis_connection("heroku")
         redisKey = "Cookies:shopee:"+email
-        if not r.exists(redisKey):
+        if r.exists(redisKey):
             mycookies = r.get(redisKey)
             mycookies = mycookies.decode("UTF-8")
-            print("-------redddd--->", mycookies)
         else:
             mycookies = getCookies(email, password, securityDeviceFingerprint)
-            redisUtility.acquireLock(r, redisKey, mycookies, 60*60*12*7)
-            print("-------reqqq--->", mycookies)
+            redisUtility.acquireLock(r, redisKey, mycookies, 60*60*24*3)
 
         testCookies = {'Cookie': mycookies}
         res = requests.post(
             CHECKIN_URL, headers=default_headers, cookies=testCookies)
-        print("------------------>", res.json())
+
         if res.status_code != 200:
             return None
         return res.json()
