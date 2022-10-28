@@ -57,7 +57,7 @@ def checkin(email="", password=""):
             redisUtility.acquireLock(r, redisKey, mycookies, 60*60*12*7)
             print("-------reqqq--->", mycookies)
 
-        testCookies = {'Cookie': mycookies}
+        testCookies = {'Cookie': 'REC_T_ID=c45d9001-567d-11ed-a14d-f4ee08043528;SPC_F=QqLOl80EAn54snz2Yyb1H8l7M2n81IbX;SPC_R_T_ID=vlypED+JtJ1Om3lcfFfl6cSNSvQwDRoRXDi9bIqfbfqNFa+T+vCCkHPzpiOBoG2udc/kEL43alzx2TSzSKKMaIP2h9c/fW8RlQspa7WnePrJqzwfnKA4wzvgs4JGWb9ic7Zsi/o/o/mrA2dmdp/TVpkaHIZFKM4OQiHEd32AcKg=;SPC_R_T_IV=YkpmYVg0Vm1ZUTdPZG1Ndg==;SPC_SI=vhVRYwAAAAB6V25PcE11a8GIawAAAAAAQ1c3U1NLdDQ=;SPC_T_ID=vlypED+JtJ1Om3lcfFfl6cSNSvQwDRoRXDi9bIqfbfqNFa+T+vCCkHPzpiOBoG2udc/kEL43alzx2TSzSKKMaIP2h9c/fW8RlQspa7WnePrJqzwfnKA4wzvgs4JGWb9ic7Zsi/o/o/mrA2dmdp/TVpkaHIZFKM4OQiHEd32AcKg=;SPC_T_IV=YkpmYVg0Vm1ZUTdPZG1Ndg=='}
         res = requests.post(
             CHECKIN_URL, headers=default_headers, cookies=testCookies)
         print("------------------>", res.json())
