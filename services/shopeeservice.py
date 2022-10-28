@@ -55,11 +55,9 @@ def checkin(email="", password=""):
             mycookies = getCookies(email, password)
             redisUtility.acquireLock(r, redisKey, mycookies, 60*60*12*7)
 
-        print("!!!!!!!!!!!!!!! mycookies =  ", mycookies)
-
         res = requests.post(
             CHECKIN_URL, headers=default_headers, cookies=mycookies)
-
+        print("------------------>", res.json())
         if res.status_code != 200:
             return None
         return res.json()
