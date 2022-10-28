@@ -116,8 +116,12 @@ def normalNotifyWithTitle(res, tokens=[carbeToken, chocoToken, yelmiToken]):
     try:
         if res == None or res == "":
             return
-        payload = {'message': res["title"] +
-                   "\n" + res["data"] + "\n" + res["url"]}
+        if "date" in res:
+            payload = {'message': res["date"] + "\n" + res["title"] +
+                       "\n" + res["data"] + "\n" + res["url"]}
+        else:
+            payload = {'message': res["title"] +
+                       "\n" + res["data"] + "\n" + res["url"]}
 
         # 發送line
         with ThreadPoolExecutor(max_workers=3) as executor:
@@ -583,20 +587,22 @@ def checkinBooks(source=[{"cookies": "", "tokenStr": ""}]):
         return
 
 
-def checkinShopee(source=[{"cookies": "", "tokenStr": ""}]):
+def checkinShopee(source=[{"email": "", "password": "", "securityDeviceFingerprint": "", "tokenStr": ""}]):
     try:
         # 發送line
         with ThreadPoolExecutor(max_workers=3) as executor:
             outStr = []
             for v in source:
                 username = v["name"]
-                checkResult = shopeeservice.checkin(v["cookies"])
+                checkResult = shopeeservice.checkin(
+                    v["email"], v["password"], v["securityDeviceFingerprint"])
                 if checkResult == None:
                     checkMsg = "fail"
                 else:
                     checkMsg = checkResult["msg"]
 
-                luckyResult = shopeeservice.getLucky(v["cookies"])
+                luckyResult = shopeeservice.getLucky(
+                    v["email"], v["password"], v["securityDeviceFingerprint"])
                 if luckyResult == None:
                     luckyMsg = "fail"
                 else:
