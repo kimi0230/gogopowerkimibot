@@ -59,7 +59,7 @@ def checkin(email="", password="", securityDeviceFingerprint=""):
         testCookies = {'Cookie': mycookies}
         res = requests.post(
             CHECKIN_URL, headers=default_headers, cookies=testCookies)
-
+        print("----------------------> ", res.json())
         if res.status_code != 200:
             return None
         return res.json()
@@ -100,8 +100,8 @@ def getCookies(email="", password="", securityDeviceFingerprint=""):
         return None
 
 
-def test():
-    testCookies = {'Cookie': ''}
+def test(cookies):
+    testCookies = {'Cookie': cookies}
     res = requests.post(
         CHECKIN_URL, headers=default_headers, cookies=testCookies)
     print("------------------>", res.json())
@@ -111,5 +111,6 @@ if __name__ == "__main__":
     c = 'Sc'
     # print(checkin("", ""))
     # print(getLucky())
-    print(getCookies("kimi0230@gmail.com", "kkjkjkjakdfjkdjkfad"))
-    # print(test())
+    # print(getCookies("kimi0230@gmail.com", "kkjkjkjakdfjkdjkfad"))
+    print(test(getCookies("kimi0230@gmail.com", "ad86e020c20560f26704c93586866ce8343964e57d3e53847596accdc54f6151",
+          "/R6Oq/PbNBzWZe3xTXUXfg==|D8CqTHd+N1KZKFbZWGJfNTzWnRmuVDlBx4X62Swe2zVz/iyhDQ4Qc6uTqTZ8H2gMLX3U06FwUMKJ0G0M3StRLYyUpfCIsr8i2waB|r3/n+vJSNH85otQ4|06|3")))
