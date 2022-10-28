@@ -51,11 +51,12 @@ def checkin(email="", password=""):
         if r.exists(redisKey):
             mycookies = r.get(redisKey)
             mycookies = mycookies.decode("UTF-8")
+            print("-------redddd--->", mycookies)
         else:
             mycookies = getCookies(email, password)
             redisUtility.acquireLock(r, redisKey, mycookies, 60*60*12*7)
+            print("-------reqqq--->", mycookies)
 
-        print("-------jjkkkkk--->")
         res = requests.post(
             CHECKIN_URL, headers=default_headers, cookies=mycookies)
         print("------------------>", res.json())
