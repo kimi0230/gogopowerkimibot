@@ -587,20 +587,20 @@ def checkinBooks(source=[{"cookies": "", "tokenStr": ""}]):
         return
 
 
-def checkinShopee(source=[{"cookies": "", "tokenStr": ""}]):
+def checkinShopee(source=[{"email": "", "password": "", "tokenStr": ""}]):
     try:
         # 發送line
         with ThreadPoolExecutor(max_workers=3) as executor:
             outStr = []
             for v in source:
                 username = v["name"]
-                checkResult = shopeeservice.checkin(v["cookies"])
+                checkResult = shopeeservice.checkin(v["email"], v["password"])
                 if checkResult == None:
                     checkMsg = "fail"
                 else:
                     checkMsg = checkResult["msg"]
 
-                luckyResult = shopeeservice.getLucky(v["cookies"])
+                luckyResult = shopeeservice.getLucky(v["email"], v["password"])
                 if luckyResult == None:
                     luckyMsg = "fail"
                 else:
