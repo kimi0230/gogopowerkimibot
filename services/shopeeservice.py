@@ -3,6 +3,7 @@ import requests
 import random
 import ast
 from django_redis import get_redis_connection
+from utility import redisUtility
 
 CHECKIN_URL = "https://shopee.tw/mkt/coins/api/v2/checkin"
 LOGIN_URL = "https://shopee.tw/api/v4/account/login_by_password"
@@ -19,11 +20,10 @@ def getLucky(email="", password=""):
         r = get_redis_connection("heroku")
         redisKey = "Cookies:shopee:"+email
         if r.exists(redisKey):
-            rResult = r.get(redisKey)
-            rdict = rResult.decode("UTF-8")
-            mycookies = ast.literal_eval(rdict)
+            mycookies = r.get(redisKey)
         else:
             mycookies = getCookies(email, password)
+            redisUtility.acquireLock(r, redisKey, mycookies, 60*60*12*7)
 
         requestID = ("%.0f" % (random.random() * 10**20))[:16]
         bodyJson = {
@@ -48,11 +48,10 @@ def checkin(email="", password=""):
         r = get_redis_connection("heroku")
         redisKey = "Cookies:shopee:"+email
         if r.exists(redisKey):
-            rResult = r.get(redisKey)
-            rdict = rResult.decode("UTF-8")
-            mycookies = ast.literal_eval(rdict)
+            mycookies = r.get(redisKey)
         else:
             mycookies = getCookies(email, password)
+            redisUtility.acquireLock(r, redisKey, mycookies, 60*60*12*7)
 
         res = requests.post(
             CHECKIN_URL, headers=default_headers, cookies=mycookies)
