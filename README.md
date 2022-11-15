@@ -4,8 +4,7 @@
 LINE Bot, LINE Notify.
 使用 Django, Django Q 排程, PostgreSQL, GraphQL, GitHub Active 自動部署至 Heroku
 發票, 天氣, 天文, 匯率, 常春藤, 股市, 疫情, ptt 爬蟲, [Cambridge Dictionary](https://dictionary.cambridge.org/zht)爬蟲
-中油油價漲幅 notify
-每日英文單字 notify 等
+中油油價漲幅 notify, 每日英文單字 notify, Shopee自動打卡簽到 等
 
 ![line bot](https://github.com/kimi0230/gogopowerkimibot/raw/main/images/gif/bot.gif)
 ![line notify](https://github.com/kimi0230/gogopowerkimibot/raw/main/images/gif/notify.gif)
@@ -179,6 +178,9 @@ Q_CLUSTER = {
 - https://django-q.readthedocs.io/en/latest/cluster.html
 - https://github.com/chubin/wttr.in
 - [Thread 用法](https://www.thepythoncode.com/article/using-threads-in-python)
+- [Surge](https://apps.apple.com/tw/app/surge-5/id1442620678)
+- [蘋果生態圈的網路神器 Surge 4 for iOS 簡易入門教學](https://www.jkg.tw/p3330/)
+- [iOS Surge 5 專用模組列表](https://kinta.ma/surge/)
 
 ## memo
 
