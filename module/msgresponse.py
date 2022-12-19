@@ -13,6 +13,7 @@ imgMap = {
     "bad": "https://i.imgur.com/ZjrBz79.png",
     "cp": "https://imgur.com/YP48ccb.png",
     "cp2": "https://i.imgur.com/Yks9Hgj.png",
+    "python": "https://imgur.com/BTscvx1.png"
 }
 
 
