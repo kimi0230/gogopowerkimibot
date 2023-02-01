@@ -184,6 +184,15 @@ def callback(request):
                                 event, ivyservice.getLastNumsDaysText(nums=int(nums)))
                         elif mtext.lower() == "go":
                             msgresponse.sendImage(event, "python")
+                        elif mtext.lower() == "a7":
+                            resMsg = 'a7 - gate - on train - arrived\
+                                7: 47 - 8: 18 - 8: 24 - 8: 40\
+                                7: 47 - 8: 18 - 8: 29 - 8: 45\
+                                8: 02 - 8: 33 - 8: 46 - 9: 02\
+                                8: 17 - 8: 48 - 8: 58 - 9: 14\
+                                8: 32 - 9: 03 - 9: 05 - 9: 21\
+                                8: 32 - 9: 03 - 9: 14 - 9: 30'
+                            msgresponse.sendText(event, resMsg)
 
                 if isinstance(event, PostbackEvent):  # PostbackTemplateAction觸發此事件
                     # 取得Postback資料
