@@ -1,7 +1,7 @@
 
 
 def getA7():
-    resMsg = '\na7 - gate - train - arrived\
+    resMsg = 'a7 - gate - train - arrived\
         7: 47 - 8: 18 - 8: 24 - 8: 40\
         7: 47 - 8: 18 - 8: 29 - 8: 45\
         8: 02 - 8: 33 - 8: 46 - 9: 02\

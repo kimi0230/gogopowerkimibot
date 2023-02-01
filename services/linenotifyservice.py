@@ -686,7 +686,7 @@ def a7():
         if msg == None:
             return
         payload = {
-            'message':  msg}
+            'message':  "\n"+msg}
         res = sendLineNotify(token, payload)
         if res.status_code == 200:
             print('發送 LINE Notify 成功！')
