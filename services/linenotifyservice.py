@@ -1,7 +1,7 @@
 from time import time
 from services import covid19service
 from datetime import datetime, timedelta
-from services import pttservice, gasservice, cambridgeservice, invoiceservice, nmnsservice, taiwanlotteryservice, ivyservice, booksservice, shopeeservice, stockservice, githubservice
+from services import pttservice, gasservice, cambridgeservice, invoiceservice, nmnsservice, taiwanlotteryservice, ivyservice, booksservice, shopeeservice, stockservice, githubservice, mrtservice
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import requests
 from django.conf import settings
@@ -680,9 +680,29 @@ def getKimi0230():
         return
 
 
+def a7():
+    try:
+        msg = mrtservice.getA7()
+        if msg == None:
+            return
+        payload = {
+            'message':  msg}
+        res = sendLineNotify(token, payload)
+        if res.status_code == 200:
+            print('發送 LINE Notify 成功！')
+        else:
+            print('發送 LINE Notify 失敗！')
+
+        return
+    except Exception as e:
+        print("getKimi0230:", e)
+        return
+
+
 if __name__ == "__main__":
     # getForeign()
     # getThreeRrade()
     # getWeekEvent()
     # getKimi0230()
-    covid19()
+    # covid19()
+    a7()
