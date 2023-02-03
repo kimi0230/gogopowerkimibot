@@ -184,6 +184,9 @@ def callback(request):
                                 event, ivyservice.getLastNumsDaysText(nums=int(nums)))
                         elif mtext.lower() == "go":
                             msgresponse.sendImage(event, "python")
+                        elif mtext.lower() == "a1":
+                            resMsg = mrtservice.getA1()
+                            msgresponse.sendText(event, resMsg)
                         elif mtext.lower() == "a7":
                             resMsg = mrtservice.getA7()
                             msgresponse.sendText(event, resMsg)

@@ -699,6 +699,25 @@ def a7():
         return
 
 
+def a1():
+    try:
+        msg = mrtservice.getA1()
+        if msg == None:
+            return
+        payload = {
+            'message':  "\n"+msg}
+        res = sendLineNotify(token, payload)
+        if res.status_code == 200:
+            print('發送 LINE Notify 成功！')
+        else:
+            print('發送 LINE Notify 失敗！')
+
+        return
+    except Exception as e:
+        print("getKimi0230:", e)
+        return
+
+
 if __name__ == "__main__":
     # getForeign()
     # getThreeRrade()
