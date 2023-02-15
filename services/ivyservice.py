@@ -53,11 +53,13 @@ def getLastNumsDays(url=ANALYSIS_URL, nums=DEFAULTNUMS):
 def getLastNumsDaysText(url=ANALYSIS_URL, nums=DEFAULTNUMS):
     try:
         source = getLastNumsDays(url, nums)
+        portal = "https://www.ivy.com.tw/newsLetter/portal"
         resMsg = ""
         if source != None:
             for item in source:
                 resMsg += "%s: %s: %s\n" % (
                     item["Date"], item["Title"], item["Link"])
+            resMsg += portal
             return resMsg
         else:
             return None
