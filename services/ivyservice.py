@@ -59,7 +59,7 @@ def getLastNumsDaysText(url=ANALYSIS_URL, nums=DEFAULTNUMS):
             for item in source:
                 resMsg += "%s: %s: %s\n" % (
                     item["Date"], item["Title"], item["Link"])
-            resMsg += portal
+            resMsg += "\nportal:%s" % (portal)
             return resMsg
         else:
             return None
