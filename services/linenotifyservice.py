@@ -88,7 +88,7 @@ def sendLineNotify(token, params=None, file=None):
         return
 
 
-def normalNotifyMessage(msg, tokens=[carbeToken, chocoToken, yelmiToken], workers=3):
+def normalNotifyMessage(msg, tokens=[carbeToken, yelmiToken], workers=3):
     try:
         if msg == None or msg == "":
             return
@@ -112,7 +112,7 @@ def normalNotifyMessage(msg, tokens=[carbeToken, chocoToken, yelmiToken], worker
         return
 
 
-def normalNotifyWithTitle(res, tokens=[carbeToken, chocoToken, yelmiToken]):
+def normalNotifyWithTitle(res, tokens=[carbeToken, yelmiToken]):
     try:
         if res == None or res == "":
             return
@@ -162,7 +162,7 @@ def carbe():
         print('發送 LINE Notify 失敗！')
 
 
-def starDay(tokens=[chocoToken, carbeToken, etenToken, yelmiToken]):
+def starDay(tokens=[carbeToken, etenToken, yelmiToken]):
     try:
         now = datetime.now()
         resMsg, resImgURL = nmnsservice.getStarDayText(now)
@@ -197,7 +197,7 @@ def starDay(tokens=[chocoToken, carbeToken, etenToken, yelmiToken]):
         return
 
 
-def star(tokens=[token, chocoToken, etenToken, yelmiToken]):
+def star(tokens=[token, etenToken, yelmiToken]):
     try:
         now = datetime.now()
         year = now.year
@@ -213,7 +213,7 @@ def star(tokens=[token, chocoToken, etenToken, yelmiToken]):
         return
 
 
-def covid19(tokens=[carbeToken, etenToken, chocoToken, yelmiToken]):
+def covid19(tokens=[carbeToken, etenToken, yelmiToken]):
     try:
         resMsg = ""
         pttRes = covid19service.getGossipCovid19()
@@ -399,7 +399,7 @@ def netflixMangFee():
         return
 
 
-def gasCPC(tokens=[carbeToken, etenToken, chocoToken, yelmiToken]):
+def gasCPC(tokens=[carbeToken, etenToken, yelmiToken]):
     try:
         # 找出明天, 用來檢查星期日抓的日期中油是否有更新
         now = datetime.now()
@@ -416,7 +416,7 @@ def gasCPC(tokens=[carbeToken, etenToken, chocoToken, yelmiToken]):
         return
 
 
-def getPresume(tokens=[carbeToken, etenToken, chocoToken, yelmiToken]):
+def getPresume(tokens=[carbeToken, etenToken, yelmiToken]):
     try:
         resMsg = gasservice.getPresumeText()
         if resMsg == None:
@@ -442,7 +442,7 @@ def getDailyAWord(examp=True,  tokens=[token]):
         return
 
 
-def getInvoice(msg="發票", tokens=[carbeToken, etenToken, chocoToken, yelmiToken]):
+def getInvoice(msg="發票", tokens=[carbeToken, etenToken, yelmiToken]):
     resMsg = invoiceservice.getInvoice(msg)
 
     payload = {'message': resMsg}
@@ -531,7 +531,7 @@ def wether(title=None, loc=[], tokens=[etenToken]):
         return
 
 
-def lottery(*category, tokens=[chocoToken, etenToken, carbeToken]):
+def lottery(*category, tokens=[etenToken, carbeToken]):
     try:
         resMsg = taiwanlotteryservice.getlotteryText(category)
         if resMsg == "":
@@ -650,7 +650,7 @@ def getForeign(tops=10, tokens=[token]):
         return
 
 
-def getWeekEvent(tokens=[yelmiToken, chocoToken]):
+def getWeekEvent(tokens=[yelmiToken]):
     try:
         res = stockservice.getWeekEvent()
         normalNotifyWithTitle(res, tokens=tokens)
