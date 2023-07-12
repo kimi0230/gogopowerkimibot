@@ -80,7 +80,7 @@ def getForeign(tops=10):
         soup = BeautifulSoup(res.text, "lxml")
         title = soup.select("div.t11")[0].text + "\t外資買賣超"
         dfs = pd.read_html(
-            url, header=1, keep_default_na=False, index_col=0)[1]
+            res.text, header=1, keep_default_na=False, index_col=0)[1]
 
         result = {
             "title": title,
@@ -261,8 +261,8 @@ def Calendar(event):
 if __name__ == "__main__":
     # weekEvent()
     # print(getThreeRrade())
-    # getForeign()
+    getForeign()
     # f = open('table.png', 'rb')  # create an empty demo file
     # file = {'imageFile': f}
     # payload = {'message': "121212"}
-    Calendar("EV000020")
+    # Calendar("EV000020")
