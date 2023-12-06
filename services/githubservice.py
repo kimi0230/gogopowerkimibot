@@ -13,6 +13,7 @@ def getKimi0230():
         # url = "https://visitor-badge.glitch.me/badge?page_id=kimi0230"
         # url = "https://steel-quark-crabapple.glitch.me/badge?page_id=kimi0230"
         url = "https://komarev.com/ghpvc/?username=kimi0230"
+        default_headers['User-Agent'] = "github-camo"
         res = requests.get(url, headers=default_headers, verify=False)
         res.encoding = 'UTF-8'
         soup = BeautifulSoup(res.text, "lxml")
